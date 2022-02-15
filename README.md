@@ -21,9 +21,9 @@ Click on `Use this template`
 
 ## Features and structure
 
-- 100% lua
+- 100% Lua
 - Github actions to run tests and check for formatting errors (Stylua)
-- tests [busted](https://olivinelabs.com/busted/) + [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
+- Tests created with [busted](https://olivinelabs.com/busted/) + [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 
 ### Plugin structure
 
