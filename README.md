@@ -10,7 +10,7 @@ A template repository for Neovim plugins.
 Via `gh`:
 
 ```
-$ gh repo create my-plugin -p ellisonleao/neovim-plugin-template
+$ gh repo create my-plugin -p ellisonleao/nvim-plugin-template
 ```
 
 Via github web page:
@@ -22,8 +22,8 @@ Click on `Use this template`
 ## Features and structure
 
 - 100% lua
-- Github actions to run tests and formatting (Stylua)
-- tests with busted and plenary.nvim
+- Github actions to run tests and check for formatting errors (Stylua)
+- tests [busted](https://olivinelabs.com/busted/) + [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
 
 ### Plugin structure
 
