@@ -30,15 +30,16 @@ Click on `Use this template`
 ```
 .
 ├── lua
-│   └── module
-│       └── init.lua
+│   ├── plugin_name
+│   │   └── module.lua
+│   └── plugin_name.lua
 ├── Makefile
 ├── plugin
-│   └── module.lua
+│   └── plugin_name.lua
 ├── README.md
 ├── tests
 │   ├── minimal_vim.vim
-│   └── module
-│       └── module_spec.lua
+│   └── plugin_name
+│       └── plugin_name_spec.lua
 └── vendor
 ```
