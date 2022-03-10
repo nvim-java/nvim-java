@@ -1,7 +1,7 @@
 .PHONY: test prepare
 
 prepare:
-	@git clone https://github.com/nvim-lua/plenary.nvim vendor/plenary.nvim
+	@if [ ! -d "./vendor/plenary.nvim" ]; then git clone https://github.com/nvim-lua/plenary.nvim vendor/plenary.nvim; fi
 
 test: prepare
 	@nvim \
