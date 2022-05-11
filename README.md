@@ -38,7 +38,7 @@ Click on `Use this template`
 │   └── plugin_name.lua
 ├── README.md
 ├── tests
-│   ├── minimal_vim.vim
+│   ├── minimal_init.lua
 │   └── plugin_name
 │       └── plugin_name_spec.lua
 └── vendor
