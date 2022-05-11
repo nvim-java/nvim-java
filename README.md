@@ -41,5 +41,4 @@ Click on `Use this template`
 │   ├── minimal_init.lua
 │   └── plugin_name
 │       └── plugin_name_spec.lua
-└── vendor
 ```
