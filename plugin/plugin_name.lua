@@ -1,1 +1,1 @@
-vim.cmd([[command! MyFirstFunction lua require('plugin_name.module').my_first_function() ]])
+vim.api.nvim_create_user_command("MyFirstFunction", require("plugin_name").hello, {})
