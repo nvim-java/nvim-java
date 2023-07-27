@@ -22,9 +22,11 @@ Click on `Use this template`
 ## Features and structure
 
 - 100% Lua
-- Github actions to run tests and check for formatting errors (Stylua)
-- Tests created with [busted](https://olivinelabs.com/busted/) + [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
-- luarocks release support (LUAROCKS_API_KEY secret configuration required)
+- Github actions for:
+  - running tests using [plenary.nvim](https://github.com/nvim-lua/plenary.nvim) and [busted](https://olivinelabs.com/busted/)
+  - check for formatting errors (Stylua)
+  - vimdocs autogeneration from README.md file
+  - luarocks release (LUAROCKS_API_KEY secret configuration required)
 
 ### Plugin structure
 
