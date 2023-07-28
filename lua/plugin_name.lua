@@ -4,7 +4,7 @@ local module = require("plugin_name.module")
 ---@class Config
 ---@field opt string Your config option
 local config = {
-  opt = "Hello!"
+  opt = "Hello!",
 }
 
 ---@class MyModule
