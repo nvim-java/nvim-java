@@ -1,6 +1,6 @@
 ---
 on: [push, pull_request]
-name: default
+name: lint-test
 
 jobs:
   stylua:
@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: JohnnyMorganz/stylua-action@v1
+      - uses: JohnnyMorganz/stylua-action@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --color always --check lua
