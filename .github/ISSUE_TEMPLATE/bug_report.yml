@@ -14,7 +14,7 @@ body:
       options:
         - label: I have read all the plugin docs
           required: true
-        - label: I have searched the existing issues of paint.nvim
+        - label: I have searched the existing issues
           required: true
         - label: I have searched the existing issues of plugins related to this issue
           required: true
