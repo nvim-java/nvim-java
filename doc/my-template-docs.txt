@@ -1,4 +1,4 @@
-*my-template-docs.txt*      For Neovim >= 0.8.0      Last change: 2023 July 29
+*my-template-docs.txt*     For Neovim >= 0.8.0     Last change: 2023 August 17
 
 ==============================================================================
 Table of Contents                         *my-template-docs-table-of-contents*
@@ -61,7 +61,7 @@ PLUGIN STRUCTURE ~
 ==============================================================================
 2. Links                                              *my-template-docs-links*
 
-1. *GitHub Workflow Status*: https://img.shields.io/github/actions/workflow/status/ellisonleao/nvim-plugin-template/default.yml?branch=main&style=for-the-badge
+1. *GitHub Workflow Status*: https://img.shields.io/github/actions/workflow/status/ellisonleao/nvim-plugin-template/lint-test.yml?branch=main&style=for-the-badge
 2. *Lua*: https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua
 3. **: https://docs.github.com/assets/cb-36544/images/help/repository/use-this-template-button.png
 
