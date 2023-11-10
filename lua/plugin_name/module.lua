@@ -3,7 +3,7 @@ local M = {}
 
 ---@return string
 M.my_first_function = function()
-  return "hello world!"
+	return 'hello world!'
 end
 
 return M
