@@ -14,10 +14,24 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local temp_path = './.test_plugins'
+local java_core_path = vim.fn.expand('~/Workspace/nvim-java-core')
 
 require('lazy').setup({
 	{
 		'nvim-lua/plenary.nvim',
+		lazy = false,
+	},
+	{
+		'nvim-java/nvim-java-core',
+		dir = vim.fn.isdirectory(java_core_path) and java_core_path or nil,
+		lazy = false,
+	},
+	{
+		'neovim/nvim-lspconfig',
+		lazy = false,
+	},
+	{
+		'williamboman/mason.nvim',
 		lazy = false,
 	},
 }, {
