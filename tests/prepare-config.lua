@@ -23,7 +23,8 @@ require('lazy').setup({
 	},
 	{
 		'nvim-java/nvim-java-core',
-		dir = vim.fn.isdirectory(java_core_path) and java_core_path or nil,
+		---@diagnostic disable-next-line: assign-type-mismatch
+		dir = vim.fn.isdirectory(java_core_path) == 1 and java_core_path or nil,
 		lazy = false,
 	},
 	{
