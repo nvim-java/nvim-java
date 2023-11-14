@@ -1,0 +1,9 @@
+{
+	"tasks": [
+		{
+			"label": "Run Tests",
+			"type": "shell",
+			"command": "make test"
+		}
+	]
+}

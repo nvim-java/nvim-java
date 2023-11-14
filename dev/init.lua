@@ -4,7 +4,7 @@ vim.opt.runtimepath:prepend(cwd)
 --[[
 -- plugin name will be used to reload the loaded modules
 --]]
-local package_name = 'plugin_name'
+local package_name = 'java'
 
 -- add the escape character to special characters
 local escape_pattern = function(text)
@@ -26,7 +26,7 @@ end
 local run_action = function()
 	vim.cmd.messages('clear')
 
-	require(package_name).hello()
+	require(package_name).__run()
 end
 
 -- unload and run the function from the package
