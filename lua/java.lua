@@ -25,6 +25,7 @@ M.dap.config_dap = java_dap.config_dap
 ----------------------------------------------------------------------
 M.test = {}
 M.test.run_current_test_class = java_dap.run_current_test_class
+M.test.debug_current_test_class = java_dap.debug_current_test_class
 
 ----------------------------------------------------------------------
 --                            Manipulate                            --
