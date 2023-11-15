@@ -8,9 +8,10 @@ local M = {}
 
 function M.setup()
 	deps.check()
-	java_lspconfig.wrap_lspconfig_setup()
 	java_mason.install_dependencies()
-	java_dap.setup_dap()
+	java_lspconfig.wrap_lspconfig_setup()
+	java_lspconfig.register_class_file_decomplier()
+	java_dap.setup_dap_on_lsp_attach()
 end
 
 ----------------------------------------------------------------------

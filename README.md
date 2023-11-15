@@ -28,6 +28,24 @@ Just install and start writing `public static void main(String[] args)`.
 - Typed & documented APIs
 - No callback hells I [promise](https://github.com/pyericz/promise-lua)
 
+### APIs
+
+### DAP
+
+- `config_dap` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
+
+```lua
+require('java').dap.config_dap()
+```
+
+### Test
+
+- `run_current_test_class` - Run the test class in the active buffer
+
+```lua
+require('java').test.run_current_test_class()
+```
+
 ## How to Use
 
 ### Install the plugin
@@ -59,4 +77,5 @@ Yep! That's all :)
 ## Projects Acknowledgement
 
 [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) is a plugin that follows "Keep it simple, stupid!" approach.
-If you love customizing things by yourself, then give nvim-jdtls a try.
+If you love customizing things by yourself, then give nvim-jdtls a try. I may or may not have copied some code ;-)
+Open source is beautiful!
