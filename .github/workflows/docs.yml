@@ -27,5 +27,5 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           base: "main"
-          commit-message: "chore(doc): automated vimdoc update"
+          commit-message: "chore(doc): automatic vimdoc update"
           title: Auto vimdoc update
