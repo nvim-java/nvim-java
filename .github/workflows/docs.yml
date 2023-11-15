@@ -28,3 +28,4 @@ jobs:
         with:
           base: "main"
           commit-message: "chore(doc): automated vimdoc update"
+          title: Auto vimdoc update
