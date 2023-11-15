@@ -28,30 +28,6 @@ Just install and start writing `public static void main(String[] args)`.
 - Typed & documented APIs
 - No callback hells I [promise](https://github.com/pyericz/promise-lua)
 
-### APIs
-
-### DAP
-
-- `config_dap` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
-
-```lua
-require('java').dap.config_dap()
-```
-
-### Test
-
-- `run_current_test_class` - Run the test class in the active buffer
-
-```lua
-require('java').test.run_current_test_class()
-```
-
-- `debug_current_test_class` - Debug the test class in the active buffer
-
-```lua
-require('java').test.debug_current_test_class()
-```
-
 ## How to Use
 
 ### Install the plugin
@@ -79,6 +55,30 @@ require('lspconfig').jdtls.setup({})
 ```
 
 Yep! That's all :)
+
+## APIs
+
+### DAP
+
+- `config_dap` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
+
+```lua
+require('java').dap.config_dap()
+```
+
+### Test
+
+- `run_current_test_class` - Run the test class in the active buffer
+
+```lua
+require('java').test.run_current_test_class()
+```
+
+- `debug_current_test_class` - Debug the test class in the active buffer
+
+```lua
+require('java').test.debug_current_test_class()
+```
 
 ## Projects Acknowledgement
 
