@@ -6,6 +6,10 @@ on:
 
 name: docs
 
+permissions:
+  pull-requests: write
+  contents: write
+
 jobs:
   docs:
     runs-on: ubuntu-latest
@@ -24,3 +28,4 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           base: "main"
+          commit-message: "chore(doc): automated vimdoc update"
