@@ -1,13 +1,13 @@
 local JavaDap = require('java.dap.dapp')
 
 local log = require('java-core.utils.log')
-local state = require('java.state')
 local notify = require('java-core.utils.notify')
+local jdtls = require('java.jdtls')
 
 local M = {}
 
 ---Setup dap config & adapter on jdtls attach event
-function M.setup_dap()
+function M.setup_dap_on_lsp_attach()
 	log.info('add LspAttach event handlers to setup dap adapter & config')
 
 	vim.api.nvim_create_autocmd('LspAttach', {
@@ -20,14 +20,19 @@ end
 
 ---Runs the current test class
 function M.run_current_test_class()
-	state.java_dap:run_current_test_class()
+	return JavaDap:new(jdtls()):run_current_test_class()
 end
 
 ---Configures the dap
 function M.config_dap()
-	state.java_dap:config_dap():thenCall(function()
-		notify.info('DAP configured')
-	end)
+	return JavaDap:new(jdtls())
+		:config_dap()
+		:thenCall(function()
+			notify.info('DAP configured')
+		end)
+		:catch(function(err)
+			notify.error('Failed to configure DAP', err)
+		end)
 end
 
 ---@private
@@ -36,13 +41,9 @@ function M.on_jdtls_attach(ev)
 	local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
 	if client.name == 'jdtls' then
-		state.java_dap = JavaDap:new({
-			client = client,
-		})
-
 		log.info('setup java dap config & adapter')
 
-		state.java_dap:config_dap()
+		M.config_dap()
 	end
 end
 
