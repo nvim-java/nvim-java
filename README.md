@@ -46,6 +46,12 @@ require('java').dap.config_dap()
 require('java').test.run_current_test_class()
 ```
 
+- `debug_current_test_class` - Debug the test class in the active buffer
+
+```lua
+require('java').test.debug_current_test_class()
+```
+
 ## How to Use
 
 ### Install the plugin

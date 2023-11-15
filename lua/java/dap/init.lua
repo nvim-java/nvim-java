@@ -20,7 +20,11 @@ end
 
 ---Runs the current test class
 function M.run_current_test_class()
-	return JavaDap:new(jdtls()):run_current_test_class()
+	return JavaDap:new(jdtls()):execute_current_test_class({ noDebug = true })
+end
+
+function M.debug_current_test_class()
+	return JavaDap:new(jdtls()):execute_current_test_class()
 end
 
 ---Configures the dap

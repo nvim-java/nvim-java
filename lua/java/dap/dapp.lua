@@ -1,4 +1,5 @@
 local log = require('java-core.utils.log')
+local get_error_handler = require('java.handlers.error')
 
 local Promise = require('java-core.utils.promise')
 local JavaCoreDap = require('java-core.dap')
@@ -30,22 +31,19 @@ function M:new(args)
 	return o
 end
 
-function M:run_current_test_class()
+---Run the current test class
+---@param config? JavaTestLauncherConfigOverridable
+function M:execute_current_test_class(config)
 	log.info('running the current class')
 
 	local buffer = vim.api.nvim_get_current_buf()
 
-	self.test_helper
+	return self.test_helper
 		:get_test_class_by_buffer(buffer)
 		:thenCall(function(classes)
-			self.test_helper:run_test(classes)
+			return self.test_helper:run_test(classes, config)
 		end)
-		:catch(function(err)
-			local msg = 'failed to run the current class'
-
-			log.error(msg, err)
-			error(msg .. err)
-		end)
+		:catch(get_error_handler('failed to run current test class'))
 end
 
 function M:config_dap()
@@ -55,12 +53,10 @@ function M:config_dap()
 
 			-- setting java adapter
 			require('dap').adapters.java = function(callback)
-				self.dap_helper:get_dap_adapter():thenCall(callback):catch(function(err)
-					local msg = 'faild to set DAP adapter'
-
-					error(msg, err)
-					log.error(msg, err)
-				end)
+				self.dap_helper
+					:get_dap_adapter()
+					:thenCall(callback)
+					:catch(get_error_handler('failed to set DAP adapter'))
 			end
 
 			-- setting java config
@@ -68,15 +64,9 @@ function M:config_dap()
 		end)
 		:thenCall(function(dap_config)
 			log.debug('set dap config: ', dap_config)
-
 			require('dap').configurations.java = dap_config
 		end)
-		:catch(function(err)
-			local msg = 'faild to set DAP configuration'
-
-			log.error(msg, err)
-			error(msg .. err)
-		end)
+		:catch(get_error_handler('failed to set DAP configuration'))
 end
 
 return M
