@@ -1,0 +1,9 @@
+root = true
+
+[*.lua]
+end_of_line = lf
+charset = utf-8
+indent_style = tab
+max_line_length = 80
+tab_width = 2
+trim_trailing_whitespace = true
