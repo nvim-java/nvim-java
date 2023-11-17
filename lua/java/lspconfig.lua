@@ -1,6 +1,6 @@
 local log = require('java-core.utils.log')
 local lspconfig = require('lspconfig')
-local server = require('java-core.server')
+local server = require('java-core.ls.servers.jdtls')
 local jdtls = require('java.jdtls')
 local get_error_handler = require('java.handlers.error')
 
