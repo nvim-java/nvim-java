@@ -26,7 +26,7 @@ local function get_error_handler(msg, ...)
 
 		local log_str = table_tostring(log_obj)
 
-		log.error(table.unpack(log_obj))
+		log.error(log_str)
 		notify.error(log_str)
 		error(log_str)
 	end
