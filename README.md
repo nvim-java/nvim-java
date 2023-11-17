@@ -30,6 +30,10 @@ Just install and start writing `public static void main(String[] args)`.
 
 ## How to Use
 
+## Pre-requisites
+
+- [Python 3.9](https://www.python.org/downloads/) - for running `jdtls` wrapper launch script
+
 ### Install the plugin
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
