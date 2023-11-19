@@ -1,4 +1,4 @@
-local log = require('java-core.utils.log')
+local log = require('java.utils.log')
 
 local pkgs = {
 	{

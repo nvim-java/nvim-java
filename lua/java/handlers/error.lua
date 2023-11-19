@@ -1,5 +1,5 @@
 local notify = require('java-core.utils.notify')
-local log = require('java-core.utils.log')
+local log = require('java.utils.log')
 
 local function table_tostring(tbl)
 	local str = ''
