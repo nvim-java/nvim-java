@@ -1,4 +1,4 @@
-local log = require('java-core.utils.log')
+local log = require('java.utils.log')
 local lspconfig = require('lspconfig')
 local server = require('java-core.ls.servers.jdtls')
 local jdtls = require('java.jdtls')
@@ -10,7 +10,7 @@ local M = {}
 
 function M.wrap_lspconfig_setup()
 	log.info('wrap lspconfig.java.setup function to inject a custom java config')
-	---@type fun(config: LSPSetupConfig)
+	---@type fun(config: LspSetupConfig)
 	local org_setup = lspconfig.jdtls.setup
 
 	lspconfig.jdtls.setup = function(user_config)
@@ -26,6 +26,7 @@ function M.wrap_lspconfig_setup()
 				'build.gradle.kts',
 				'.git',
 			},
+			jdtls_plugins = { 'java-test', 'java-debug-adapter' },
 		})
 
 		config = vim.tbl_deep_extend('force', user_config, config)

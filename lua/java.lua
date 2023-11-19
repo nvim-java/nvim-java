@@ -1,6 +1,6 @@
 local deps = require('java.dependencies')
 local java_mason = require('java.mason')
-local java_dap = require('java.dap')
+local java_dap = require('java.dap.api')
 local java_lspconfig = require('java.lspconfig')
 local ts = require('java.treesitter')
 
