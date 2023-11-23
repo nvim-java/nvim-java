@@ -5,7 +5,7 @@ local M = {}
 
 local dependecies = {
 	{ name = 'jdtls', version = 'v1.29.0' },
-	{ name = 'java-test', version = '0.40.1' },
+	{ name = 'java-test', version = '0.40.2' },
 	{ name = 'java-debug-adapter', version = '0.52.0' },
 }
 
