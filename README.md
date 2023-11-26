@@ -1,4 +1,4 @@
-# nvim-java
+# :coffee: nvim-java
 
 ![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
 ![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
@@ -9,13 +9,13 @@
 No need to put up with [jdtls](https://github.com/eclipse-jdtls/eclipse.jdt.ls) nonsense anymore.
 Just install and start writing `public static void main(String[] args)`.
 
-## Features
+## :dizzy: Features
 
 - :white_check_mark: Diagnostics & Auto Completion
 - :white_check_mark: Automatic [DAP](https://github.com/mfussenegger/nvim-dap) debug configuration
 - :white_check_mark: Running tests
 
-## Why
+## :bulb: Why
 
 - Uses [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) to setup `jdtls`
 - Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
@@ -27,11 +27,11 @@ Just install and start writing `public static void main(String[] args)`.
     - `java-debug-adapter`
 - Typed & documented APIs
 
-## How to Install
+## :hammer: How to Install
 
 <details>
 
-<summary>details</summary>
+<summary>:pushpin: details</summary>
 
 **Pre-requisites**
 
@@ -65,11 +65,11 @@ Yep! That's all :)
 
 </details>
 
-## APIs
+## :computer: APIs
 
 <details>
 
-<summary>details</summary>
+<summary>:pushpin: details</summary>
 
 **DAP**
 
@@ -95,7 +95,7 @@ require('java').test.debug_current_test_class()
 
 </details>
 
-## Projects Acknowledgement
+## :bookmark_tabs: Projects Acknowledgement
 
 [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) is a plugin that follows "Keep it simple, stupid!" approach.
 If you love customizing things by yourself, then give nvim-jdtls a try. I may or may not have copied some code ;-)
