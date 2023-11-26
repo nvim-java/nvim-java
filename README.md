@@ -98,5 +98,5 @@ require('java').test.debug_current_test_class()
 ## :bookmark_tabs: Projects Acknowledgement
 
 [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) is a plugin that follows "Keep it simple, stupid!" approach.
-If you love customizing things by yourself, then give nvim-jdtls a try. I may or may not have copied some code ;-)
-Open source is beautiful!
+If you love customizing things by yourself, then give nvim-jdtls a try. I may or may not have copied some code :wink:
+Beauty of Open source!
