@@ -2,8 +2,9 @@ local deps = require('java.utils.dependencies')
 local mason = require('java.utils.mason')
 local lspconfig = require('java.utils.lspconfig')
 
-local dap = require('java.dap.api')
-local ts = require('java.treesitter')
+local test = require('java.api.test')
+local dap = require('java.api.dap')
+-- local ts = require('java.treesitter')
 
 local M = {}
 
@@ -25,8 +26,8 @@ M.dap.config_dap = dap.config_dap
 --                            Test APIs                             --
 ----------------------------------------------------------------------
 M.test = {}
-M.test.run_current_test_class = dap.run_current_test_class
-M.test.debug_current_test_class = dap.debug_current_test_class
+M.test.run_current_test_class = test.run_current_test_class
+M.test.debug_current_test_class = test.debug_current_test_class
 
 ----------------------------------------------------------------------
 --                            Manipulate                            --
@@ -35,7 +36,7 @@ M.manipulate = {}
 -- M.manipulate.organize_imports = {}
 
 function M.__run()
-	ts.find_main_method()
+	test.debug_current_method()
 end
 
 return M

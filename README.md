@@ -13,7 +13,7 @@ Just install and start writing `public static void main(String[] args)`.
 
 - :white_check_mark: Diagnostics & Auto Completion
 - :white_check_mark: Automatic [DAP](https://github.com/mfussenegger/nvim-dap) debug configuration
-- :x: Running tests
+- :white_check_mark: Running tests
 
 ## Why
 
@@ -26,9 +26,14 @@ Just install and start writing `public static void main(String[] args)`.
     - `java-test`
     - `java-debug-adapter`
 - Typed & documented APIs
-- No callback hells I [promise](https://github.com/pyericz/promise-lua)
+
+<details>
+
+<summary>
 
 ## How to Use
+
+</summary>
 
 ## Pre-requisites
 
@@ -60,7 +65,15 @@ require('lspconfig').jdtls.setup({})
 
 Yep! That's all :)
 
+</details>
+
+<details>
+
+<summary>
+
 ## APIs
+
+</summary>
 
 ### DAP
 
@@ -83,6 +96,8 @@ require('java').test.run_current_test_class()
 ```lua
 require('java').test.debug_current_test_class()
 ```
+
+</details>
 
 ## Projects Acknowledgement
 
