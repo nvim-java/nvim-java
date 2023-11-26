@@ -65,11 +65,7 @@ Yep! That's all :)
 
 <details>
 
-<summary>
-
-## APIs
-
-</summary>
+<summary><h2>APIs</h2></summary>
 
 ### DAP
 
