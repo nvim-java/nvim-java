@@ -29,7 +29,11 @@ Just install and start writing `public static void main(String[] args)`.
 
 <details>
 
-<summary>How to Use</summary>
+<summary>
+
+## How to Use
+
+</summary>
 
 ## Pre-requisites
 
@@ -65,7 +69,11 @@ Yep! That's all :)
 
 <details>
 
-<summary>APIs</summary>
+<summary>
+
+## APIs
+
+</summary>
 
 ### DAP
 
