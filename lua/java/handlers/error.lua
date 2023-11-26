@@ -12,11 +12,8 @@ end
 
 ---Returns a error handler
 ---@param msg string messages to show in the error
----@param ...? any values for place holders in the message
 ---@return fun(err: any) # function that log and notify the error
-local function get_error_handler(msg, ...)
-	msg = string.format(msg, ...)
-
+local function get_error_handler(msg)
 	return function(err)
 		local trace = debug.traceback()
 
