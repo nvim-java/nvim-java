@@ -30,7 +30,7 @@ Just install and start writing `public static void main(String[] args)`.
 <details>
 <summary><h2>How to Use</h2></summary>
 
-## Pre-requisites
+### Pre-requisites
 
 - [Python 3.9](https://www.python.org/downloads/) - for running `jdtls` wrapper launch script
 
@@ -59,6 +59,7 @@ require('lspconfig').jdtls.setup({})
 ```
 
 Yep! That's all :)
+
 </details>
 
 <details>
@@ -85,6 +86,7 @@ require('java').test.run_current_test_class()
 ```lua
 require('java').test.debug_current_test_class()
 ```
+
 </details>
 
 ## Projects Acknowledgement
