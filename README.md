@@ -29,11 +29,7 @@ Just install and start writing `public static void main(String[] args)`.
 
 <details>
 
-<summary>
-
-## How to Use
-
-</summary>
+<summary><h2>How to Use</h2></summary>
 
 ## Pre-requisites
 
