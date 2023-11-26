@@ -1,4 +1,4 @@
-# nvim-java
+# :coffee: nvim-java
 
 ![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
 ![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
@@ -9,13 +9,13 @@
 No need to put up with [jdtls](https://github.com/eclipse-jdtls/eclipse.jdt.ls) nonsense anymore.
 Just install and start writing `public static void main(String[] args)`.
 
-## Features
+## :dizzy: Features
 
 - :white_check_mark: Diagnostics & Auto Completion
 - :white_check_mark: Automatic [DAP](https://github.com/mfussenegger/nvim-dap) debug configuration
-- :x: Running tests
+- :white_check_mark: Running tests
 
-## Why
+## :bulb: Why
 
 - Uses [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) to setup `jdtls`
 - Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
@@ -26,15 +26,18 @@ Just install and start writing `public static void main(String[] args)`.
     - `java-test`
     - `java-debug-adapter`
 - Typed & documented APIs
-- No callback hells I [promise](https://github.com/pyericz/promise-lua)
 
-## How to Use
+## :hammer: How to Install
 
-## Pre-requisites
+<details>
+
+<summary>:pushpin: details</summary>
+
+**Pre-requisites**
 
 - [Python 3.9](https://www.python.org/downloads/) - for running `jdtls` wrapper launch script
 
-### Install the plugin
+**Install the plugin**
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
@@ -52,7 +55,7 @@ return {
 }
 ```
 
-### Setup JDTLS like you would usually do
+**Setup jdtls like you would usually do**
 
 ```lua
 require('lspconfig').jdtls.setup({})
@@ -60,9 +63,15 @@ require('lspconfig').jdtls.setup({})
 
 Yep! That's all :)
 
-## APIs
+</details>
 
-### DAP
+## :computer: APIs
+
+<details>
+
+<summary>:pushpin: details</summary>
+
+**DAP**
 
 - `config_dap` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
 
@@ -70,7 +79,7 @@ Yep! That's all :)
 require('java').dap.config_dap()
 ```
 
-### Test
+**Test**
 
 - `run_current_test_class` - Run the test class in the active buffer
 
@@ -84,8 +93,10 @@ require('java').test.run_current_test_class()
 require('java').test.debug_current_test_class()
 ```
 
-## Projects Acknowledgement
+</details>
+
+## :bookmark_tabs: Projects Acknowledgement
 
 [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) is a plugin that follows "Keep it simple, stupid!" approach.
-If you love customizing things by yourself, then give nvim-jdtls a try. I may or may not have copied some code ;-)
-Open source is beautiful!
+If you love customizing things by yourself, then give nvim-jdtls a try. I may or may not have copied some code :wink:
+Beauty of Open source!
