@@ -1,9 +1,9 @@
 local JavaDap = require('java.dap')
 
 local log = require('java.utils.log')
-local notify = require('java-core.utils.notify')
 local get_error_handler = require('java.handlers.error')
-local jdtls = require('java.jdtls')
+local jdtls = require('java.utils.jdtls')
+local async = require('java-core.utils.async').sync
 
 local M = {}
 
@@ -19,24 +19,36 @@ function M.setup_dap_on_lsp_attach()
 	})
 end
 
----Runs the current test class
 function M.run_current_test_class()
-	return JavaDap:new(jdtls()):execute_current_test_class({ noDebug = true })
+	log.info('run current test class')
+
+	return async(function()
+			return JavaDap:new(jdtls()):execute_current_test_class({ noDebug = true })
+		end)
+		.catch(get_error_handler('failed to run the current test class'))
+		.run()
 end
 
 function M.debug_current_test_class()
-	return JavaDap:new(jdtls()):execute_current_test_class({})
+	log.info('debug current test class')
+
+	return async(function()
+			return JavaDap:new(jdtls()):execute_current_test_class({})
+		end)
+		.catch(get_error_handler('failed to debug the current test class'))
+		.run()
 end
 
----Configures the dap
 function M.config_dap()
-	return JavaDap:new(jdtls())
-		:config_dap()
-		:catch(get_error_handler('failed to configure dap'))
+	log.info('configuring dap')
+
+	return async(function()
+			JavaDap:new(jdtls()):config_dap()
+		end)
+		.catch(get_error_handler('dap configuration failed'))
+		.run()
 end
 
----@private
----@param ev any
 function M.on_jdtls_attach(ev)
 	local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
