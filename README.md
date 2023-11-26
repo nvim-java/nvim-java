@@ -27,9 +27,11 @@ Just install and start writing `public static void main(String[] args)`.
     - `java-debug-adapter`
 - Typed & documented APIs
 
+## How to Install
+
 <details>
 
-<summary><h2>How to Use</h2></summary>
+<summary>details</summary>
 
 ### Pre-requisites
 
@@ -63,9 +65,11 @@ Yep! That's all :)
 
 </details>
 
+## APIs
+
 <details>
 
-<summary><h2>APIs</h2></summary>
+<summary>details</summary>
 
 ### DAP
 
