@@ -33,11 +33,11 @@ Just install and start writing `public static void main(String[] args)`.
 
 <summary>details</summary>
 
-### Pre-requisites
+**Pre-requisites**
 
 - [Python 3.9](https://www.python.org/downloads/) - for running `jdtls` wrapper launch script
 
-### Install the plugin
+**Install the plugin**
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
@@ -55,7 +55,7 @@ return {
 }
 ```
 
-### Setup JDTLS like you would usually do
+**Setup jdtls like you would usually do**
 
 ```lua
 require('lspconfig').jdtls.setup({})
@@ -71,7 +71,7 @@ Yep! That's all :)
 
 <summary>details</summary>
 
-### DAP
+**DAP**
 
 - `config_dap` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
 
@@ -79,7 +79,7 @@ Yep! That's all :)
 require('java').dap.config_dap()
 ```
 
-### Test
+**Test**
 
 - `run_current_test_class` - Run the test class in the active buffer
 
