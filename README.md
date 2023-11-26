@@ -28,7 +28,6 @@ Just install and start writing `public static void main(String[] args)`.
 - Typed & documented APIs
 
 <details>
-
 <summary><h2>How to Use</h2></summary>
 
 ## Pre-requisites
@@ -60,11 +59,9 @@ require('lspconfig').jdtls.setup({})
 ```
 
 Yep! That's all :)
-
 </details>
 
 <details>
-
 <summary><h2>APIs</h2></summary>
 
 ### DAP
@@ -88,7 +85,6 @@ require('java').test.run_current_test_class()
 ```lua
 require('java').test.debug_current_test_class()
 ```
-
 </details>
 
 ## Projects Acknowledgement
