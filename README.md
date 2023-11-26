@@ -28,6 +28,7 @@ Just install and start writing `public static void main(String[] args)`.
 - Typed & documented APIs
 
 <details>
+
 <summary><h2>How to Use</h2></summary>
 
 ### Pre-requisites
@@ -63,6 +64,7 @@ Yep! That's all :)
 </details>
 
 <details>
+
 <summary><h2>APIs</h2></summary>
 
 ### DAP
