@@ -7,11 +7,13 @@ local notify = require('java-core.utils.notify')
 local JavaCoreDap = require('java-core.dap')
 local JavaCoreTestApi = require('java-core.api.test')
 local JavaCoreTestClient = require('java-core.ls.clients.java-test-client')
+local JavaCoreDapRunner = require('java-core.dap.runner')
+local JavaTestTestReporter = require('java-test.reports.junit')
 
 ---@class JavaDap
 ---@field private client LspClient
 ---@field private dap JavaCoreDap
----@field private test_api JavaCoreTestApi
+---@field private test_api java_core.TestApi
 ---@field private test_client java_core.TestClient
 local M = {}
 
@@ -24,6 +26,9 @@ function M:new(args)
 
 	o.test_api = JavaCoreTestApi:new({
 		client = args.client,
+		runner = JavaCoreDapRunner:new({
+			reporter = JavaTestTestReporter(),
+		}),
 	})
 
 	o.test_client = JavaCoreTestClient:new({
