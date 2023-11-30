@@ -26,8 +26,13 @@ M.dap.config_dap = dap.config_dap
 --                            Test APIs                             --
 ----------------------------------------------------------------------
 M.test = {}
-M.test.run_current_test_class = test.run_current_test_class
-M.test.debug_current_test_class = test.debug_current_test_class
+M.test.run_current_class = test.run_current_class
+M.test.debug_current_class = test.debug_current_class
+
+M.test.run_current_method = test.run_current_method
+M.test.debug_current_method = test.debug_current_method
+
+M.test.view_report = test.view_report
 
 ----------------------------------------------------------------------
 --                            Manipulate                            --
