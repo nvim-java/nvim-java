@@ -9,6 +9,10 @@
 No need to put up with [jdtls](https://github.com/eclipse-jdtls/eclipse.jdt.ls) nonsense anymore.
 Just install and start writing `public static void main(String[] args)`.
 
+> [!WARNING]
+> This is a WIP but we are so close to v1.0.0. So it could be rough around the edges and documents might not be up to date.
+> You can check the progress we are making here https://github.com/orgs/nvim-java/projects/1/views/2.
+
 ## :dizzy: Features
 
 - :white_check_mark: Diagnostics & Auto Completion
@@ -33,11 +37,12 @@ Just install and start writing `public static void main(String[] args)`.
 
 <summary>:pushpin: details</summary>
 
-**Pre-requisites**
+- Pre-requisites
+  - [JDK 17](https://jdk.java.net/archive/) - jdtls is running on JDK 17
+  - [Python 3.9](https://www.python.org/downloads/) - for running `jdtls` wrapper launch script
+  - [Node 16](https://nodejs.org/dist/v16.9.1/) - for building `vscode-java-test`
 
-- [Python 3.9](https://www.python.org/downloads/) - for running `jdtls` wrapper launch script
-
-**Install the plugin**
+- Install the plugin
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
@@ -45,17 +50,30 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 return {
   'nvim-java/nvim-java',
   dependencies = {
+    'nvim-java/lua-async-await',
     'nvim-java/nvim-java-core',
+    'nvim-java/nvim-java-test',
+    'MunifTanjim/nui.nvim',
     'neovim/nvim-lspconfig',
-    'williamboman/mason.nvim',
     'mfussenegger/nvim-dap',
+    {
+      'williamboman/mason.nvim',
+      opts = {
+        registries = {
+          'github:nvim-java/nvim-java-mason-registry',
+          'github:mason-org/mason-registry',
+        },
+      },
+    }
   },
   event = 'VeryLazy',
   opts = {},
 }
 ```
 
-**Setup jdtls like you would usually do**
+- Make sure to run `MasonUpdate`
+
+- Setup jdtls like you would usually do
 
 ```lua
 require('lspconfig').jdtls.setup({})
