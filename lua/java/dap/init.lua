@@ -1,17 +1,19 @@
 local log = require('java.utils.log')
-local async = require('java-core.utils.async').sync
 local buf_util = require('java.utils.buffer')
 local win_util = require('java.utils.window')
+
+local async = require('java-core.utils.async').sync
 local notify = require('java-core.utils.notify')
 
 local JavaCoreDap = require('java-core.dap')
 local JavaCoreTestApi = require('java-core.api.test')
 local JavaCoreTestClient = require('java-core.ls.clients.java-test-client')
+local JavaCoreDapRunner = require('java-core.dap.runner')
 
 ---@class JavaDap
 ---@field private client LspClient
 ---@field private dap JavaCoreDap
----@field private test_api JavaCoreTestApi
+---@field private test_api java_core.TestApi
 ---@field private test_client java_core.TestClient
 local M = {}
 
@@ -24,6 +26,7 @@ function M:new(args)
 
 	o.test_api = JavaCoreTestApi:new({
 		client = args.client,
+		runner = JavaCoreDapRunner:new(),
 	})
 
 	o.test_client = JavaCoreTestClient:new({
@@ -40,14 +43,19 @@ function M:new(args)
 end
 
 ---Run the current test class
+---@param report java_test.JUnitTestReport
 ---@param config JavaCoreDapLauncherConfigOverridable
-function M:execute_current_test_class(config)
+function M:execute_current_test_class(report, config)
 	log.debug('running the current class')
 
-	return self.test_api:run_class_by_buffer(buf_util.get_curr_buf(), config)
+	return self.test_api:run_class_by_buffer(
+		buf_util.get_curr_buf(),
+		report,
+		config
+	)
 end
 
-function M:execute_current_test_method(config)
+function M:execute_current_test_method(report, config)
 	log.debug('running the current method')
 
 	local method = self:find_current_test_method()
@@ -57,7 +65,7 @@ function M:execute_current_test_method(config)
 		return
 	end
 
-	self.test_api:run_test({ method }, config)
+	self.test_api:run_test({ method }, report, config)
 end
 
 function M:find_current_test_method()

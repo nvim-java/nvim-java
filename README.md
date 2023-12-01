@@ -99,16 +99,34 @@ require('java').dap.config_dap()
 
 **Test**
 
-- `run_current_test_class` - Run the test class in the active buffer
+- `run_current_class` - Run the test class in the active buffer
 
 ```lua
-require('java').test.run_current_test_class()
+require('java').test.run_current_class()
 ```
 
-- `debug_current_test_class` - Debug the test class in the active buffer
+- `debug_current_class` - Debug the test class in the active buffer
 
 ```lua
-require('java').test.debug_current_test_class()
+require('java').test.debug_current_class()
+```
+
+- `run_current_method` - Run the test method on the cursor
+
+```lua
+require('java').test.run_current_method()
+```
+
+- `debug_current_method` - Debug the test method on the cursor
+
+```lua
+require('java').test.debug_current_method()
+```
+
+- `view_report` - Open the last test report in a popup window
+
+```lua
+require('java').test.view_report()
 ```
 
 </details>
