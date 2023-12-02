@@ -5,16 +5,17 @@ local win_util = require('java.utils.window')
 local async = require('java-core.utils.async').sync
 local notify = require('java-core.utils.notify')
 
-local JavaCoreDap = require('java-core.dap')
+local DapSetup = require('java-dap.api.setup')
+local DapRunner = require('java-dap.api.runner')
+
 local JavaCoreTestApi = require('java-core.api.test')
 local JavaCoreTestClient = require('java-core.ls.clients.java-test-client')
-local JavaCoreDapRunner = require('java-core.dap.runner')
 
 ---@class JavaDap
 ---@field private client LspClient
 ---@field private dap JavaCoreDap
 ---@field private test_api java_core.TestApi
----@field private test_client java_core.TestClient
+---@field private test_client java-core.TestClient
 local M = {}
 
 ---@param args { client: LspClient }
@@ -26,16 +27,10 @@ function M:new(args)
 
 	o.test_api = JavaCoreTestApi:new({
 		client = args.client,
-		runner = JavaCoreDapRunner:new(),
+		runner = DapRunner(),
 	})
 
-	o.test_client = JavaCoreTestClient:new({
-		client = args.client,
-	})
-
-	o.dap = JavaCoreDap:new({
-		client = args.client,
-	})
+	o.dap = DapSetup(args.client)
 
 	setmetatable(o, self)
 	self.__index = self
