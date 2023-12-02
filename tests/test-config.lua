@@ -1,16 +1,25 @@
-local java_core_path = vim.fn.expand('~/Workspace/nvim-java-core')
-local java_test_path = vim.fn.expand('~/Workspace/nvim-java-test')
+---@diagnostic disable: assign-type-mismatch
+---@param dev_path string
+---@param plug_path string
+---@return string|nil
+local function local_plug(dev_path, plug_path)
+	return (vim.fn.isdirectory(dev_path) == 1) and dev_path or plug_path
+end
 
 local plug_path = './.test_plugins'
-
-java_core_path = (vim.fn.isdirectory(java_core_path) == 1) and java_core_path
-	or (plug_path .. '/nvim-java-core')
-
-java_test_path = (vim.fn.isdirectory(java_test_path) == 1) and java_test_path
-	or (plug_path .. '/nvim-java-test')
 
 vim.opt.rtp:append(plug_path .. '/plenary.nvim')
 vim.opt.rtp:append(plug_path .. '/nvim-lspconfig')
 vim.opt.rtp:append(plug_path .. '/mason.nvim')
-vim.opt.rtp:append(java_core_path)
-vim.opt.rtp:append(java_test_path)
+
+vim.opt.rtp:append(
+	local_plug('~/Workspace/nvim-java-core', plug_path .. '/nvim-java-core')
+)
+
+vim.opt.rtp:append(
+	local_plug('~/Workspace/nvim-java-test', plug_path .. '/nvim-java-test')
+)
+
+vim.opt.rtp:append(
+	local_plug('~/Workspace/nvim-java-dap', plug_path .. '/nvim-java-dap')
+)

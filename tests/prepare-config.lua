@@ -1,5 +1,12 @@
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
+---@diagnostic disable: assign-type-mismatch
+---@param path string
+---@return string|nil
+local function local_plug(path)
+	return vim.fn.isdirectory(path) == 1 and path or nil
+end
+
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
 		'git',
@@ -14,8 +21,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local temp_path = './.test_plugins'
-local java_core_path = vim.fn.expand('~/Workspace/nvim-java-core')
-local java_test_path = vim.fn.expand('~/Workspace/nvim-java-test')
 
 require('lazy').setup({
 	{
@@ -25,13 +30,19 @@ require('lazy').setup({
 	{
 		'nvim-java/nvim-java-test',
 		---@diagnostic disable-next-line: assign-type-mismatch
-		dir = vim.fn.isdirectory(java_test_path) == 1 and java_test_path or nil,
+		dir = local_plug('~/Workspace/nvim-java-test'),
 		lazy = false,
 	},
 	{
 		'nvim-java/nvim-java-core',
 		---@diagnostic disable-next-line: assign-type-mismatch
-		dir = vim.fn.isdirectory(java_core_path) == 1 and java_core_path or nil,
+		dir = local_plug('~/Workspace/nvim-java-core'),
+		lazy = false,
+	},
+	{
+		'nvim-java/nvim-java-dap',
+		---@diagnostic disable-next-line: assign-type-mismatch
+		dir = local_plug('~/Workspace/nvim-java-dap'),
 		lazy = false,
 	},
 	{
