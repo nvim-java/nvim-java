@@ -29,7 +29,7 @@ function M.wrap_lspconfig_setup()
 				'build.gradle.kts',
 				'.git',
 			},
-			jdtls_plugins = { 'java-test', 'java-debug-adapter' },
+			jdtls_plugins = { 'java-test', 'java-debug-adapter', 'sts4' },
 		})
 
 		config = vim.tbl_deep_extend('force', user_config, config)
