@@ -25,6 +25,7 @@ function M.check()
 	M.neovim_plugin_check()
 end
 
+---@private
 function M.neovim_plugin_check()
 	for _, pkg in ipairs(pkgs) do
 		local ok, _ = pcall(require, pkg.name)

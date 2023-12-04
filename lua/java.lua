@@ -1,18 +1,24 @@
-local deps = require('java.utils.dependencies')
-local mason = require('java.utils.mason')
-local lspconfig = require('java.utils.lspconfig')
+local decomple_watch = require('java.startup.decompile-watcher')
+local mason_dep = require('java.startup.mason-dep')
+local nvim_dep = require('java.startup.nvim-dep')
+local setup_wrap = require('java.startup.lspconfig-setup-wrap')
 
 local test = require('java.api.test')
 local dap = require('java.api.dap')
--- local ts = require('java.treesitter')
+
+local global_config = require('java.config')
 
 local M = {}
 
-function M.setup()
-	deps.check()
-	mason.install_dependencies()
-	lspconfig.wrap_lspconfig_setup()
-	lspconfig.register_class_file_decomplier()
+function M.setup(custom_config)
+	local config = vim.tbl_deep_extend('force', global_config, custom_config)
+
+	nvim_dep.check()
+	mason_dep.install(config)
+
+	setup_wrap.setup(config)
+	decomple_watch.setup()
+
 	dap.setup_dap_on_lsp_attach()
 end
 

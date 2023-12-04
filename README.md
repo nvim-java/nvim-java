@@ -23,7 +23,7 @@ Just install and start writing `public static void main(String[] args)`.
 
 - Uses [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) to setup `jdtls`
 - Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
-- Everything necessary will be installed automatically (except JDKs)
+- Everything necessary will be installed automatically
 - Uses `jdtls` and auto loads `jdtls` plugins from [mason.nvim](https://github.com/williamboman/mason.nvim)
   - Supported plugins are,
     - `lombok`
@@ -38,9 +38,8 @@ Just install and start writing `public static void main(String[] args)`.
 <summary>:pushpin: details</summary>
 
 - Pre-requisites
-  - [JDK 17](https://jdk.java.net/archive/) - jdtls is running on JDK 17
+
   - [Python 3.9](https://www.python.org/downloads/) - for running `jdtls` wrapper launch script
-  - [Node 16](https://nodejs.org/dist/v16.9.1/) - for building `vscode-java-test`
 
 - Install the plugin
 
