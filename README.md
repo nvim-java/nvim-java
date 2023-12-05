@@ -37,10 +37,6 @@ Just install and start writing `public static void main(String[] args)`.
 
 <summary>:pushpin: details</summary>
 
-- Pre-requisites
-
-  - [Python 3.9](https://www.python.org/downloads/) - for running `jdtls` wrapper launch script
-
 - Install the plugin
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
@@ -69,8 +65,6 @@ return {
   opts = {},
 }
 ```
-
-- Make sure to run `MasonUpdate`
 
 - Setup jdtls like you would usually do
 
