@@ -14,12 +14,14 @@ function M.setup(custom_config)
 	local config = vim.tbl_deep_extend('force', global_config, custom_config)
 
 	nvim_dep.check()
-	mason_dep.install(config)
 
-	setup_wrap.setup(config)
-	decomple_watch.setup()
+	local is_installing = mason_dep.install(config)
 
-	dap.setup_dap_on_lsp_attach()
+	if not is_installing then
+		setup_wrap.setup(config)
+		decomple_watch.setup()
+		dap.setup_dap_on_lsp_attach()
+	end
 end
 
 ----------------------------------------------------------------------
