@@ -40,7 +40,7 @@ M.test.debug_current_class = test.debug_current_class
 M.test.run_current_method = test.run_current_method
 M.test.debug_current_method = test.debug_current_method
 
-M.test.view_report = test.view_report
+M.test.view_last_report = test.view_last_report
 
 ----------------------------------------------------------------------
 --                            Manipulate                            --
