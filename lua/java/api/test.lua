@@ -59,7 +59,7 @@ function M.run_current_method()
 		.run()
 end
 
-function M.view_report()
+function M.view_last_report()
 	if M.last_report then
 		M.last_report:show_report()
 	end

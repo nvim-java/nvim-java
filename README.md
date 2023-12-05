@@ -82,6 +82,21 @@ Yep! That's all :)
 
 </details>
 
+## :keyboard: Commands
+
+<details>
+
+<summary>:pushpin: details</summary>
+
+- `JavaDapConfig` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
+- `JavaTestRunCurrentClass` - Run the test class in the active buffer
+- `JavaTestDebugCurrentClass` - Debug the test class in the active buffer
+- `JavaTestRunCurrentMethod` - Run the test method on the cursor
+- `JavaTestDebugCurrentMethod` - Debug the test method on the cursor
+- `JavaTestViewLastReport` - Open the last test report in a popup window
+
+</details>
+
 ## :computer: APIs
 
 <details>
@@ -125,7 +140,7 @@ require('java').test.debug_current_method()
 - `view_report` - Open the last test report in a popup window
 
 ```lua
-require('java').test.view_report()
+require('java').test.view_last_report()
 ```
 
 </details>
