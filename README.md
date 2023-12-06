@@ -139,6 +139,65 @@ require('java').test.view_last_report()
 
 </details>
 
+## :golf: Architecture
+
+<details>
+
+<summary>:pushpin: details</summary>
+
+Following is the high level idea. Jdtls is the language server nvim-java communicates with. However,
+we don't have all the features we need just in Jdtls. So, we are loading java-test & java-debug-adapter extensions
+when we launch Jdtls. Once the language server is started, we communicate with the language server to do stuff.
+
+For instance, to run the current test,
+
+- Request Jdtls for test classes
+- Request Jdtls for class paths, module paths, java executable
+- Request Jdtls to start a debug session and send the port of the session back
+- Prepare TCP connections to listen to the test results
+- Start nvim-dap and let user interactions to be handled by nvim-dap
+- Parse the test results as they come in
+- Once the execution is done, open a window show the test results
+
+```
+  ┌────────────┐                         ┌────────────┐
+  │            │                         │            │
+  │   Neovim   │                         │   VSCode   │
+  │            │                         │            │
+  └─────▲──────┘                         └──────▲─────┘
+        │                                       │
+        │                                       │
+        │                                       │
+        │                                       │
+┌───────▼───────┐                ┌──────────────▼──────────────┐
+│               │                │                             │
+│   nvim-java   │                │   Extension Pack for Java   │
+│               │                │                             │
+└───────▲───────┘                └──────────────▲──────────────┘
+        │                                       │
+        │                                       │
+        │                                       │
+        │                                       │
+        │                                       │
+        │              ┌───────────┐            │
+        │              │           │            │
+        └──────────────►   JDTLS   ◄────────────┘
+                       │           │
+                       └───▲───▲───┘
+                           │   │
+                           │   │
+                           │   │
+                           │   │
+                           │   │
+  ┌───────────────┐        │   │         ┌────────────────────────┐
+  │               │        │   │         │                        │
+  │   java-test   ◄────────┘   └─────────►   java-debug-adapter   │
+  │               │                      │                        │
+  └───────────────┘                      └────────────────────────┘
+```
+
+</details>
+
 ## :bookmark_tabs: Projects Acknowledgement
 
 [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) is a plugin that follows "Keep it simple, stupid!" approach.
