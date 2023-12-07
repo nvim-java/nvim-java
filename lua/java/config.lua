@@ -24,7 +24,7 @@ local config = {
 		enable = true,
 	},
 	jdk = {
-		auto_install = false,
+		auto_install = true,
 	},
 }
 
