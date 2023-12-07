@@ -3,6 +3,7 @@ local mason_ui = require('mason.ui')
 local mason_util = require('java.utils.mason')
 local notify = require('java-core.utils.notify')
 local async = require('java-core.utils.async')
+local lazy = require('java.ui.lazy')
 local sync = async.sync
 
 local M = {}
@@ -29,6 +30,10 @@ end
 
 function M.refresh_and_install(packages)
 	vim.schedule(function()
+		-- lazy covers mason
+		-- https://github.com/nvim-java/nvim-java/issues/51
+		lazy.close_lazy_if_opened()
+
 		mason_ui.open()
 		notify.warn('Please close and re-open after dependecies are installed')
 	end)
