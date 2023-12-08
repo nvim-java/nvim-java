@@ -65,7 +65,7 @@ return {
 }
 ```
 
-- Setup nvim-java before `lspconfig` and `mason-lspconfig`
+- Setup nvim-java before `lspconfig`
 
 ```lua
 require('java').setup()
