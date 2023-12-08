@@ -4,6 +4,7 @@ local log = require('java.utils.log')
 local get_error_handler = require('java.handlers.error')
 local jdtls = require('java.utils.jdtls')
 local async = require('java-core.utils.async').sync
+local notify = require('java-core.utils.notify')
 
 local M = {}
 
@@ -23,7 +24,9 @@ function M.config_dap()
 	log.info('configuring dap')
 
 	return async(function()
+			notify.warn('Configuring DAP')
 			JavaDap:new(jdtls()):config_dap()
+			notify.info('DAP configured')
 		end)
 		.catch(get_error_handler('dap configuration failed'))
 		.run()
