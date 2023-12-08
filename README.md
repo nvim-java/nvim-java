@@ -62,9 +62,13 @@ return {
       },
     }
   },
-  event = 'VeryLazy',
-  opts = {},
 }
+```
+
+- Setup nvim-java before `lspconfig`
+
+```lua
+require('java').setup()
 ```
 
 - Setup jdtls like you would usually do
