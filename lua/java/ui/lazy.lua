@@ -7,6 +7,10 @@ function M.close_lazy_if_opened()
 		return
 	end
 
+	if not view.view or not view.view.hide then
+		return
+	end
+
 	view.view:hide()
 end
 
