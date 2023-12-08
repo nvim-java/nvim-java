@@ -13,6 +13,10 @@ Just install and start writing `public static void main(String[] args)`.
 > This is a WIP but we are so close to v1.0.0. So it could be rough around the edges and documents might not be up to date.
 > You can check the progress we are making here https://github.com/orgs/nvim-java/projects/1/views/2.
 
+## :loudspeaker: Demo
+
+https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d5c2e15647bc
+
 ## :dizzy: Features
 
 - :white_check_mark: Diagnostics & Auto Completion
@@ -35,7 +39,7 @@ Just install and start writing `public static void main(String[] args)`.
 
 <details>
 
-<summary>:pushpin: details</summary>
+<summary>:orange_circle: details</summary>
 
 - Install the plugin
 
@@ -85,7 +89,7 @@ Yep! That's all :)
 
 <details>
 
-<summary>:pushpin: details</summary>
+<summary>:orange_circle: details</summary>
 
 - `JavaDapConfig` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
 - `JavaTestRunCurrentClass` - Run the test class in the active buffer
@@ -100,7 +104,7 @@ Yep! That's all :)
 
 <details>
 
-<summary>:pushpin: details</summary>
+<summary>:orange_circle: details</summary>
 
 **DAP**
 
@@ -148,7 +152,7 @@ require('java').test.view_last_report()
 
 <details>
 
-<summary>:pushpin: details</summary>
+<summary>:orange_circle: details</summary>
 
 Following is the high level idea. Jdtls is the language server nvim-java communicates with. However,
 we don't have all the features we need just in Jdtls. So, we are loading java-test & java-debug-adapter extensions
