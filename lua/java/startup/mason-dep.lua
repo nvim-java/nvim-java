@@ -44,7 +44,7 @@ end
 
 function M.get_pkg_list(config)
 	local dependecies = {
-		{ name = 'jdtls', version = 'v1.29.0' },
+		{ name = 'jdtls', version = 'v1.30.1' },
 		{ name = 'java-test', version = '0.40.1' },
 		{ name = 'java-debug-adapter', version = '0.52.0' },
 	}
