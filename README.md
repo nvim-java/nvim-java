@@ -39,7 +39,7 @@ https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d
 
 <details>
 
-<summary>:orange_circle: details</summary>
+<summary>:small_orange_diamond:details</summary>
 
 - Install the plugin
 
@@ -89,7 +89,7 @@ Yep! That's all :)
 
 <details>
 
-<summary>:orange_circle: details</summary>
+<summary>:small_orange_diamond:details</summary>
 
 - `JavaDapConfig` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
 - `JavaTestRunCurrentClass` - Run the test class in the active buffer
@@ -104,7 +104,7 @@ Yep! That's all :)
 
 <details>
 
-<summary>:orange_circle: details</summary>
+<summary>:small_orange_diamond:details</summary>
 
 **DAP**
 
@@ -148,11 +148,61 @@ require('java').test.view_last_report()
 
 </details>
 
+## :clamp: How to Use JDK X.X Version?
+<details>
+  
+<summary>:small_orange_diamond:details</summary>
+
+**Method 1:**
+
+[Neoconf](https://github.com/folke/neoconf.nvim) can be used to manage LSP setting including jdtls. Neoconf allows
+global configuration as well as project vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
+
+```json
+{
+  "lspconfig": {
+    "jdtls": {
+      "java.configuration.runtimes": [
+        {
+          "name": "JavaSE-21",
+          "path": "/opt/jdk-21",
+          "default": true
+        }
+      ]
+    },
+  }
+}
+```
+
+**Method 2:**
+
+Pass the settings to Jdtls setup.
+
+```lua
+require('lspconfig').jdtls.setup({
+  settings = {
+    java = {
+      configuration = {
+        runtimes = {
+          {
+            name = "JavaSE-21",
+            path = "/opt/jdk-21",
+            default = true,
+          }
+        }
+      }
+    }
+  }
+})
+```
+
+</details>
+
 ## :golf: Architecture
 
 <details>
 
-<summary>:orange_circle: details</summary>
+<summary>:small_orange_diamond:details</summary>
 
 Following is the high level idea. Jdtls is the language server nvim-java communicates with. However,
 we don't have all the features we need just in Jdtls. So, we are loading java-test & java-debug-adapter extensions
