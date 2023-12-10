@@ -1,41 +1,28 @@
-name: Github Release
+name: Release
 
 on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  contents: write
 
 jobs:
-  style:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: JohnnyMorganz/stylua-action@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          version: latest
-          # CLI arguments
-          args: --check .
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: lunarmodules/luacheck@v1
   release:
     name: release
-
     if: ${{ github.ref == 'refs/heads/main' }}
-    needs:
-      - style
-      - lint
+    # needs:
+    #   - style
+    #   - lint
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
-        id: release
         with:
-          # token: ${{ secrets.RELEASE_TOKEN }}
           release-type: simple
-          # package-name: nvim-window-picker
+          package-name: nvim-testing
       # - uses: actions/checkout@v3
       # - uses: rickstaa/action-create-tag@v1
       #   if: ${{ steps.release.outputs.release_created }}
