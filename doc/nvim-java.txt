@@ -1,4 +1,4 @@
-*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2023 December 08
+*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2023 December 10
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -10,6 +10,7 @@ Table of Contents                                *nvim-java-table-of-contents*
   - How to Install                                  |nvim-java-how-to-install|
   - Commands                                              |nvim-java-commands|
   - APIs                                                      |nvim-java-apis|
+  - How to Use JDK X.X Version?        |nvim-java-how-to-use-jdk-x.x-version?|
   - Architecture                                      |nvim-java-architecture|
   - Projects Acknowledgement              |nvim-java-projects-acknowledgement|
 
@@ -56,7 +57,7 @@ WHY                                                            *nvim-java-why*
 
 HOW TO INSTALL                                      *nvim-java-how-to-install*
 
-details ~
+:small_orange_diamond:details ~
 
 - Install the plugin
 
@@ -103,7 +104,7 @@ Yep! That’s all :)
 
 COMMANDS                                                  *nvim-java-commands*
 
-details ~
+:small_orange_diamond:details ~
 
 - `JavaDapConfig` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
 - `JavaTestRunCurrentClass` - Run the test class in the active buffer
@@ -115,7 +116,7 @@ details ~
 
 APIS                                                          *nvim-java-apis*
 
-details ~
+:small_orange_diamond:details ~
 
 **DAP**
 
@@ -158,9 +159,58 @@ details ~
 <
 
 
+HOW TO USE JDK X.X VERSION?            *nvim-java-how-to-use-jdk-x.x-version?*
+
+:small_orange_diamond:details ~
+
+**Method 1:**
+
+Neoconf <https://github.com/folke/neoconf.nvim> can be used to manage LSP
+setting including jdtls. Neoconf allows global configuration as well as project
+vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
+
+>json
+    {
+      "lspconfig": {
+        "jdtls": {
+          "java.configuration.runtimes": [
+            {
+              "name": "JavaSE-21",
+              "path": "/opt/jdk-21",
+              "default": true
+            }
+          ]
+        },
+      }
+    }
+<
+
+**Method 2:**
+
+Pass the settings to Jdtls setup.
+
+>lua
+    require('lspconfig').jdtls.setup({
+      settings = {
+        java = {
+          configuration = {
+            runtimes = {
+              {
+                name = "JavaSE-21",
+                path = "/opt/jdk-21",
+                default = true,
+              }
+            }
+          }
+        }
+      }
+    })
+<
+
+
 ARCHITECTURE                                          *nvim-java-architecture*
 
-details ~
+:small_orange_diamond:details ~
 
 Following is the high level idea. Jdtls is the language server nvim-java
 communicates with. However, we don’t have all the features we need just in
