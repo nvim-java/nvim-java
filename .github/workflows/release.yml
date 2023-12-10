@@ -1,14 +1,46 @@
-name: "release"
+name: Github Release
+
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [main]
+  pull_request:
+
 jobs:
-  luarocks-upload:
-    runs-on: ubuntu-22.04
+  style:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: LuaRocks Upload
-        uses: nvim-neorocks/luarocks-tag-release@v4
-        env:
-          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+      - uses: JohnnyMorganz/stylua-action@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: latest
+          # CLI arguments
+          args: --check .
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: lunarmodules/luacheck@v1
+  release:
+    name: release
+
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs:
+      - style
+      - lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          # token: ${{ secrets.RELEASE_TOKEN }}
+          release-type: simple
+          # package-name: nvim-window-picker
+      # - uses: actions/checkout@v3
+      # - uses: rickstaa/action-create-tag@v1
+      #   if: ${{ steps.release.outputs.release_created }}
+      #   with:
+      #     tag: stable
+      #     message: "Current stable release: ${{ steps.release.outputs.tag_name }}"
+      #     tag_exists_error: false
+      #     force_push_tag: true
