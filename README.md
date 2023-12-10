@@ -1,17 +1,12 @@
 # :coffee: nvim-java
 
-![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
-![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
 ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
+![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
+![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
 
-No need to put up with [jdtls](https://github.com/eclipse-jdtls/eclipse.jdt.ls) nonsense anymore.
 Just install and start writing `public static void main(String[] args)`.
-
-> [!WARNING]
-> This is a WIP but we are so close to v1.0.0. So it could be rough around the edges and documents might not be up to date.
-> You can check the progress we are making here https://github.com/orgs/nvim-java/projects/1/views/2.
 
 ## :loudspeaker: Demo
 
@@ -25,15 +20,14 @@ https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d
 
 ## :bulb: Why
 
+- Everything necessary will be installed automatically
 - Uses [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) to setup `jdtls`
 - Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
-- Everything necessary will be installed automatically
-- Uses `jdtls` and auto loads `jdtls` plugins from [mason.nvim](https://github.com/williamboman/mason.nvim)
+- Auto loads necessary `jdtls` plugins
   - Supported plugins are,
     - `lombok`
     - `java-test`
     - `java-debug-adapter`
-- Typed & documented APIs
 
 ## :hammer: How to Install
 
