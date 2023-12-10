@@ -9,7 +9,6 @@ local DapSetup = require('java-dap.api.setup')
 local DapRunner = require('java-dap.api.runner')
 
 local JavaCoreTestApi = require('java-core.api.test')
-local JavaCoreTestClient = require('java-core.ls.clients.java-test-client')
 
 ---@class JavaDap
 ---@field private client LspClient
