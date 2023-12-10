@@ -14,6 +14,7 @@ local cmd_map = {
 	JavaTestDebugCurrentMethod = { java.test.debug_current_method },
 
 	JavaTestViewLastReport = { java.test.view_last_report },
+	JavaSettingsChangeRuntime = { java.settings.change_runtime },
 }
 
 for cmd, details in pairs(cmd_map) do

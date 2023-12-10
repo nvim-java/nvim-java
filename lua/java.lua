@@ -5,6 +5,7 @@ local setup_wrap = require('java.startup.lspconfig-setup-wrap')
 
 local test = require('java.api.test')
 local dap = require('java.api.dap')
+local settings = require('java.api.settings')
 
 local global_config = require('java.config')
 
@@ -44,13 +45,19 @@ M.test.debug_current_method = test.debug_current_method
 M.test.view_last_report = test.view_last_report
 
 ----------------------------------------------------------------------
+--                             Settings                             --
+----------------------------------------------------------------------
+M.settings = {}
+M.settings.change_runtime = settings.change_runtime
+
+----------------------------------------------------------------------
 --                            Manipulate                            --
 ----------------------------------------------------------------------
 M.manipulate = {}
 -- M.manipulate.organize_imports = {}
 
 function M.__run()
-	test.debug_current_method()
+	require('java.api.settings').change_runtime()
 end
 
 return M

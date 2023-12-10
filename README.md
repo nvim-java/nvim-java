@@ -97,6 +97,7 @@ Yep! That's all :)
 - `JavaTestRunCurrentMethod` - Run the test method on the cursor
 - `JavaTestDebugCurrentMethod` - Debug the test method on the cursor
 - `JavaTestViewLastReport` - Open the last test report in a popup window
+- `JavaSettingsChangeRuntime` - Change the current runtime
 
 </details>
 
@@ -144,6 +145,14 @@ require('java').test.debug_current_method()
 
 ```lua
 require('java').test.view_last_report()
+```
+
+**Settings**
+
+- `change_runtime` - Changes the current runtime
+
+```lua
+require('java').settings.change_runtime()
 ```
 
 </details>
