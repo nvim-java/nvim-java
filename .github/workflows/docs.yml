@@ -18,7 +18,7 @@ jobs:
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
-          vimdoc: "nvim-java-core"
+          vimdoc: "nvim-java"
           dedupsubheadings: false
           version: "Neovim >= 0.9.4"
           demojify: true

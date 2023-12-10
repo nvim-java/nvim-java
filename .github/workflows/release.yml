@@ -14,20 +14,8 @@ jobs:
   release:
     name: release
     if: ${{ github.ref == 'refs/heads/main' }}
-    # needs:
-    #   - style
-    #   - lint
     runs-on: ubuntu-latest
     steps:
       - uses: google-github-actions/release-please-action@v3
         with:
           release-type: simple
-          package-name: nvim-testing
-      # - uses: actions/checkout@v3
-      # - uses: rickstaa/action-create-tag@v1
-      #   if: ${{ steps.release.outputs.release_created }}
-      #   with:
-      #     tag: stable
-      #     message: "Current stable release: ${{ steps.release.outputs.tag_name }}"
-      #     tag_exists_error: false
-      #     force_push_tag: true
