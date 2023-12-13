@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/nvim-java/nvim-java/compare/v1.0.0...v1.0.1) (2023-12-13)
+
+
+### Bug Fixes
+
+* goto definition error out due to buffer is not modifiable ([#74](https://github.com/nvim-java/nvim-java/issues/74)) ([d1233cc](https://github.com/nvim-java/nvim-java/commit/d1233ccc101866bcbea394c51b7c0780bf98bb9d))
+
 ## 1.0.0 (2023-12-10)
 
 
