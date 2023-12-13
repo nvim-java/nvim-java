@@ -35,6 +35,11 @@ https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d
 
 <summary>:small_orange_diamond:details</summary>
 
+### Distributions:
+- [Lazyvim](https://github.com/nvim-java/nvim-java/wiki/Lazyvim)
+
+### Custom:
+
 - Install the plugin
 
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
@@ -143,11 +148,12 @@ require('java').test.view_last_report()
 </details>
 
 ## :clamp: How to Use JDK X.X Version?
+
 <details>
   
 <summary>:small_orange_diamond:details</summary>
 
-**Method 1:**
+### Method 1:
 
 [Neoconf](https://github.com/folke/neoconf.nvim) can be used to manage LSP setting including jdtls. Neoconf allows
 global configuration as well as project vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
@@ -163,12 +169,12 @@ global configuration as well as project vice configurations. Here is how you can
           "default": true
         }
       ]
-    },
+    }
   }
 }
 ```
 
-**Method 2:**
+### Method 2:
 
 Pass the settings to Jdtls setup.
 
