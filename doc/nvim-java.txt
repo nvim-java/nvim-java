@@ -1,4 +1,4 @@
-*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2023 December 10
+*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2023 December 13
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -50,6 +50,14 @@ WHY                                                            *nvim-java-why*
 HOW TO INSTALL                                      *nvim-java-how-to-install*
 
 :small_orange_diamond:details ~
+
+
+DISTRIBUTIONS: ~
+
+- Lazyvim <https://github.com/nvim-java/nvim-java/wiki/Lazyvim>
+
+
+CUSTOM: ~
 
 - Install the plugin
 
@@ -155,7 +163,8 @@ HOW TO USE JDK X.X VERSION?            *nvim-java-how-to-use-jdk-x.x-version?*
 
 :small_orange_diamond:details ~
 
-**Method 1:**
+
+METHOD 1: ~
 
 Neoconf <https://github.com/folke/neoconf.nvim> can be used to manage LSP
 setting including jdtls. Neoconf allows global configuration as well as project
@@ -172,12 +181,13 @@ vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
               "default": true
             }
           ]
-        },
+        }
       }
     }
 <
 
-**Method 2:**
+
+METHOD 2: ~
 
 Pass the settings to Jdtls setup.
 
