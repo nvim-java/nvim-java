@@ -11,7 +11,8 @@ local global_config = require('java.config')
 local M = {}
 
 function M.setup(custom_config)
-	local config = vim.tbl_deep_extend('force', global_config, custom_config)
+	local config =
+		vim.tbl_deep_extend('force', global_config, custom_config or {})
 
 	nvim_dep.check()
 

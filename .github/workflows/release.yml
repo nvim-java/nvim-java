@@ -1,14 +1,21 @@
-name: "release"
+name: Release
+
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  contents: write
+
 jobs:
-  luarocks-upload:
-    runs-on: ubuntu-22.04
+  release:
+    name: release
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: LuaRocks Upload
-        uses: nvim-neorocks/luarocks-tag-release@v4
-        env:
-          LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
+      - uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: simple

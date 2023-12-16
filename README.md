@@ -1,17 +1,16 @@
 # :coffee: nvim-java
 
-![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
-![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
 ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
+![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
+![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
 
-No need to put up with [jdtls](https://github.com/eclipse-jdtls/eclipse.jdt.ls) nonsense anymore.
 Just install and start writing `public static void main(String[] args)`.
 
-> [!WARNING]
-> This is a WIP but we are so close to v1.0.0. So it could be rough around the edges and documents might not be up to date.
-> You can check the progress we are making here https://github.com/orgs/nvim-java/projects/1/views/2.
+## :loudspeaker: Demo
+
+https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d5c2e15647bc
 
 ## :dizzy: Features
 
@@ -21,21 +20,25 @@ Just install and start writing `public static void main(String[] args)`.
 
 ## :bulb: Why
 
+- Everything necessary will be installed automatically
 - Uses [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) to setup `jdtls`
 - Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
-- Everything necessary will be installed automatically
-- Uses `jdtls` and auto loads `jdtls` plugins from [mason.nvim](https://github.com/williamboman/mason.nvim)
+- Auto loads necessary `jdtls` plugins
   - Supported plugins are,
     - `lombok`
     - `java-test`
     - `java-debug-adapter`
-- Typed & documented APIs
 
 ## :hammer: How to Install
 
 <details>
 
-<summary>:pushpin: details</summary>
+<summary>:small_orange_diamond:details</summary>
+
+### Distributions:
+- [Lazyvim](https://github.com/nvim-java/nvim-java/wiki/Lazyvim)
+
+### Custom:
 
 - Install the plugin
 
@@ -62,9 +65,13 @@ return {
       },
     }
   },
-  event = 'VeryLazy',
-  opts = {},
 }
+```
+
+- Setup nvim-java before `lspconfig`
+
+```lua
+require('java').setup()
 ```
 
 - Setup jdtls like you would usually do
@@ -81,7 +88,7 @@ Yep! That's all :)
 
 <details>
 
-<summary>:pushpin: details</summary>
+<summary>:small_orange_diamond:details</summary>
 
 - `JavaDapConfig` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
 - `JavaTestRunCurrentClass` - Run the test class in the active buffer
@@ -96,7 +103,7 @@ Yep! That's all :)
 
 <details>
 
-<summary>:pushpin: details</summary>
+<summary>:small_orange_diamond:details</summary>
 
 **DAP**
 
@@ -140,11 +147,62 @@ require('java').test.view_last_report()
 
 </details>
 
+## :clamp: How to Use JDK X.X Version?
+
+<details>
+  
+<summary>:small_orange_diamond:details</summary>
+
+### Method 1:
+
+[Neoconf](https://github.com/folke/neoconf.nvim) can be used to manage LSP setting including jdtls. Neoconf allows
+global configuration as well as project vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
+
+```json
+{
+  "lspconfig": {
+    "jdtls": {
+      "java.configuration.runtimes": [
+        {
+          "name": "JavaSE-21",
+          "path": "/opt/jdk-21",
+          "default": true
+        }
+      ]
+    }
+  }
+}
+```
+
+### Method 2:
+
+Pass the settings to Jdtls setup.
+
+```lua
+require('lspconfig').jdtls.setup({
+  settings = {
+    java = {
+      configuration = {
+        runtimes = {
+          {
+            name = "JavaSE-21",
+            path = "/opt/jdk-21",
+            default = true,
+          }
+        }
+      }
+    }
+  }
+})
+```
+
+</details>
+
 ## :golf: Architecture
 
 <details>
 
-<summary>:pushpin: details</summary>
+<summary>:small_orange_diamond:details</summary>
 
 Following is the high level idea. Jdtls is the language server nvim-java communicates with. However,
 we don't have all the features we need just in Jdtls. So, we are loading java-test & java-debug-adapter extensions

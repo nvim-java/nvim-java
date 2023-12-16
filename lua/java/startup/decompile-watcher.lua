@@ -29,6 +29,9 @@ function M.setup()
 						:java_decompile(opts.file)
 
 					local lines = vim.split(text, '\n')
+
+					vim.bo[buffer].modifiable = true
+
 					vim.api.nvim_buf_set_lines(buffer, 0, -1, true, lines)
 
 					vim.bo[buffer].swapfile = false
@@ -44,7 +47,7 @@ function M.setup()
 				.catch(get_error_handler('decompilation failed for ' .. opts.file))
 				.run()
 
-			vim.wait(3000, function()
+			vim.wait(10000, function()
 				return done
 			end)
 		end,
