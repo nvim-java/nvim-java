@@ -29,7 +29,7 @@ function M.setup(config)
 			use_mason_jdk = config.jdk.auto_install,
 		})
 
-		org_setup(vim.tbl_extend('force', user_config, default_config))
+		org_setup(vim.tbl_extend('force', default_config, user_config))
 	end
 end
 
