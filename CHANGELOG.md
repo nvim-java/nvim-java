@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/nvim-java/nvim-java/compare/v1.0.1...v1.0.2) (2023-12-17)
+
+
+### Bug Fixes
+
+* user jdtls setup config wont override the default config ([#91](https://github.com/nvim-java/nvim-java/issues/91)) ([fa14d06](https://github.com/nvim-java/nvim-java/commit/fa14d065d3e5d7402d8bde6ebb2099dfc9f29e3f))
+
 ## [1.0.1](https://github.com/nvim-java/nvim-java/compare/v1.0.0...v1.0.1) (2023-12-13)
 
 
