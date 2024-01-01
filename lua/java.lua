@@ -5,6 +5,7 @@ local setup_wrap = require('java.startup.lspconfig-setup-wrap')
 
 local test = require('java.api.test')
 local dap = require('java.api.dap')
+local runner = require('java.api.runner')
 
 local global_config = require('java.config')
 
@@ -48,6 +49,12 @@ M.test.view_last_report = test.view_last_report
 ----------------------------------------------------------------------
 M.manipulate = {}
 -- M.manipulate.organize_imports = {}
+
+----------------------------------------------------------------------
+--                            Runner APIs                           --
+----------------------------------------------------------------------
+M.runner = {}
+M.runner.run_app = runner.run_app
 
 function M.__run()
 	test.debug_current_method()
