@@ -17,7 +17,7 @@ local cmd_map = {
 
 	JavaRunnerRunMain = { java.runner.built_in.run_app , { nargs = '?' } },
 	JavaRunnerStopMain = { java.runner.built_in.stop_app },
-  JavaRunnerToogleLogs = {java.runner.built_in.toogle_logs},
+  JavaRunnerToggleLogs = {java.runner.built_in.toggle_logs},
 
 
 }

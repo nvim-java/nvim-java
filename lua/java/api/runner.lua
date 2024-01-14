@@ -3,7 +3,6 @@ local async = require('java-core.utils.async').sync
 local get_error_handler = require('java.handlers.error')
 local jdtls = require('java.utils.jdtls')
 local notify = require('java-core.utils.notify')
-
 local DapSetup = require('java-dap.api.setup')
 
 --- @class BuiltInMainRunner
@@ -34,48 +33,17 @@ function BuiltInMainRunner:new()
 	return o
 end
 
---- @param clear_buffer boolean
-function BuiltInMainRunner:stop(clear_buffer)
+function BuiltInMainRunner:stop()
 	if self.job_id ~= nil then
 		vim.fn.jobstop(self.job_id)
-		vim.api.nvim_buf_set_lines(
-			self.bufnr,
-			-2,
-			-1,
-			false,
-			{ 'Process successfully killed.', ' ', ' ' }
-		)
+		vim.fn.jobwait({ self.job_id }, 1000)
 		self.job_id = nil
-		if clear_buffer then
-			vim.api.nvim_buf_set_lines(self.bufnr, 0, -1, false, {})
-		end
 	end
-end
-
-function BuiltInMainRunner:_set_up_buffer()
-	vim.cmd('sp | winc J | res 15 | buffer ' .. self.bufnr)
-	self.win = vim.api.nvim_get_current_win()
-	vim.api.nvim_win_set_option(self.win, 'number', false)
-	vim.api.nvim_win_set_option(self.win, 'relativenumber', false)
-	vim.api.nvim_win_set_option(self.win, 'signcolumn', 'no')
-	self:_set_up_buffer_autocmd()
-	self.is_open = false
-end
-
-function BuiltInMainRunner:_on_std(_, data, _)
-	vim.api.nvim_buf_set_lines(self.bufnr, -2, -1, false, data)
-	local current_buf = vim.api.nvim_get_current_buf()
-	vim.api.nvim_buf_call(self.bufnr, function()
-		local mode = vim.api.nvim_get_mode().mode
-		if current_buf ~= self.bufnr or mode ~= 'i' then
-			vim.cmd('normal! G')
-		end
-	end)
 end
 
 --- @param cmd string[]
 function BuiltInMainRunner:run_app(cmd)
-	self:stop(true)
+	self:stop()
 	if not self.bufnr then
 		self.bufnr = vim.api.nvim_create_buf(false, true)
 		vim.api.nvim_buf_call(self.bufnr, function()
@@ -83,14 +51,24 @@ function BuiltInMainRunner:run_app(cmd)
 		end)
 	end
 
-	local command = table.concat(cmd, ' ')
-	vim.api.nvim_buf_set_lines(self.bufnr, -2, -1, false, { command, ' ' })
-	self.job_id = vim.fn.jobstart(command, {
-		on_stdout = function(_, data, _)
-			self:_on_std(_, data, _)
+	self.chan = vim.api.nvim_open_term(self.bufnr, {
+		on_input = function(_, _, _, data)
+			if self.job_id then
+				vim.fn.chansend(self.job_id, data)
+			end
 		end,
-		on_stderr = function(_, data, _)
-			self:_on_std(_, data, _)
+	})
+
+	local command = table.concat(cmd, ' ')
+	vim.fn.chansend(self.chan, command)
+	self.job_id = vim.fn.jobstart(command, {
+		pty = true,
+		clear_env = true,
+		on_stdout = function(_, data)
+			self:_on_stdout(data)
+		end,
+		on_exit = function(_, exit_code)
+			self:_on_exit(exit_code)
 		end,
 	})
 end
@@ -104,15 +82,55 @@ function BuiltInMainRunner:hide_logs()
 	end
 end
 
-function BuiltInMainRunner:toogle_logs()
+function BuiltInMainRunner:toggle_logs()
 	if self.is_open then
 		vim.api.nvim_buf_call(self.bufnr, function()
 			self:_set_up_buffer()
-			vim.cmd('normal! G')
+			self:_scroll_down()
 		end)
 	else
 		self:hide_logs()
 	end
+end
+
+function BuiltInMainRunner:_set_up_buffer()
+	vim.cmd('sp | winc J | res 15 | buffer ' .. self.bufnr)
+	self.win = vim.api.nvim_get_current_win()
+	vim.api.nvim_win_set_option(self.win, 'number', false)
+	vim.api.nvim_win_set_option(self.win, 'relativenumber', false)
+	vim.api.nvim_win_set_option(self.win, 'signcolumn', 'no')
+	self:_set_up_buffer_autocmd()
+	self.is_open = false
+end
+
+--- @param data string[]
+function BuiltInMainRunner:_on_stdout(data)
+	vim.fn.chansend(self.chan, data)
+	vim.api.nvim_buf_call(self.bufnr, function()
+		local current_buf = vim.api.nvim_get_current_buf()
+		local mode = vim.api.nvim_get_mode().mode
+		if current_buf ~= self.bufnr or mode ~= 'i' then
+			self:_scroll_down()
+		end
+	end)
+end
+
+--- @param exit_code number
+function BuiltInMainRunner:_on_exit(exit_code)
+	vim.fn.chansend(
+		self.chan,
+		'\nProcess finished with exit code ' .. exit_code .. '\n'
+	)
+	self.job_id = nil
+	local current_buf = vim.api.nvim_get_current_buf()
+	if current_buf == self.bufnr then
+		vim.cmd('stopinsert')
+	end
+end
+
+function BuiltInMainRunner:_scroll_down()
+	local last_line = vim.api.nvim_buf_line_count(self.bufnr)
+	vim.api.nvim_win_set_cursor(self.win, { last_line, 0 })
 end
 
 --- @class RunnerApi
@@ -152,7 +170,7 @@ function RunnerApi:get_config()
 	if #config_names == 1 then
 		return config_lookup[config_names[1]]
 	end
-
+	--
 	local selected_config = nil
 	vim.ui.select(config_names, {
 		prompt = 'Select the main class (modul -> mainClass)',
@@ -211,9 +229,9 @@ function M.built_in.run_app(opts)
 	end, opts.args)
 end
 
-function M.built_in.toogle_logs()
+function M.built_in.toggle_logs()
 	if M.BuildInRunner then
-		M.BuildInRunner:toogle_logs()
+		M.BuildInRunner:toggle_logs()
 	end
 end
 
