@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.4](https://github.com/nvim-java/nvim-java/compare/v1.0.3...v1.0.4) (2024-01-13)
+
+
+### Miscellaneous Chores
+
+* release 1.0.4 ([a268bdd](https://github.com/nvim-java/nvim-java/commit/a268bddafec62282d1e7e5ad85d34696bf5dd027))
+
+## [1.0.3](https://github.com/nvim-java/nvim-java/compare/v1.0.2...v1.0.3) (2024-01-07)
+
+
+### Bug Fixes
+
+* java-debug fails due to unavailablity of v0.52.0 ([#105](https://github.com/nvim-java/nvim-java/issues/105)) ([f20e49f](https://github.com/nvim-java/nvim-java/commit/f20e49fbfa84a73f371ba9bd925d19c57f0cdd70))
+
 ## [1.0.2](https://github.com/nvim-java/nvim-java/compare/v1.0.1...v1.0.2) (2023-12-17)
 
 
