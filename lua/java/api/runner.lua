@@ -1,16 +1,20 @@
 local log = require('java.utils.log')
-local async = require('java-core.utils.async').sync
+local class = require('java-core.utils.class')
+local async = require('java-core.utils.async')
 local get_error_handler = require('java.handlers.error')
 local jdtls = require('java.utils.jdtls')
 local notify = require('java-core.utils.notify')
 local DapSetup = require('java-dap.api.setup')
+
+local sync = require('java-core.utils.async').sync
+local wait = require('java-core.utils.async').wait
 
 --- @class BuiltInMainRunner
 --- @field win  number
 --- @field bufnr number
 --- @field job_id number
 --- @field is_open boolean
-local BuiltInMainRunner = {}
+local BuiltInMainRunner = class()
 
 function BuiltInMainRunner:_set_up_buffer_autocmd()
 	local group = vim.api.nvim_create_augroup('logger', { clear = true })
@@ -23,14 +27,8 @@ function BuiltInMainRunner:_set_up_buffer_autocmd()
 	})
 end
 
-function BuiltInMainRunner:new()
-	local o = {
-		is_open = false,
-	}
-
-	setmetatable(o, self)
-	self.__index = self
-	return o
+function BuiltInMainRunner:_init()
+	self.is_open = false
 end
 
 function BuiltInMainRunner:stop()
@@ -41,7 +39,8 @@ function BuiltInMainRunner:stop()
 	end
 end
 
---- @param cmd string[]
+---Creates a terminal window and runs the given cmd
+---@param cmd string[] command to run
 function BuiltInMainRunner:run_app(cmd)
 	self:stop()
 	if not self.bufnr then
@@ -54,6 +53,7 @@ function BuiltInMainRunner:run_app(cmd)
 	self.chan = vim.api.nvim_open_term(self.bufnr, {
 		on_input = function(_, _, _, data)
 			if self.job_id then
+				-- Sends the stdin to the process
 				vim.fn.chansend(self.job_id, data)
 			end
 		end,
@@ -73,6 +73,7 @@ function BuiltInMainRunner:run_app(cmd)
 	})
 end
 
+---Hides the log window
 function BuiltInMainRunner:hide_logs()
 	if self.bufnr then
 		self.is_open = true
@@ -82,6 +83,7 @@ function BuiltInMainRunner:hide_logs()
 	end
 end
 
+---Toggles the log window
 function BuiltInMainRunner:toggle_logs()
 	if self.is_open then
 		vim.api.nvim_buf_call(self.bufnr, function()
@@ -93,6 +95,7 @@ function BuiltInMainRunner:toggle_logs()
 	end
 end
 
+---Opens a window at the bottom of the editor and sets the buffer
 function BuiltInMainRunner:_set_up_buffer()
 	vim.cmd('sp | winc J | res 15 | buffer ' .. self.bufnr)
 	self.win = vim.api.nvim_get_current_win()
@@ -103,7 +106,7 @@ function BuiltInMainRunner:_set_up_buffer()
 	self.is_open = false
 end
 
---- @param data string[]
+---@param data string[]
 function BuiltInMainRunner:_on_stdout(data)
 	vim.fn.chansend(self.chan, data)
 	vim.api.nvim_buf_call(self.bufnr, function()
@@ -136,17 +139,11 @@ end
 --- @class RunnerApi
 --- @field client LspClient
 --- @field private dap JavaCoreDap
-local RunnerApi = {}
+local RunnerApi = class()
 
-function RunnerApi:new(args)
-	local o = {
-		client = args.client,
-	}
-
-	o.dap = DapSetup(args.client)
-	setmetatable(o, self)
-	self.__index = self
-	return o
+function RunnerApi:_init(args)
+	self.client = args.client
+	self.dap = DapSetup(args.client)
 end
 
 function RunnerApi:get_config()
@@ -170,14 +167,19 @@ function RunnerApi:get_config()
 	if #config_names == 1 then
 		return config_lookup[config_names[1]]
 	end
-	--
-	local selected_config = nil
-	vim.ui.select(config_names, {
-		prompt = 'Select the main class (modul -> mainClass)',
-	}, function(choice)
-		selected_config = config_lookup[choice]
+
+	local selected_key = self:_ui_select_sync(config_names, {
+		prompt = 'Select the main class (module -> mainClass)',
+	})
+
+	vim.print('selected_key', selected_key)
+	return config_lookup[selected_key]
+end
+
+function RunnerApi:_ui_select_sync(items, opts)
+	return wait(function(callback)
+		vim.ui.select(items, opts, callback)
 	end)
-	return selected_config
 end
 
 --- @param callback fun(cmd)
@@ -212,8 +214,8 @@ local M = {
 --- @param callback fun(cmd)
 --- @param args string
 function M.run_app(callback, args)
-	return async(function()
-			return RunnerApi:new(jdtls()):run_app(callback, args)
+	return sync(function()
+			return RunnerApi(jdtls()):run_app(callback, args)
 		end)
 		.catch(get_error_handler('failed to run app'))
 		.run()
@@ -221,12 +223,15 @@ end
 
 --- @param opts {}
 function M.built_in.run_app(opts)
-	if not M.BuildInRunner then
-		M.BuildInRunner = BuiltInMainRunner:new()
-	end
-	M.run_app(function(cmd)
-		M.BuildInRunner:run_app(cmd)
-	end, opts.args)
+	sync(function()
+		if not M.BuildInRunner then
+			M.BuildInRunner = BuiltInMainRunner()
+		end
+
+		M.run_app(function(cmd)
+			M.BuildInRunner:run_app(cmd)
+		end, opts.args)
+	end).run()
 end
 
 function M.built_in.toggle_logs()
