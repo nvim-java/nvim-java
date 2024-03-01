@@ -12,10 +12,8 @@ local M = {}
 function M.setup_dap_on_lsp_attach()
 	log.info('add LspAttach event handlers to setup dap adapter & config')
 
-	vim.api.nvim_create_autocmd('LspAttach', {
-		pattern = '*',
+	M.even_id = vim.api.nvim_create_autocmd('LspAttach', {
 		callback = M.on_jdtls_attach,
-		once = true,
 		group = vim.api.nvim_create_augroup('nvim-java-dap-config', {}),
 	})
 end
@@ -35,10 +33,19 @@ end
 function M.on_jdtls_attach(ev)
 	local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-	if client.name == 'jdtls' then
+	if client == nil then
+		return
+	end
+
+	local server_name = client.name
+
+	if server_name == 'jdtls' then
 		log.info('setup java dap config & adapter')
 
 		M.config_dap()
+
+		-- removing the event handler after configuring dap
+		vim.api.nvim_del_autocmd(M.even_id)
 	end
 end
 
