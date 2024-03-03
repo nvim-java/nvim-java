@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/nvim-java/nvim-java/compare/v1.0.5...v1.0.6) (2024-03-03)
+
+
+### Bug Fixes
+
+* lombok APIs with parameters are not working ([#129](https://github.com/nvim-java/nvim-java/issues/129)) ([5133a21](https://github.com/nvim-java/nvim-java/commit/5133a21ffc6b9545d9785721d34a212120a22749))
+
 ## [1.0.5](https://github.com/nvim-java/nvim-java/compare/v1.0.4...v1.0.5) (2024-03-01)
 
 
