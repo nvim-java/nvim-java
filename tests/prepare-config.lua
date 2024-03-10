@@ -53,6 +53,10 @@ require('lazy').setup({
 		'williamboman/mason.nvim',
 		lazy = false,
 	},
+	{
+		'MunifTanjim/nui.nvim',
+		lazy = false,
+	},
 }, {
 	root = temp_path,
 	lockfile = temp_path .. '/lazy-lock.json',

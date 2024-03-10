@@ -19,7 +19,7 @@ local cmd_map = {
 	JavaRunnerStopMain = { java.runner.built_in.stop_app },
   JavaRunnerToggleLogs = {java.runner.built_in.toggle_logs},
 
-
+	JavaPofile = { java.profile.ui }
 }
 
 for cmd, details in pairs(cmd_map) do

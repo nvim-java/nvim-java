@@ -5,6 +5,7 @@ local jdtls = require('java.utils.jdtls')
 local notify = require('java-core.utils.notify')
 local DapSetup = require('java-dap.api.setup')
 local ui = require('java.utils.ui')
+local profile_config = require('java.api.profile_config').config
 
 --- @class BuiltInMainRunner
 --- @field win  number
@@ -193,13 +194,24 @@ function RunnerApi:run_app(callback, args)
 	local main_class = enrich_config.mainClass
 	local java_exec = enrich_config.javaExec
 
+	local active_profile = profile_config:get_active_profile()
+
+	local vm_args = ''
+	local prog_args = ''
+	if active_profile then
+		prog_args = (active_profile.prog_args or '') .. ' ' .. (args or '')
+		vm_args = active_profile.vm_args or ''
+	end
+
 	local cmd = {
 		java_exec,
-		args or '',
+		vm_args,
 		'-cp',
 		class_paths,
 		main_class,
+		prog_args,
 	}
+
 	log.debug('run app cmd: ', cmd)
 	callback(cmd)
 end

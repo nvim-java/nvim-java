@@ -5,6 +5,7 @@ local DapSetup = require('java-dap.api.setup')
 local mock_client = { jdtls_args = {} }
 local runner = require('java.api.runner')
 local async = require('java-core.utils.async').sync
+local ProfileConfig = require('java.api.profile_config').config
 
 local RunnerApi = runner.RunnerApi:new({ client = mock_client })
 
@@ -79,7 +80,7 @@ describe('java-core.api.runner', function()
 		assert.spy(callback_spy).was_not_called()
 	end)
 
-	it('RUnnerApi:run_app without args', function()
+	it('RunnerApi:run_app without active profile', function()
 		RunnerApi.get_config = function()
 			return { name = 'config1' }
 		end
@@ -90,6 +91,11 @@ describe('java-core.api.runner', function()
 				mainClass = 'mainClass',
 				javaExec = 'javaExec',
 			}
+		end
+
+		RunnerApi.profile_config = {}
+		RunnerApi.profile_config.get_active_profile = function()
+			return nil
 		end
 
 		local callback_mock = function(_, _) end
@@ -98,14 +104,15 @@ describe('java-core.api.runner', function()
 		RunnerApi:run_app(callback_spy)
 		assert.spy(callback_spy).was_called_with({
 			'javaExec',
-			'',
+			'', -- vm_args
 			'-cp',
 			'path1:path2',
 			'mainClass',
+			'', -- prog_args
 		})
 	end)
 
-	it('RunnerApi:run_app with args', function()
+	it('RunnerApi:run_app with active profile', function()
 		RunnerApi.get_config = function()
 			return { name = 'config1' }
 		end
@@ -118,16 +125,25 @@ describe('java-core.api.runner', function()
 			}
 		end
 
+		RunnerApi.profile_config = ProfileConfig
+		RunnerApi.profile_config.get_active_profile = function()
+			return {
+				prog_args = 'profile_prog_args',
+				vm_args = 'vm_args',
+			}
+		end
+
 		local callback_mock = function(_, _) end
 		local callback_spy = spy.new(callback_mock)
 
-		RunnerApi:run_app(callback_spy, 'args')
+		RunnerApi:run_app(callback_spy, 'input_prog_args')
 		assert.spy(callback_spy).was_called_with({
 			'javaExec',
-			'args',
+			'vm_args',
 			'-cp',
 			'path1:path2',
 			'mainClass',
+			'profile_prog_args input_prog_args',
 		})
 	end)
 
