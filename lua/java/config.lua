@@ -27,7 +27,7 @@ local config = {
 		auto_install = true,
 	},
 	notifications = {
-	  dap = true,
+		dap = true,
 	},
 }
 

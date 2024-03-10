@@ -6,6 +6,7 @@ local setup_wrap = require('java.startup.lspconfig-setup-wrap')
 local test = require('java.api.test')
 local dap = require('java.api.dap')
 local runner = require('java.api.runner')
+local profile_ui = require('java.ui.profile')
 
 local global_config = require('java.config')
 
@@ -61,6 +62,12 @@ M.runner.built_in = {}
 M.runner.built_in.run_app = runner.built_in.run_app
 M.runner.built_in.toggle_logs = runner.built_in.toggle_logs
 M.runner.built_in.stop_app = runner.built_in.stop_app
+
+----------------------------------------------------------------------
+--                             Profile UI                           --
+----------------------------------------------------------------------
+M.profile = {}
+M.profile.ui = profile_ui.ui
 
 function M.__run()
 	test.debug_current_method()
