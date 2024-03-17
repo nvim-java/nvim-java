@@ -14,6 +14,12 @@ local cmd_map = {
 	JavaTestDebugCurrentMethod = { java.test.debug_current_method },
 
 	JavaTestViewLastReport = { java.test.view_last_report },
+
+	JavaRunnerRunMain = { java.runner.built_in.run_app , { nargs = '?' } },
+	JavaRunnerStopMain = { java.runner.built_in.stop_app },
+  JavaRunnerToggleLogs = {java.runner.built_in.toggle_logs},
+
+
 }
 
 for cmd, details in pairs(cmd_map) do
