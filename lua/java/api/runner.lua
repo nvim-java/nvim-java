@@ -4,6 +4,7 @@ local get_error_handler = require('java.handlers.error')
 local jdtls = require('java.utils.jdtls')
 local notify = require('java-core.utils.notify')
 local DapSetup = require('java-dap.api.setup')
+local ui = require('java.utils.ui')
 
 --- @class BuiltInMainRunner
 --- @field win  number
@@ -96,9 +97,11 @@ end
 function BuiltInMainRunner:_set_up_buffer()
 	vim.cmd('sp | winc J | res 15 | buffer ' .. self.bufnr)
 	self.win = vim.api.nvim_get_current_win()
-	vim.api.nvim_win_set_option(self.win, 'number', false)
-	vim.api.nvim_win_set_option(self.win, 'relativenumber', false)
-	vim.api.nvim_win_set_option(self.win, 'signcolumn', 'no')
+
+	vim.wo[self.win].number = false
+	vim.wo[self.win].relativenumber = false
+	vim.wo[self.win].signcolumn = 'no'
+
 	self:_set_up_buffer_autocmd()
 	self.is_open = false
 end
@@ -135,7 +138,7 @@ end
 
 --- @class RunnerApi
 --- @field client LspClient
---- @field private dap JavaCoreDap
+--- @field private dap java.DapSetup
 local RunnerApi = {}
 
 function RunnerApi:new(args)
@@ -170,14 +173,11 @@ function RunnerApi:get_config()
 	if #config_names == 1 then
 		return config_lookup[config_names[1]]
 	end
-	--
-	local selected_config = nil
-	vim.ui.select(config_names, {
-		prompt = 'Select the main class (modul -> mainClass)',
-	}, function(choice)
-		selected_config = config_lookup[choice]
-	end)
-	return selected_config
+
+	local selected_config =
+		ui.select('Select the main class (modul -> mainClass)', config_names)
+
+	return config_lookup[selected_config]
 end
 
 --- @param callback fun(cmd)
