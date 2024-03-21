@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/nvim-java/nvim-java/compare/v1.0.6...v1.1.0) (2024-03-17)
+
+
+### Features
+
+* APIs to run application ([#136](https://github.com/nvim-java/nvim-java/issues/136)) ([a0c6c1b](https://github.com/nvim-java/nvim-java/commit/a0c6c1b7dbf547b88350d6ffd033c61451a067eb))
+
 ## [1.0.6](https://github.com/nvim-java/nvim-java/compare/v1.0.5...v1.0.6) (2024-03-03)
 
 
