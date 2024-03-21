@@ -26,6 +26,9 @@ local config = {
 	jdk = {
 		auto_install = true,
 	},
+	notifications = {
+	  dap = true,
+	},
 }
 
 return config

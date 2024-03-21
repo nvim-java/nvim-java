@@ -14,6 +14,7 @@ local M = {}
 function M.setup(custom_config)
 	local config =
 		vim.tbl_deep_extend('force', global_config, custom_config or {})
+	vim.g.nvim_java_config = config
 
 	nvim_dep.check()
 

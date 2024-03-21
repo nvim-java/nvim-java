@@ -22,9 +22,14 @@ function M.config_dap()
 	log.info('configuring dap')
 
 	return async(function()
-			notify.warn('Configuring DAP')
+			local config = vim.g.nvim_java_config
+			if config.notifications.dap then
+				notify.warn('Configuring DAP')
+			end
 			JavaDap:new(jdtls()):config_dap()
-			notify.info('DAP configured')
+			if config.notifications.dap then
+   			notify.info('DAP configured')
+  		end
 		end)
 		.catch(get_error_handler('dap configuration failed'))
 		.run()
