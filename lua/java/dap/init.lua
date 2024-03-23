@@ -9,6 +9,7 @@ local DapSetup = require('java-dap.api.setup')
 local DapRunner = require('java-dap.api.runner')
 
 local JavaCoreTestApi = require('java-core.api.test')
+local profile_config = require('java.api.profile_config').config
 
 ---@class JavaDap
 ---@field private client LspClient
@@ -87,8 +88,15 @@ function M:config_dap()
 			callback(adapter --[[@as Adapter]])
 		end).run()
 	end
-
 	local dap_config = self.dap:get_dap_config()
+
+	local active_profile = profile_config:get_active_profile()
+	if active_profile then
+		for _, config in ipairs(dap_config) do
+			config.vmArgs = active_profile.vm_args
+			config.args = active_profile.prog_args
+		end
+	end
 
 	log.debug('set dap config: ', dap_config)
 	require('dap').configurations.java = dap_config

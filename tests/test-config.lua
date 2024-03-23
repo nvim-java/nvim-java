@@ -11,6 +11,7 @@ local plug_path = './.test_plugins'
 vim.opt.rtp:append(plug_path .. '/plenary.nvim')
 vim.opt.rtp:append(plug_path .. '/nvim-lspconfig')
 vim.opt.rtp:append(plug_path .. '/mason.nvim')
+vim.opt.rtp:append(plug_path .. '/nui.nvim')
 
 vim.opt.rtp:append(
 	local_plug('~/Workspace/nvim-java-core', plug_path .. '/nvim-java-core')
