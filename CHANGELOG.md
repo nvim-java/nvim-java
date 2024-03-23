@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/nvim-java/nvim-java/compare/v1.1.0...v1.2.0) (2024-03-23)
+
+
+### Features
+
+* **conf:** capability to remove dap related notifications ([9f9b785](https://github.com/nvim-java/nvim-java/commit/9f9b785e9f8a452e7bd56d809578efc1c5908b6b))
+
+
+### Bug Fixes
+
+* jdtls wont start up after new mason versioned package ([#147](https://github.com/nvim-java/nvim-java/issues/147)) ([8945fc1](https://github.com/nvim-java/nvim-java/commit/8945fc16452e9c6748194ac5e24379a8ccdcf3a2))
+* **test:** tests are hanging after vim.ui.select to handle async ui change. ([#139](https://github.com/nvim-java/nvim-java/issues/139)) ([#140](https://github.com/nvim-java/nvim-java/issues/140)) ([ba1146e](https://github.com/nvim-java/nvim-java/commit/ba1146ebe859dbd2ea4fded68bb8b04805a894ec))
+
 ## [1.1.0](https://github.com/nvim-java/nvim-java/compare/v1.0.6...v1.1.0) (2024-03-17)
 
 
