@@ -28,8 +28,8 @@ function M.config_dap()
 			end
 			JavaDap:new(jdtls()):config_dap()
 			if config.notifications.dap then
-   			notify.info('DAP configured')
-  		end
+				notify.info('DAP configured')
+			end
 		end)
 		.catch(get_error_handler('dap configuration failed'))
 		.run()
