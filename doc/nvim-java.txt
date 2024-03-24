@@ -1,4 +1,4 @@
-*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2023 December 13
+*nvim-java.txt*         For Neovim >= 0.9.4         Last change: 2024 March 24
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -11,6 +11,7 @@ Table of Contents                                *nvim-java-table-of-contents*
   - Commands                                              |nvim-java-commands|
   - APIs                                                      |nvim-java-apis|
   - How to Use JDK X.X Version?        |nvim-java-how-to-use-jdk-x.x-version?|
+  - Configuration                                    |nvim-java-configuration|
   - Architecture                                      |nvim-java-architecture|
   - Projects Acknowledgement              |nvim-java-projects-acknowledgement|
 
@@ -31,7 +32,8 @@ https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d
 FEATURES                                                  *nvim-java-features*
 
 - Diagnostics & Auto Completion
-- Automatic DAP <https://github.com/mfussenegger/nvim-dap> debug configuration
+- Automatic DAP <https://github.com/mfussenegger/nvim-dap>
+    debug configuration
 - Running tests
 
 
@@ -52,12 +54,12 @@ HOW TO INSTALL                                      *nvim-java-how-to-install*
 :small_orange_diamond:details ~
 
 
-DISTRIBUTIONS: ~
+DISTRIBUTIONS ~
 
 - Lazyvim <https://github.com/nvim-java/nvim-java/wiki/Lazyvim>
 
 
-CUSTOM: ~
+CUSTOM ~
 
 - Install the plugin
 
@@ -106,7 +108,29 @@ COMMANDS                                                  *nvim-java-commands*
 
 :small_orange_diamond:details ~
 
-- `JavaDapConfig` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
+
+RUNNER ~
+
+- `JavaRunnerRunMain` - Runs the application or selected main class (if there
+    are multiple main classes)
+
+>vim
+    :JavaRunnerRunMain
+    :JavaRunnerRunMain <arguments> <to> <pass>
+<
+
+- `JavaRunnerStopMain` - Stops the running application
+- `JavaRunnerToggleLogs` - Toggle between show & hide runner log window
+
+
+DAP ~
+
+- `JavaDapConfig` - DAP is autoconfigured on start up, but in case you want to
+    force configure it again, you can use this API
+
+
+TEST ~
+
 - `JavaTestRunCurrentClass` - Run the test class in the active buffer
 - `JavaTestDebugCurrentClass` - Debug the test class in the active buffer
 - `JavaTestRunCurrentMethod` - Run the test method on the cursor
@@ -118,15 +142,41 @@ APIS                                                          *nvim-java-apis*
 
 :small_orange_diamond:details ~
 
-**DAP**
 
-- `config_dap` - DAP is autoconfigured on start up, but in case you want to force configure it again, you can use this API
+RUNNER ~
+
+- `built_in.run_app` - Runs the application or selected main class (if there
+    are multiple main classes)
+
+>lua
+    require('java').runner.built_in.run_app({})
+    require('java').runner.built_in.run_app({'arguments', 'to', 'pass', 'to', 'main'})
+<
+
+- `built_in.stop_app` - Stops the running application
+
+>lua
+    require('java').runner.built_in.stop_app()
+<
+
+- `built_in.toggle_logs` - Toggle between show & hide runner log window
+
+>lua
+    require('java').runner.built_in.toggle_logs()
+<
+
+
+DAP ~
+
+- `config_dap` - DAP is autoconfigured on start up, but in case you want to force
+    configure it again, you can use this API
 
 >lua
     require('java').dap.config_dap()
 <
 
-**Test**
+
+TEST ~
 
 - `run_current_class` - Run the test class in the active buffer
 
@@ -164,7 +214,7 @@ HOW TO USE JDK X.X VERSION?            *nvim-java-how-to-use-jdk-x.x-version?*
 :small_orange_diamond:details ~
 
 
-METHOD 1: ~
+METHOD 1 ~
 
 Neoconf <https://github.com/folke/neoconf.nvim> can be used to manage LSP
 setting including jdtls. Neoconf allows global configuration as well as project
@@ -187,7 +237,7 @@ vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
 <
 
 
-METHOD 2: ~
+METHOD 2 ~
 
 Pass the settings to Jdtls setup.
 
@@ -207,6 +257,51 @@ Pass the settings to Jdtls setup.
         }
       }
     })
+<
+
+
+CONFIGURATION                                        *nvim-java-configuration*
+
+:small_orange_diamond:details ~
+
+For most users changing the default configuration is not necessary. But if you
+want, following options are available
+
+>lua
+    {
+     --  list of file that exists in root of the project
+     root_markers = {
+      'settings.gradle',
+      'settings.gradle.kts',
+      'pom.xml',
+      'build.gradle',
+      'mvnw',
+      'gradlew',
+      'build.gradle',
+      'build.gradle.kts',
+      '.git',
+     },
+    
+     -- load java test plugins
+     java_test = {
+      enable = true,
+     },
+    
+     -- load java debugger plugins
+     java_debug_adapter = {
+      enable = true,
+     },
+    
+     jdk = {
+      -- install jdk using mason.nvim
+      auto_install = true,
+     },
+    
+     notifications = {
+      -- enable 'Configuring DAP' & 'DAP configured' messages on start up
+      dap = true,
+     },
+    }
 <
 
 
@@ -230,7 +325,7 @@ For instance, to run the current test,
 - Parse the test results as they come in
 - Once the execution is done, open a window show the test results
 
->
+>text
       ┌────────────┐                         ┌────────────┐
       │            │                         │            │
       │   Neovim   │                         │   VSCode   │
