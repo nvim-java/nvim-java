@@ -95,9 +95,10 @@ Yep! That's all :)
 ### Runner
 
 - `JavaRunnerRunMain` - Runs the application or selected main class (if there
-  multiple main classes)
+  are multiple main classes)
 
 ```vim
+:JavaRunnerRunMain
 :JavaRunnerRunMain <arguments> <to> <pass>
 ```
 
@@ -128,23 +129,23 @@ Yep! That's all :)
 ### Runner
 
 - `built_in.run_app` - Runs the application or selected main class (if there
-  multiple main classes)
+  are multiple main classes)
 
 ```lua
-require('java').built_in.run_app({})
-require('java').built_in.run_app({'arguments', 'to', 'pass', 'to', 'main'})
+require('java').runner.built_in.run_app({})
+require('java').runner.built_in.run_app({'arguments', 'to', 'pass', 'to', 'main'})
 ```
 
 - `built_in.stop_app` - Stops the running application
 
 ```lua
-require('java').built_in.stop_app()
+require('java').runner.built_in.stop_app()
 ```
 
 - `built_in.toggle_logs` - Toggle between show & hide runner log window
 
 ```lua
-require('java').built_in.toggle_logs()
+require('java').runner.built_in.toggle_logs()
 ```
 
 ### DAP
