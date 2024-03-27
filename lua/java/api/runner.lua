@@ -64,7 +64,6 @@ function BuiltInMainRunner:run_app(cmd)
 	vim.fn.chansend(self.chan, command)
 	self.job_id = vim.fn.jobstart(command, {
 		pty = true,
-		clear_env = true,
 		on_stdout = function(_, data)
 			self:_on_stdout(data)
 		end,
