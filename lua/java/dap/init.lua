@@ -9,7 +9,7 @@ local DapSetup = require('java-dap.api.setup')
 local DapRunner = require('java-dap.api.runner')
 
 local JavaCoreTestApi = require('java-core.api.test')
-local profile_config = require('java.api.profile_config').config
+local profile_config = require('java.api.profile_config')
 
 ---@class JavaDap
 ---@field private client LspClient
@@ -81,8 +81,8 @@ end
 
 function M:config_dap()
 	log.debug('set dap adapter callback function')
-
-	require('dap').adapters.java = function(callback)
+	local nvim_dap = require('dap')
+	nvim_dap.adapters.java = function(callback)
 		async(function()
 			local adapter = self.dap:get_dap_adapter()
 			callback(adapter --[[@as Adapter]])
@@ -90,16 +90,20 @@ function M:config_dap()
 	end
 	local dap_config = self.dap:get_dap_config()
 
-	local active_profile = profile_config:get_active_profile()
+	local active_profile = profile_config.get_active_profile()
 	if active_profile then
 		for _, config in ipairs(dap_config) do
 			config.vmArgs = active_profile.vm_args
 			config.args = active_profile.prog_args
 		end
+		log.debug('set dap config: ', dap_config)
+		-- if dap is already running, need to terminate it to apply new config
+		if nvim_dap.session then
+			nvim_dap.terminate()
+			notify.warn('Terminating current dap session')
+		end
 	end
-
-	log.debug('set dap config: ', dap_config)
-	require('dap').configurations.java = dap_config
+	nvim_dap.configurations.java = dap_config
 end
 
 return M

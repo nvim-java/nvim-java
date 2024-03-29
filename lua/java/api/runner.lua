@@ -5,14 +5,15 @@ local jdtls = require('java.utils.jdtls')
 local notify = require('java-core.utils.notify')
 local DapSetup = require('java-dap.api.setup')
 local ui = require('java.utils.ui')
-local profile_config = require('java.api.profile_config').config
+local profile_config = require('java.api.profile_config')
+local class = require('java-core.utils.class')
 
 --- @class BuiltInMainRunner
 --- @field win  number
 --- @field bufnr number
 --- @field job_id number
 --- @field is_open boolean
-local BuiltInMainRunner = {}
+local BuiltInMainRunner = class()
 
 function BuiltInMainRunner:_set_up_buffer_autocmd()
 	local group = vim.api.nvim_create_augroup('logger', { clear = true })
@@ -25,14 +26,8 @@ function BuiltInMainRunner:_set_up_buffer_autocmd()
 	})
 end
 
-function BuiltInMainRunner:new()
-	local o = {
-		is_open = false,
-	}
-
-	setmetatable(o, self)
-	self.__index = self
-	return o
+function BuiltInMainRunner:_init()
+	self.is_open = false
 end
 
 function BuiltInMainRunner:stop()
@@ -139,9 +134,9 @@ end
 --- @class RunnerApi
 --- @field client LspClient
 --- @field private dap java.DapSetup
-local RunnerApi = {}
+local RunnerApi = class()
 
-function RunnerApi:new(args)
+function RunnerApi:_init(args)
 	local o = {
 		client = args.client,
 	}
@@ -194,7 +189,7 @@ function RunnerApi:run_app(callback, args)
 	local main_class = enrich_config.mainClass
 	local java_exec = enrich_config.javaExec
 
-	local active_profile = profile_config:get_active_profile()
+	local active_profile = profile_config.get_active_profile()
 
 	local vm_args = ''
 	local prog_args = ''
@@ -224,7 +219,7 @@ local M = {
 --- @param args string
 function M.run_app(callback, args)
 	return async(function()
-			return RunnerApi:new(jdtls()):run_app(callback, args)
+			return RunnerApi(jdtls()):run_app(callback, args)
 		end)
 		.catch(get_error_handler('failed to run app'))
 		.run()
@@ -233,7 +228,7 @@ end
 --- @param opts {}
 function M.built_in.run_app(opts)
 	if not M.BuildInRunner then
-		M.BuildInRunner = BuiltInMainRunner:new()
+		M.BuildInRunner = BuiltInMainRunner()
 	end
 	M.run_app(function(cmd)
 		M.BuildInRunner:run_app(cmd)

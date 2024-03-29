@@ -5,12 +5,12 @@ local DapSetup = require('java-dap.api.setup')
 local mock_client = { jdtls_args = {} }
 local runner = require('java.api.runner')
 local async = require('java-core.utils.async').sync
-local ProfileConfig = require('java.api.profile_config').config
+local profile_config = require('java.api.profile_config')
 
-local RunnerApi = runner.RunnerApi:new({ client = mock_client })
+local RunnerApi = runner.RunnerApi({ client = mock_client })
 
 describe('java-core.api.runner', function()
-	it('RunnerApi:new', function()
+	it('RunnerApi()', function()
 		local mock_dap = DapSetup(mock_client)
 		assert.same(RunnerApi.client, mock_client)
 		assert.same(RunnerApi.dap, mock_dap)
@@ -93,7 +93,7 @@ describe('java-core.api.runner', function()
 			}
 		end
 
-		RunnerApi.profile_config = {}
+		RunnerApi.profile_config = profile_config
 		RunnerApi.profile_config.get_active_profile = function()
 			return nil
 		end
@@ -125,7 +125,7 @@ describe('java-core.api.runner', function()
 			}
 		end
 
-		RunnerApi.profile_config = ProfileConfig
+		RunnerApi.profile_config = profile_config
 		RunnerApi.profile_config.get_active_profile = function()
 			return {
 				prog_args = 'profile_prog_args',
@@ -148,7 +148,7 @@ describe('java-core.api.runner', function()
 	end)
 
 	it('BuildInRunner:new', function()
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		assert.equals(built_in_main_runner.is_open, false)
 	end)
 
@@ -161,7 +161,7 @@ describe('java-core.api.runner', function()
 		local api = mock(vim.api, true)
 		api.nvim_get_current_win.returns(1)
 
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		built_in_main_runner.bufnr = 1
 		built_in_main_runner.is_open = true
 		spy.on(built_in_main_runner, '_set_up_buffer_autocmd')
@@ -178,7 +178,7 @@ describe('java-core.api.runner', function()
 	it('BuildInRunner:_set_up_buffer_autocmd', function()
 		local api = mock(vim.api, true)
 
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		built_in_main_runner.bufnr = 1
 		built_in_main_runner.is_open = false
 		built_in_main_runner:_set_up_buffer_autocmd()
@@ -204,7 +204,7 @@ describe('java-core.api.runner', function()
 			api.nvim_get_current_buf.returns(mock_current_bufnr)
 			api.nvim_get_mode.returns({ mode = 'i' })
 
-			local built_in_main_runner = runner.BuiltInMainRunner:new()
+			local built_in_main_runner = runner.BuiltInMainRunner()
 			built_in_main_runner.chan = 2
 			built_in_main_runner.bufnr = mock_current_bufnr
 			spy.on(built_in_main_runner, '_scroll_down')
@@ -231,7 +231,7 @@ describe('java-core.api.runner', function()
 			api.nvim_get_current_buf.returns(2)
 			api.nvim_get_mode.returns({ mode = 'i' })
 
-			local built_in_main_runner = runner.BuiltInMainRunner:new()
+			local built_in_main_runner = runner.BuiltInMainRunner()
 			built_in_main_runner.bufnr = 1
 			built_in_main_runner.chan = 2
 			spy.on(built_in_main_runner, '_scroll_down')
@@ -259,7 +259,7 @@ describe('java-core.api.runner', function()
 			api.nvim_get_mode.returns({ mode = 'n' })
 			api.nvim_buf_line_count.returns(3)
 
-			local built_in_main_runner = runner.BuiltInMainRunner:new()
+			local built_in_main_runner = runner.BuiltInMainRunner()
 			built_in_main_runner.bufnr = mock_current_bufnr
 			built_in_main_runner.chan = 2
 			spy.on(built_in_main_runner, '_scroll_down')
@@ -286,7 +286,7 @@ describe('java-core.api.runner', function()
 
 			api.nvim_get_current_buf.returns(mock_current_bufnr)
 
-			local built_in_main_runner = runner.BuiltInMainRunner:new()
+			local built_in_main_runner = runner.BuiltInMainRunner()
 			built_in_main_runner.bufnr = mock_current_bufnr
 			built_in_main_runner.chan = 2
 			built_in_main_runner:_on_exit(0)
@@ -311,7 +311,7 @@ describe('java-core.api.runner', function()
 
 			api.nvim_get_current_buf.returns(mock_current_bufnr)
 
-			local built_in_main_runner = runner.BuiltInMainRunner:new()
+			local built_in_main_runner = runner.BuiltInMainRunner()
 			built_in_main_runner.bufnr = mock_current_bufnr + 1
 			built_in_main_runner.chan = 2
 			built_in_main_runner:_on_exit(0)
@@ -336,7 +336,7 @@ describe('java-core.api.runner', function()
 		api.nvim_create_buf.returns(1)
 		api.nvim_open_term.returns(2)
 
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		built_in_main_runner:run_app({ 'java', '-cp', 'path1:path2', 'mainClass' })
 
 		assert
@@ -367,7 +367,7 @@ describe('java-core.api.runner', function()
 		api.nvim_create_buf.returns(1)
 		api.nvim_open_term.returns(2)
 
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		built_in_main_runner.bufnr = 11
 		built_in_main_runner.job_id = 1
 		built_in_main_runner:run_app({ 'java', '-cp', 'path1:path2', 'mainClass' })
@@ -388,7 +388,7 @@ describe('java-core.api.runner', function()
 
 		api.nvim_buf_line_count.returns(3)
 
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		-- mock private functions
 		built_in_main_runner._set_up_buffer = function() end
 		built_in_main_runner.hide_logs = function() end
@@ -414,7 +414,7 @@ describe('java-core.api.runner', function()
 	it('BuiltInMainRunner:toggle_logs when is_open=false', function()
 		local api = mock(vim.api, true)
 
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		built_in_main_runner.is_open = false
 		spy.on(built_in_main_runner, 'hide_logs')
 
@@ -430,7 +430,7 @@ describe('java-core.api.runner', function()
 		local fn = mock(vim.fn, true)
 		local spy_jobstop = spy.on(fn, 'jobstop')
 
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		built_in_main_runner:stop()
 
 		assert.spy(spy_jobstop).was_not_called()
@@ -443,7 +443,7 @@ describe('java-core.api.runner', function()
 		local spy_cmd = spy.on(vim, 'cmd')
 		local api = mock(vim.api, true)
 
-		local built_in_main_runner = runner.BuiltInMainRunner:new()
+		local built_in_main_runner = runner.BuiltInMainRunner()
 		built_in_main_runner.bufnr = 1
 		built_in_main_runner:hide_logs()
 
@@ -460,9 +460,9 @@ describe('java-core.api.runner', function()
 
 	it('built_in.run_app', function()
 		local built_in_main_runner_mock = mock(runner.BuiltInMainRunner, true)
-		built_in_main_runner_mock.new.returns(built_in_main_runner_mock)
+		built_in_main_runner_mock._init.returns(built_in_main_runner_mock)
 		spy.on(built_in_main_runner_mock, 'run_app')
-		spy.on(built_in_main_runner_mock, 'new')
+		spy.on(built_in_main_runner_mock, '_init')
 
 		runner.run_app = function(callback, args)
 			assert.equals(args, 'args')
@@ -472,7 +472,7 @@ describe('java-core.api.runner', function()
 		runner.built_in.run_app({ args = 'args' })
 
 		assert.not_nil(runner.BuiltInMainRunner)
-		assert.spy(built_in_main_runner_mock.new).was_called()
+		assert.spy(built_in_main_runner_mock._init).was_called()
 		assert.spy(built_in_main_runner_mock.run_app).was_called()
 	end)
 
