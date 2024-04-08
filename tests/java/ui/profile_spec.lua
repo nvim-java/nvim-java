@@ -18,7 +18,7 @@ describe('java.ui.profile', function()
 				is_active = is_active,
 			}
 		end,
-		get_profile_by_name = function()
+		get_profile = function()
 			return {}
 		end,
 		get_all_profiles = function()
@@ -70,7 +70,8 @@ describe('java.ui.profile', function()
 		package.loaded['java.api.profile_config'] = profile_config
 
 		local profile_ui = require('java.ui.profile')
-		local items = profile_ui.ProfileUI.get_tree_node_list_for_menu()
+		local ui = profile_ui.ProfileUI('main_class')
+		local items = ui:get_tree_node_list_for_menu()
 
 		for key, value in pairs(items) do
 			assert.same(expected_menu_items[key].text, value.text)
@@ -91,6 +92,10 @@ describe('java.ui.profile', function()
 
 		assert.same(menu.table2.lines, { menu_list = 'mock_menu_list' })
 		assert.same(menu.table1.border.text.top, '[Profiles]')
+		assert.same(
+			menu.table1.border.text.bottom,
+			'[a]ctivate [d]elete [b]ack [q]uit'
+		)
 		assert(menu.table2.on_change ~= nil)
 		assert(menu.table2.on_submit ~= nil)
 	end)
@@ -99,14 +104,15 @@ describe('java.ui.profile', function()
 		it('successfully', function()
 			local spy_nvim_api = spy.on(vim.api, 'nvim_buf_set_lines')
 
-			profile_config.get_profile_by_name = function(name)
+			profile_config.get_profile = function(name, main_class)
 				assert.same(name, 'target_profile')
+				assert.same(main_class, 'main_class')
 				return profile_config.Profile('vm_args', 'prog_args', 'name', false)
 			end
 			package.loaded['java.api.profile_config'] = profile_config
 
 			local profile_ui = require('java.ui.profile')
-			local ui = profile_ui.ProfileUI()
+			local ui = profile_ui.ProfileUI('main_class')
 			local popup = ui:_get_and_fill_popup('Title', 'name', 'target_profile')
 
 			assert
@@ -122,7 +128,7 @@ describe('java.ui.profile', function()
 
 		it('when target_profile is nil', function()
 			local spy_nvim_api = spy.on(vim.api, 'nvim_buf_set_lines')
-			profile_config.get_profile_by_name = function()
+			profile_config.get_profile = function(_, _)
 				return profile_config.Profile('vm_args', 'prog_args', 'name', false)
 			end
 			package.loaded['java.api.profile_config'] = profile_config
@@ -184,6 +190,8 @@ describe('java.ui.profile', function()
 		assert.same(boxes[1].box.border.text.top, '[Name]')
 		assert.same(boxes[2].box.border.text.top, '[VM arguments]')
 		assert.same(boxes[3].box.border.text.top, '[Program arguments]')
+		assert.same(boxes[3].box.border.text.bottom, '[s]ave [b]ack [q]uit')
+		assert.same(boxes[3].box.border.text.bottom_align, 'center')
 
 		assert.same(boxes[1].options, { grow = 0.2 })
 		assert.same(boxes[2].options, { grow = 0.4 })
@@ -359,8 +367,6 @@ describe('java.ui.profile', function()
 
 	it('openMenu', function()
 		-- mock Menu
-		-- package.loaded['nui.menu'] = MockMenu
-
 		local spy_on_mount = spy.on(MockMenu, 'mount')
 		local spy_on_map = spy.on(MockMenu, 'map')
 		-- mock profile_ui

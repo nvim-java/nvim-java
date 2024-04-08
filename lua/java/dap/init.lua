@@ -90,19 +90,19 @@ function M:config_dap()
 	end
 	local dap_config = self.dap:get_dap_config()
 
-	local active_profile = profile_config.get_active_profile()
-	if active_profile then
-		for _, config in ipairs(dap_config) do
-			config.vmArgs = active_profile.vm_args
-			config.args = active_profile.prog_args
-		end
-		log.debug('set dap config: ', dap_config)
-		-- if dap is already running, need to terminate it to apply new config
-		if nvim_dap.session then
-			nvim_dap.terminate()
-			notify.warn('Terminating current dap session')
+	for _, config in ipairs(dap_config) do
+		local profile = profile_config.get_active_profile(config.name)
+		if profile then
+			config.vmArgs = profile.vm_args
+			config.args = profile.prog_args
 		end
 	end
+	-- if dap is already running, need to terminate it to apply new config
+	if nvim_dap.session then
+		nvim_dap.terminate()
+		notify.warn('Terminating current dap session')
+	end
+	-- end
 	nvim_dap.configurations.java = dap_config
 end
 

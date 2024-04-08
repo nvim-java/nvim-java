@@ -2,7 +2,6 @@ local log = require('java.utils.log')
 local async = require('java-core.utils.async').sync
 local get_error_handler = require('java.handlers.error')
 local jdtls = require('java.utils.jdtls')
-local notify = require('java-core.utils.notify')
 local DapSetup = require('java-dap.api.setup')
 local ui = require('java.utils.ui')
 local profile_config = require('java.api.profile_config')
@@ -137,42 +136,13 @@ end
 local RunnerApi = class()
 
 function RunnerApi:_init(args)
-	local o = {
-		client = args.client,
-	}
-
-	o.dap = DapSetup(args.client)
-	setmetatable(o, self)
-	self.__index = self
-	return o
+	self.client = args.client
+	self.dap = DapSetup(args.client)
 end
 
 function RunnerApi:get_config()
 	local configs = self.dap:get_dap_config()
-	log.debug('dap configs: ', configs)
-
-	local config_names = {}
-	local config_lookup = {}
-	for _, config in ipairs(configs) do
-		if config.projectName then
-			table.insert(config_names, config.name)
-			config_lookup[config.name] = config
-		end
-	end
-
-	if #config_names == 0 then
-		notify.warn('Dap config not found')
-		return
-	end
-
-	if #config_names == 1 then
-		return config_lookup[config_names[1]]
-	end
-
-	local selected_config =
-		ui.select('Select the main class (modul -> mainClass)', config_names)
-
-	return config_lookup[selected_config]
+	return ui.select_from_dap_configs(configs)
 end
 
 --- @param callback fun(cmd)
@@ -189,7 +159,7 @@ function RunnerApi:run_app(callback, args)
 	local main_class = enrich_config.mainClass
 	local java_exec = enrich_config.javaExec
 
-	local active_profile = profile_config.get_active_profile()
+	local active_profile = profile_config.get_active_profile(enrich_config.name)
 
 	local vm_args = ''
 	local prog_args = ''
