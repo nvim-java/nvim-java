@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/nvim-java/nvim-java/compare/v1.3.0...v1.3.1) (2024-04-12)
+
+
+### Bug Fixes
+
+* check existance of profile before modifications ([6c4f1e2](https://github.com/nvim-java/nvim-java/commit/6c4f1e2de5adb9e521947b95eb2ae32d03c61d0a))
+
 ## [1.3.0](https://github.com/nvim-java/nvim-java/compare/v1.2.0...v1.3.0) (2024-04-12)
 
 
