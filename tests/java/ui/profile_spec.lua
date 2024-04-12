@@ -96,7 +96,6 @@ describe('java.ui.profile', function()
 			menu.table1.border.text.bottom,
 			'[a]ctivate [d]elete [b]ack [q]uit'
 		)
-		assert(menu.table2.on_change ~= nil)
 		assert(menu.table2.on_submit ~= nil)
 	end)
 

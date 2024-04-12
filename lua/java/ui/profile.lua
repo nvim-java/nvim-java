@@ -325,7 +325,7 @@ end
 function ProfileUI:openMenu()
 	self.menu = self:get_menu()
 
-	self.menu:on(event.CursorMoved, function(a, b, c, d, e)
+	self.menu:on(event.CursorMoved, function()
 		self.focus_item = self.menu.tree:get_node()
 	end)
 
