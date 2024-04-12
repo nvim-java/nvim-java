@@ -149,7 +149,7 @@ function M.get_profile(profile_name, dap_config_name)
 	return M.project_profiles[dap_config_name][profile_name]
 end
 
---- @param dap_config_name_key string
+--- @param dap_config_name string
 --- @return table<string, Profile>
 function M.get_all_profiles(dap_config_name)
 	return M.project_profiles[dap_config_name] or {}
@@ -157,12 +157,17 @@ end
 --- @param dap_config_name string
 --- @param profile_name string
 function M.set_active_profile(profile_name, dap_config_name)
+	if not M.__has_profile(profile_name, dap_config_name) then
+		return
+	end
+
 	for _, profile in pairs(M.project_profiles[dap_config_name]) do
 		if profile.is_active then
 			profile.is_active = false
 			break
 		end
 	end
+
 	M.project_profiles[dap_config_name][profile_name].is_active = true
 	M.save()
 end
@@ -200,8 +205,23 @@ end
 --- @param dap_config_name string
 --- @param profile_name string
 function M.delete_profile(profile_name, dap_config_name)
+	if not M.__has_profile(profile_name, dap_config_name) then
+		return
+	end
+
 	M.project_profiles[dap_config_name][profile_name] = nil
 	M.save()
+end
+
+---Returns true if a profile exists by given name
+---@param profile_name string
+---@param dap_config_name string
+function M.__has_profile(profile_name, dap_config_name)
+	if M.project_profiles[dap_config_name][profile_name] then
+		return true
+	end
+
+	return false
 end
 
 --- @type Profile
