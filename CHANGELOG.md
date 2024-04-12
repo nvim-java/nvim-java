@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.3.0](https://github.com/nvim-java/nvim-java/compare/v1.2.0...v1.3.0) (2024-04-12)
+
+
+### Features
+
+* run/debug profiles ([#110](https://github.com/nvim-java/nvim-java/issues/110), [#131](https://github.com/nvim-java/nvim-java/issues/131)) ([#146](https://github.com/nvim-java/nvim-java/issues/146)) ([3442006](https://github.com/nvim-java/nvim-java/commit/3442006df0bbfb7fc5a45618d1fe971ce95a97a7))
+
+
+### Bug Fixes
+
+* profile deletion does not work ([#158](https://github.com/nvim-java/nvim-java/issues/158)) ([cb62d07](https://github.com/nvim-java/nvim-java/commit/cb62d076edf5c12f036cb55c121c2fa77becb0f4))
+* typo in java profile ui command ([#156](https://github.com/nvim-java/nvim-java/issues/156)) ([30966b7](https://github.com/nvim-java/nvim-java/commit/30966b7314ffb01acc2886c24ef155bea9a1aaf1))
+
 ## [1.2.0](https://github.com/nvim-java/nvim-java/compare/v1.1.0...v1.2.0) (2024-03-23)
 
 
