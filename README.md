@@ -118,6 +118,10 @@ Yep! That's all :)
 - `JavaTestDebugCurrentMethod` - Debug the test method on the cursor
 - `JavaTestViewLastReport` - Open the last test report in a popup window
 
+### Profiles
+
+- `JavaProfile` - Opens the profiles UI
+
 </details>
 
 ## :computer: APIs
@@ -187,6 +191,12 @@ require('java').test.debug_current_method()
 
 ```lua
 require('java').test.view_last_report()
+```
+
+### Profiles
+
+```lua
+require('java').profile.ui()
 ```
 
 </details>
