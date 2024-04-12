@@ -43,6 +43,7 @@ describe('java.ui.profile', function()
 		self.table1 = table1
 		self.table2 = table2
 	end
+	function MockMenu.on() end
 	function MockMenu.unmount() end
 	function MockMenu.map() end
 	function MockMenu.mount() end
@@ -96,7 +97,6 @@ describe('java.ui.profile', function()
 			menu.table1.border.text.bottom,
 			'[a]ctivate [d]elete [b]ack [q]uit'
 		)
-		assert(menu.table2.on_change ~= nil)
 		assert(menu.table2.on_submit ~= nil)
 	end)
 

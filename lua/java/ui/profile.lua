@@ -1,3 +1,4 @@
+local event = require('nui.utils.autocmd').event
 local Layout = require('nui.layout')
 local Menu = require('nui.menu')
 local Popup = require('nui.popup')
@@ -144,9 +145,6 @@ function ProfileUI:get_menu()
 			close = { '<Esc>', '<C-c>' },
 			submit = { '<CR>', '<Space>' },
 		},
-		on_change = function(item)
-			self.focus_item = item
-		end,
 		on_submit = function(item)
 			if item.text == new_profile then
 				self:_open_profile_editor()
@@ -327,6 +325,10 @@ end
 function ProfileUI:openMenu()
 	self.menu = self:get_menu()
 
+	self.menu:on(event.CursorMoved, function()
+		self.focus_item = self.menu.tree:get_node()
+	end)
+
 	self.menu:mount()
 	-- quit
 	self.menu:map('n', 'q', function()
@@ -352,6 +354,7 @@ local get_error_handler = require('java.handlers.error')
 
 --- @type ProfileUI
 M.ProfileUI = ProfileUI
+
 function M.ui()
 	return async(function()
 			local dap_config = DapSetup(jdtls().client):get_dap_config()
