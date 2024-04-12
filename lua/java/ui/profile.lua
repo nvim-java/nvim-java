@@ -354,6 +354,7 @@ local get_error_handler = require('java.handlers.error')
 
 --- @type ProfileUI
 M.ProfileUI = ProfileUI
+
 function M.ui()
 	return async(function()
 			local dap_config = DapSetup(jdtls().client):get_dap_config()

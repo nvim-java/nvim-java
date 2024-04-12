@@ -43,6 +43,7 @@ describe('java.ui.profile', function()
 		self.table1 = table1
 		self.table2 = table2
 	end
+	function MockMenu.on() end
 	function MockMenu.unmount() end
 	function MockMenu.map() end
 	function MockMenu.mount() end
