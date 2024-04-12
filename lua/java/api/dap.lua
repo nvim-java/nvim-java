@@ -5,6 +5,7 @@ local get_error_handler = require('java.handlers.error')
 local jdtls = require('java.utils.jdtls')
 local async = require('java-core.utils.async').sync
 local notify = require('java-core.utils.notify')
+local project_config = require('java.api.profile_config')
 
 local M = {}
 
@@ -47,8 +48,8 @@ function M.on_jdtls_attach(ev)
 	if server_name == 'jdtls' then
 		log.info('setup java dap config & adapter')
 
+		project_config.setup()
 		M.config_dap()
-
 		-- removing the event handler after configuring dap
 		vim.api.nvim_del_autocmd(M.even_id)
 	end
