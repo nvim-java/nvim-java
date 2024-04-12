@@ -15,11 +15,11 @@ local cmd_map = {
 
 	JavaTestViewLastReport = { java.test.view_last_report },
 
-	JavaRunnerRunMain = { java.runner.built_in.run_app , { nargs = '?' } },
+	JavaRunnerRunMain = { java.runner.built_in.run_app, { nargs = '?' } },
 	JavaRunnerStopMain = { java.runner.built_in.stop_app },
-  JavaRunnerToggleLogs = {java.runner.built_in.toggle_logs},
+	JavaRunnerToggleLogs = { java.runner.built_in.toggle_logs },
 
-	JavaPofile = { java.profile.ui }
+	JavaProfile = { java.profile.ui },
 }
 
 for cmd, details in pairs(cmd_map) do
