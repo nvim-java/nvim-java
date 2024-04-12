@@ -1,4 +1,4 @@
-*nvim-java.txt*         For Neovim >= 0.9.4         Last change: 2024 March 24
+*nvim-java.txt*         For Neovim >= 0.9.4         Last change: 2024 April 12
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -14,6 +14,7 @@ Table of Contents                                *nvim-java-table-of-contents*
   - Configuration                                    |nvim-java-configuration|
   - Architecture                                      |nvim-java-architecture|
   - Projects Acknowledgement              |nvim-java-projects-acknowledgement|
+2. Links                                                     |nvim-java-links|
 
 ==============================================================================
 1. nvim-java                                             *nvim-java-nvim-java*
@@ -138,6 +139,11 @@ TEST ~
 - `JavaTestViewLastReport` - Open the last test report in a popup window
 
 
+PROFILES ~
+
+- `JavaProfile` - Opens the profiles UI
+
+
 APIS                                                          *nvim-java-apis*
 
 :small_orange_diamond:details ~
@@ -206,6 +212,13 @@ TEST ~
 
 >lua
     require('java').test.view_last_report()
+<
+
+
+PROFILES ~
+
+>lua
+    require('java').profile.ui()
 <
 
 
