@@ -12,6 +12,14 @@ function M.select(prompt, values)
 	end)
 end
 
+function M.input(prompt)
+	return await(function(callback)
+		vim.ui.input({
+			prompt = prompt,
+		}, callback)
+	end)
+end
+
 ---@param configs table
 function M.select_from_dap_configs(configs)
 	local config_names = {}

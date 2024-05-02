@@ -7,6 +7,7 @@ local test = require('java.api.test')
 local dap = require('java.api.dap')
 local runner = require('java.api.runner')
 local profile_ui = require('java.ui.profile')
+local refactor = require('java.api.refactor')
 
 local global_config = require('java.config')
 
@@ -49,8 +50,15 @@ M.test.view_last_report = test.view_last_report
 ----------------------------------------------------------------------
 --                            Manipulate                            --
 ----------------------------------------------------------------------
+
 M.manipulate = {}
 -- M.manipulate.organize_imports = {}
+
+----------------------------------------------------------------------
+--                             Refactor                             --
+----------------------------------------------------------------------
+M.refactor = {}
+M.refactor.extract_variable = refactor.extract_variable
 
 ----------------------------------------------------------------------
 --                            Runner APIs                           --
