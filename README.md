@@ -122,6 +122,10 @@ Yep! That's all :)
 
 - `JavaProfile` - Opens the profiles UI
 
+### Refactor
+
+- `JavaRefactorExtractVariable` - Create a variable from returned value at cursor
+
 </details>
 
 ## :computer: APIs
@@ -197,6 +201,14 @@ require('java').test.view_last_report()
 
 ```lua
 require('java').profile.ui()
+```
+
+### Refactor
+
+- `extract_variable` - Create a variable from returned value at cursor
+
+```lua
+require('java').refactor.extract_variable()
 ```
 
 </details>

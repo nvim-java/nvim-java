@@ -1,3 +1,4 @@
+local notify = require('java-core.utils.notify')
 local log = require('java.utils.log')
 
 local pkgs = {
@@ -16,6 +17,21 @@ Please follow the install guide in https://github.com/nvim-java/nvim-java to ins
 		err = [[nvim-lspconfig is not installed. nvim-lspconfig requires nvim-lspconfig to show diagnostics & auto completion.
 Please follow the install guide in https://github.com/nvim-java/nvim-java to install nvim-java]],
 	},
+	{
+		name = 'java-refactor',
+		warn = [[nvim-java-refactor is not installed. nvim-java-refactor requires nvim-java to do code refactoring
+Please add nvim-java-refactor to the current dependency list
+
+{
+	"nvim-java/nvim-java",
+	dependencies = {
+		"nvim-java/nvim-java-refactor",
+		....
+	}
+}
+
+Please follow the install guide in https://github.com/nvim-java/nvim-java to install nvim-java]],
+	},
 }
 
 local M = {}
@@ -31,8 +47,13 @@ function M.neovim_plugin_check()
 		local ok, _ = pcall(require, pkg.name)
 
 		if not ok then
-			log.error(pkg.err)
-			error(pkg.err)
+			if pkg.warn then
+				log.warn(pkg.warn)
+				notify.warn(pkg.warn)
+			else
+				log.error(pkg.err)
+				error(pkg.err)
+			end
 		end
 	end
 end

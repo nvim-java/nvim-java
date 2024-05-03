@@ -20,6 +20,8 @@ local cmd_map = {
 	JavaRunnerToggleLogs = { java.runner.built_in.toggle_logs },
 
 	JavaProfile = { java.profile.ui },
+
+	JavaRefactorExtractVariable = { java.refactor.extract_variable },
 }
 
 for cmd, details in pairs(cmd_map) do
