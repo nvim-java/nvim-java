@@ -1,4 +1,4 @@
-*nvim-java.txt*         For Neovim >= 0.9.4         Last change: 2024 April 12
+*nvim-java.txt*          For Neovim >= 0.9.4          Last change: 2024 May 03
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -144,6 +144,11 @@ PROFILES ~
 - `JavaProfile` - Opens the profiles UI
 
 
+REFACTOR ~
+
+- `JavaRefactorExtractVariable` - Create a variable from returned value at cursor
+
+
 APIS                                                          *nvim-java-apis*
 
 :small_orange_diamond:details ~
@@ -219,6 +224,15 @@ PROFILES ~
 
 >lua
     require('java').profile.ui()
+<
+
+
+REFACTOR ~
+
+- `extract_variable` - Create a variable from returned value at cursor
+
+>lua
+    require('java').refactor.extract_variable()
 <
 
 
