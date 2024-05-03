@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/nvim-java/nvim-java/compare/v1.3.1...v1.4.0) (2024-05-03)
+
+
+### Features
+
+* add extract variable refactor command ([#171](https://github.com/nvim-java/nvim-java/issues/171)) ([0e61713](https://github.com/nvim-java/nvim-java/commit/0e617134db2b540e5cee54856d8805e647f1d42f))
+
 ## [1.3.1](https://github.com/nvim-java/nvim-java/compare/v1.3.0...v1.3.1) (2024-04-12)
 
 
