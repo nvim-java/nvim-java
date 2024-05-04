@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4          Last change: 2024 May 03
+*nvim-java.txt*          For Neovim >= 0.9.4          Last change: 2024 May 04
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -71,6 +71,7 @@ Using lazy.nvim <https://github.com/folke/lazy.nvim>
       'nvim-java/nvim-java',
       dependencies = {
         'nvim-java/lua-async-await',
+        'nvim-java/nvim-java-refactor',
         'nvim-java/nvim-java-core',
         'nvim-java/nvim-java-test',
         'nvim-java/nvim-java-dap',
