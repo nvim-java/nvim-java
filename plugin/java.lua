@@ -21,7 +21,10 @@ local cmd_map = {
 
 	JavaProfile = { java.profile.ui },
 
-	JavaRefactorExtractVariable = { java.refactor.extract_variable },
+	JavaRefactorExtractVariable = {
+		java.refactor.extract_variable,
+		{ range = 2 },
+	},
 }
 
 for cmd, details in pairs(cmd_map) do
