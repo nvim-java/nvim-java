@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/nvim-java/nvim-java/compare/v1.4.0...v1.5.0) (2024-05-05)
+
+
+### Features
+
+* allow extract variable command in visual mode ([0ac2e2f](https://github.com/nvim-java/nvim-java/commit/0ac2e2f5d8a4dc72b2fd249424534cd94d2c7a78))
+
 ## [1.4.0](https://github.com/nvim-java/nvim-java/compare/v1.3.1...v1.4.0) (2024-05-03)
 
 
