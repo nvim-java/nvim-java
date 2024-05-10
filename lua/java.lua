@@ -15,18 +15,18 @@ local M = {}
 
 function M.setup(custom_config)
 	local config =
-		vim.tbl_deep_extend('force', global_config, custom_config or {})
+			vim.tbl_deep_extend('force', global_config, custom_config or {})
 	vim.g.nvim_java_config = config
 
-	nvim_dep.check()
-
-	local is_installing = mason_dep.install(config)
-
-	if not is_installing then
-		setup_wrap.setup(config)
-		decomple_watch.setup()
-		dap.setup_dap_on_lsp_attach()
+	if config.jdk.auto_install then
+		nvim_dep.check()
+		local is_installing = mason_dep.install(config)
+		if is_installing then return end
 	end
+
+	setup_wrap.setup(config)
+	decomple_watch.setup()
+	dap.setup_dap_on_lsp_attach()
 end
 
 ----------------------------------------------------------------------
