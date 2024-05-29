@@ -18,6 +18,7 @@ https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d
 - :white_check_mark: Automatic [DAP](https://github.com/mfussenegger/nvim-dap)
   debug configuration
 - :white_check_mark: Running tests
+- :white_check_mark: Run & Debug profiles
 
 ## :bulb: Why
 
@@ -35,6 +36,10 @@ https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d
 <details>
 
 <summary>:small_orange_diamond:details</summary>
+
+### Q & A
+
+If you face any issues, check our [Q & A](https://github.com/nvim-java/nvim-java/wiki/Q-&-A) wiki to see if that helps
 
 ### Distributions
 
