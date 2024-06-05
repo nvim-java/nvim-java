@@ -18,6 +18,7 @@ local cmd_map = {
 	JavaRunnerRunMain = { java.runner.built_in.run_app, { nargs = '?' } },
 	JavaRunnerStopMain = { java.runner.built_in.stop_app },
 	JavaRunnerToggleLogs = { java.runner.built_in.toggle_logs },
+	JavaRunnerSwitchLogs = { java.runner.built_in.switch_app },
 
 	JavaProfile = { java.profile.ui },
 

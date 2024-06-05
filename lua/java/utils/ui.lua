@@ -26,8 +26,12 @@ function M.select_from_dap_configs(configs)
 	local config_lookup = {}
 	for _, config in ipairs(configs) do
 		if config.projectName then
-			table.insert(config_names, config.name)
-			config_lookup[config.name] = config
+			local key = config.name
+			if config.extra_args then
+				key = key .. ' | ' .. config.extra_args
+			end
+			table.insert(config_names, key)
+			config_lookup[key] = config
 		end
 	end
 
