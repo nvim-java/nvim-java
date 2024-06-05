@@ -100,7 +100,9 @@ function M:config_dap()
 	-- if dap is already running, need to terminate it to apply new config
 	if nvim_dap.session then
 		nvim_dap.terminate()
-		notify.warn('Terminating current dap session')
+		if vim.g.nvim_java_config.notifications.dap then
+			notify.warn('Terminating current dap session')
+		end
 	end
 	-- end
 	nvim_dap.configurations.java = dap_config
