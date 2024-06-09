@@ -188,7 +188,7 @@ describe('java-core.api.runner', function()
 		local running_app = runner.RunningApp({ projectName = 'projectName' })
 
 		spy.on(runner.BuiltInMainRunner, 'set_up_buffer_autocmd')
-		runner.BuiltInMainRunner.set_up_buffer(running_app)
+		runner.BuiltInMainRunner.open_run_window(running_app)
 
 		assert.equals(running_app.is_open, true)
 		assert.equals(running_app.win, 1)
@@ -348,7 +348,7 @@ describe('java-core.api.runner', function()
 			running_app.is_open = true
 			running_app.job_id = 1
 
-			runner.BuiltInMainRunner.on_exit(0, running_app)
+			runner.BuiltInMainRunner.send_chan_exit_code(0, running_app)
 			assert
 				.spy(spy_chensend)
 				.was_called_with(2, '\nProcess finished with exit code 0\n')
@@ -378,7 +378,7 @@ describe('java-core.api.runner', function()
 			running_app.is_open = true
 			running_app.job_id = 1
 
-			runner.BuiltInMainRunner.on_exit(0, running_app)
+			runner.BuiltInMainRunner.send_chan_exit_code(0, running_app)
 			assert
 				.spy(spy_chensend)
 				.was_called_with(2, '\nProcess finished with exit code 0\n')
@@ -407,7 +407,7 @@ describe('java-core.api.runner', function()
 
 		local built_in_main_runner = runner.BuiltInMainRunner()
 
-		runner.BuiltInMainRunner.set_up_buffer = function(selected_app)
+		runner.BuiltInMainRunner.open_run_window = function(selected_app)
 			assert.equals(selected_app, running_app)
 		end
 		runner.BuiltInMainRunner.scroll_down = function(selected_app)
@@ -464,7 +464,7 @@ describe('java-core.api.runner', function()
 		local built_in_main_runner = runner.BuiltInMainRunner()
 		built_in_main_runner.current_app = running_app
 
-		runner.BuiltInMainRunner.set_up_buffer = function(selected_app)
+		runner.BuiltInMainRunner.open_run_window = function(selected_app)
 			assert.equals(selected_app, running_app)
 		end
 		runner.BuiltInMainRunner.scroll_down = function(selected_app)
@@ -504,14 +504,14 @@ describe('java-core.api.runner', function()
 		local running_app = runner.RunningApp()
 		running_app.is_open = true
 
-		runner.BuiltInMainRunner.hide_logs = function(selected_app)
+		runner.BuiltInMainRunner.hide_log = function(selected_app)
 			assert.equals(selected_app, running_app)
 		end
 
 		local spy_set_up_buffer = spy.on(runner.BuiltInMainRunner, 'set_up_buffer')
 		local spy_hide_logs = spy.on(runner.BuiltInMainRunner, 'hide_logs')
 
-		runner.BuiltInMainRunner.toggle_logs(running_app)
+		runner.BuiltInMainRunner.toggle_log(running_app)
 
 		assert.spy(spy_hide_logs).was_called()
 		assert.spy(spy_set_up_buffer).was_not_called()
@@ -526,7 +526,7 @@ describe('java-core.api.runner', function()
 		local running_app = runner.RunningApp()
 		running_app.is_open = false
 
-		runner.BuiltInMainRunner.set_up_buffer = function(selected_app)
+		runner.BuiltInMainRunner.open_run_window = function(selected_app)
 			assert.equals(selected_app, running_app)
 		end
 
@@ -537,7 +537,7 @@ describe('java-core.api.runner', function()
 		local spy_set_up_buffer = spy.on(runner.BuiltInMainRunner, 'set_up_buffer')
 		local spy_hide_logs = spy.on(runner.BuiltInMainRunner, 'hide_logs')
 
-		runner.BuiltInMainRunner.toggle_logs(running_app)
+		runner.BuiltInMainRunner.toggle_log(running_app)
 
 		local call_info = api.nvim_buf_call.calls[1]
 		assert.equals(call_info.vals[1], 1)
@@ -676,7 +676,7 @@ describe('java-core.api.runner', function()
 		local running_app1 = runner.RunningApp({ projectName = 'projectName1' })
 		local running_app2 = runner.RunningApp({ projectName = 'projectName2' })
 
-		runner.BuiltInMainRunner.hide_logs = function(selected_app)
+		runner.BuiltInMainRunner.hide_log = function(selected_app)
 			assert.equals(selected_app, running_app2)
 		end
 
