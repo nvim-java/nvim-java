@@ -64,8 +64,6 @@ M.refactor.extract_variable = refactor.extract_variable
 --                            Runner APIs                           --
 ----------------------------------------------------------------------
 M.runner = {}
-M.runner.run_app = runner.run_app
-
 M.runner.built_in = {}
 M.runner.built_in.run_app = runner.built_in.run_app
 M.runner.built_in.toggle_logs = runner.built_in.toggle_logs
