@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/nvim-java/nvim-java/compare/v1.5.1...v1.6.0) (2024-06-25)
+
+
+### Features
+
+* handle multiple running app ([#182](https://github.com/nvim-java/nvim-java/issues/182)) ([#191](https://github.com/nvim-java/nvim-java/issues/191)) ([ca5cfdb](https://github.com/nvim-java/nvim-java/commit/ca5cfdba0d0629a829d16fa838808be0d5db8baa))
+
 ## [1.5.1](https://github.com/nvim-java/nvim-java/compare/v1.5.0...v1.5.1) (2024-05-29)
 
 
