@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4          Last change: 2024 May 04
+*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 June 25
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -24,6 +24,9 @@ Table of Contents                                *nvim-java-table-of-contents*
 Just install and start writing `public static void main(String[] args)`.
 
 
+  [!WARNING] You cannot use `nvim-java` alongside `nvim-jdtls`. So remove
+  `nvim-jdtls` before installing this
+
 DEMO                                                          *nvim-java-demo*
 
 
@@ -36,6 +39,7 @@ FEATURES                                                  *nvim-java-features*
 - Automatic DAP <https://github.com/mfussenegger/nvim-dap>
     debug configuration
 - Running tests
+- Run & Debug profiles
 
 
 WHY                                                            *nvim-java-why*
@@ -53,6 +57,12 @@ WHY                                                            *nvim-java-why*
 HOW TO INSTALL                                      *nvim-java-how-to-install*
 
 :small_orange_diamond:details ~
+
+
+Q & A ~
+
+If you face any issues, check our Q & A
+<https://github.com/nvim-java/nvim-java/wiki/Q-&-A> wiki to see if that helps
 
 
 DISTRIBUTIONS ~
