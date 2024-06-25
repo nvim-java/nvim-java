@@ -17,22 +17,6 @@ function Runner:_init()
 	self.logger = RunLogger()
 end
 
----Stops the user selected run
-function Runner:stop_run()
-	local selected_run = self:select_run()
-
-	if not selected_run then
-		return
-	end
-
-	if selected_run.job_id ~= nil then
-		vim.fn.jobstop(selected_run.job_id)
-		vim.fn.jobwait({ selected_run.job_id }, 1000)
-		selected_run.job_id = nil
-		self.logger:set_buffer(selected_run.bufnr)
-	end
-end
-
 ---Starts a new run
 ---@param args string
 function Runner:start_run(args)
@@ -48,33 +32,25 @@ function Runner:start_run(args)
 	if self.runs[dap_config.mainClass] then
 		run = self.runs[dap_config.mainClass]
 	else
-		run = Run(dap_config)
+		run = Run(dap_config, cmd)
 		self.runs[dap_config.mainClass] = run
 	end
 
 	self.curr_run = run
-	self.logger:set_buffer(run.bufnr)
+	self.logger:set_buffer(run.buffer)
 
-	run.chan = vim.api.nvim_open_term(run.bufnr, {
-		on_input = function(_, _, _, data)
-			if run.job_id then
-				vim.fn.chansend(run.job_id, data)
-			end
-		end,
-	})
+	run:start()
+end
 
-	local cmd_str = table.concat(cmd, ' ')
-	vim.fn.chansend(run.chan, cmd_str)
+---Stops the user selected run
+function Runner:stop_run()
+	local run = self:select_run()
 
-	run.job_id = vim.fn.jobstart(cmd_str, {
-		pty = true,
-		on_stdout = function(_, data)
-			Runner.on_stdout(data, run)
-		end,
-		on_exit = function(_, exit_code)
-			Runner.send_chan_exit_code(exit_code, run)
-		end,
-	})
+	if not run then
+		return
+	end
+
+	run:stop()
 end
 
 function Runner:toggle_open_log()
@@ -82,7 +58,7 @@ function Runner:toggle_open_log()
 		self.logger:close()
 	else
 		if self.curr_run then
-			self.logger:create(self.curr_run.bufnr)
+			self.logger:create(self.curr_run.buffer)
 		end
 	end
 end
@@ -96,32 +72,7 @@ function Runner:switch_log()
 	end
 
 	self.curr_run = selected_run
-	self.logger:set_buffer(selected_run.bufnr)
-end
-
----@private
----@param exit_code number
----@param run java.Run
-function Runner.send_chan_exit_code(exit_code, run)
-	local exit_message = 'Process finished with exit code ' .. exit_code
-
-	vim.fn.chansend(run.chan, '\n' .. exit_message .. '\n')
-
-	local current_buf = vim.api.nvim_get_current_buf()
-
-	if current_buf == run.bufnr then
-		vim.cmd('stopinsert')
-	end
-
-	vim.notify(run.dap_config.name .. ' ' .. exit_message)
-	run.running_status = exit_message
-end
-
----@private
----@param data string[]
----@param run java.Run
-function Runner.on_stdout(data, run)
-	vim.fn.chansend(run.chan, data)
+	self.logger:set_buffer(selected_run.buffer)
 end
 
 ---Prompt the user to select an active run and returns the selected run
@@ -131,7 +82,7 @@ function Runner:select_run()
 	local active_main_classes = {} ---@type string[]
 
 	for _, run in pairs(self.runs) do
-		table.insert(active_main_classes, run.dap_config.mainClass)
+		table.insert(active_main_classes, run.main_class)
 	end
 
 	local selected_main = ui.select('Select main class', active_main_classes)
@@ -148,17 +99,13 @@ end
 ---@return string[] | nil
 ---@return java-dap.DapLauncherConfig | nil
 function Runner.select_dap_config(args)
-	local client = jdtls()
-	local dap = DapSetup(client)
-
+	local dap = DapSetup(jdtls())
 	local dap_config_list = dap:get_dap_config()
 	local selected_dap_config = ui.select_from_dap_configs(dap_config_list)
 
 	if not selected_dap_config then
 		return nil, nil
 	end
-
-	selected_dap_config.request = 'launch'
 
 	local enriched_config = dap:enrich_config(selected_dap_config)
 
