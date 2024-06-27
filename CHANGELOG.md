@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/nvim-java/nvim-java/compare/v1.6.0...v1.6.1) (2024-06-27)
+
+
+### Bug Fixes
+
+* when the same main class is ran again, first process is not stopped ([1fae8de](https://github.com/nvim-java/nvim-java/commit/1fae8de1327167ac4b9f744970b2b6b7c7652874))
+
 ## [1.6.0](https://github.com/nvim-java/nvim-java/compare/v1.5.1...v1.6.0) (2024-06-25)
 
 
