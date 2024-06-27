@@ -5,10 +5,10 @@ local notify = require('java-core.utils.notify')
 ---@field name string
 ---@field main_class string
 ---@field buffer number
+---@field is_running boolean
 ---@field private cmd string
 ---@field private term_chan_id number
 ---@field private job_chan_id number | nil
----@field private is_running boolean
 ---@field private is_failure boolean
 local Run = class()
 

@@ -26,11 +26,13 @@ function Runner:start_run(args)
 		return
 	end
 
-	local run ---@as java.Run
+	local run = self.runs[dap_config.mainClass]
 
 	-- get the default run if exist or create new run
-	if self.runs[dap_config.mainClass] then
-		run = self.runs[dap_config.mainClass]
+	if run then
+		if run.is_running then
+			run:stop()
+		end
 	else
 		run = Run(dap_config, cmd)
 		self.runs[dap_config.mainClass] = run
