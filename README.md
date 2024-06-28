@@ -55,28 +55,7 @@ If you face any issues, check our [Q & A](https://github.com/nvim-java/nvim-java
 Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
-return {
-  'nvim-java/nvim-java',
-  dependencies = {
-    'nvim-java/lua-async-await',
-    'nvim-java/nvim-java-refactor',
-    'nvim-java/nvim-java-core',
-    'nvim-java/nvim-java-test',
-    'nvim-java/nvim-java-dap',
-    'MunifTanjim/nui.nvim',
-    'neovim/nvim-lspconfig',
-    'mfussenegger/nvim-dap',
-    {
-      'williamboman/mason.nvim',
-      opts = {
-        registries = {
-          'github:nvim-java/mason-registry',
-          'github:mason-org/mason-registry',
-        },
-      },
-    }
-  },
-}
+return {'nvim-java/nvim-java'}
 ```
 
 - Setup nvim-java before `lspconfig`
