@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/nvim-java/nvim-java/compare/v1.6.1...v1.7.0) (2024-06-28)
+
+
+### Features
+
+* add lazy.lua file to declare dependencies on lazy.nvim ([#215](https://github.com/nvim-java/nvim-java/issues/215)) ([1349ac5](https://github.com/nvim-java/nvim-java/commit/1349ac545feb37459a04a0a37d41496463c63c87))
+
 ## [1.6.1](https://github.com/nvim-java/nvim-java/compare/v1.6.0...v1.6.1) (2024-06-27)
 
 
