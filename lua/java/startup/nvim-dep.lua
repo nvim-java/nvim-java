@@ -1,4 +1,3 @@
-local notify = require('java-core.utils.notify')
 local log = require('java.utils.log')
 
 local pkgs = {
@@ -36,26 +35,33 @@ Please follow the install guide in https://github.com/nvim-java/nvim-java to ins
 
 local M = {}
 
-function M.check()
+function M.is_valid()
 	log.info('check neovim plugin dependencies')
-	M.neovim_plugin_check()
-end
 
----@private
-function M.neovim_plugin_check()
 	for _, pkg in ipairs(pkgs) do
 		local ok, _ = pcall(require, pkg.name)
 
 		if not ok then
 			if pkg.warn then
-				log.warn(pkg.warn)
-				notify.warn(pkg.warn)
+				return {
+					success = false,
+					continue = true,
+					message = pkg.warn,
+				}
 			else
-				log.error(pkg.err)
-				error(pkg.err)
+				return {
+					success = false,
+					continue = false,
+					message = pkg.err,
+				}
 			end
 		end
 	end
+
+	return {
+		success = true,
+		continue = true,
+	}
 end
 
 return M
