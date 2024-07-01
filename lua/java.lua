@@ -1,24 +1,17 @@
 local decomple_watch = require('java.startup.decompile-watcher')
 local mason_dep = require('java.startup.mason-dep')
 local setup_wrap = require('java.startup.lspconfig-setup-wrap')
+local startup_check = require('java.startup.startup-check')
 
 local test = require('java.api.test')
 local dap = require('java.api.dap')
 local runner = require('java.api.runner')
 local profile_ui = require('java.ui.profile')
 local refactor = require('java.api.refactor')
-local log = require('java.utils.log')
-local notify = require('java-core.utils.notify')
 
 local global_config = require('java.config')
 
-local M = {
-	checks = {
-		require('java.startup.exec-order-check'),
-		require('java.startup.duplicate-setup-check'),
-		require('java.startup.nvim-dep'),
-	},
-}
+local M = {}
 
 function M.setup(custom_config)
 	local config =
@@ -26,22 +19,8 @@ function M.setup(custom_config)
 
 	vim.g.nvim_java_config = config
 
-	for _, check in ipairs(M.checks) do
-		local check_res = check.is_valid()
-
-		if check_res.message then
-			if not check_res.success then
-				log.error(check_res.message)
-				notify.error(check_res.message)
-			else
-				log.warn(check_res.message)
-				notify.warn(check_res.message)
-			end
-		end
-
-		if not check_res.continue then
-			return
-		end
+	if not startup_check() then
+		return
 	end
 
 	local is_installing = mason_dep.install(config)
