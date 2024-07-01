@@ -1,7 +1,7 @@
 local decomple_watch = require('java.startup.decompile-watcher')
 local mason_dep = require('java.startup.mason-dep')
-local nvim_dep = require('java.startup.nvim-dep')
 local setup_wrap = require('java.startup.lspconfig-setup-wrap')
+local startup_check = require('java.startup.startup-check')
 
 local test = require('java.api.test')
 local dap = require('java.api.dap')
@@ -16,9 +16,12 @@ local M = {}
 function M.setup(custom_config)
 	local config =
 		vim.tbl_deep_extend('force', global_config, custom_config or {})
+
 	vim.g.nvim_java_config = config
 
-	nvim_dep.check()
+	if not startup_check() then
+		return
+	end
 
 	local is_installing = mason_dep.install(config)
 
