@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/nvim-java/nvim-java/compare/v1.7.0...v1.8.0) (2024-07-01)
+
+
+### Features
+
+* add validations for exec order, duplicate setup calls ([#219](https://github.com/nvim-java/nvim-java/issues/219)) ([15bc822](https://github.com/nvim-java/nvim-java/commit/15bc822acb1e11983bde70f436dd17d41ba76925))
+
 ## [1.7.0](https://github.com/nvim-java/nvim-java/compare/v1.6.1...v1.7.0) (2024-06-28)
 
 
