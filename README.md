@@ -13,7 +13,7 @@ Just install and start writing `public static void main(String[] args)`.
 
 ## :loudspeaker: Demo
 
-https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d5c2e15647bc
+<https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d5c2e15647bc>
 
 ## :dizzy: Features
 
@@ -44,9 +44,10 @@ https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d
 
 If you face any issues, check our [Q & A](https://github.com/nvim-java/nvim-java/wiki/Q-&-A) wiki to see if that helps
 
-### Distributions
+### Distributions & Templates
 
 - [Lazyvim](https://github.com/nvim-java/nvim-java/wiki/Lazyvim)
+- [Kickstart](https://github.com/nvim-java/nvim-java/wiki/Kickstart)
 
 ### Custom
 
