@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 01
+*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 02
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -30,7 +30,7 @@ Just install and start writing `public static void main(String[] args)`.
 DEMO                                                          *nvim-java-demo*
 
 
-https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d5c2e15647bc
+<https://github.com/nvim-java/nvim-java/assets/18459807/047c8c46-9a0a-4869-b342-d5c2e15647bc>
 
 
 FEATURES                                                  *nvim-java-features*
@@ -65,9 +65,10 @@ If you face any issues, check our Q & A
 <https://github.com/nvim-java/nvim-java/wiki/Q-&-A> wiki to see if that helps
 
 
-DISTRIBUTIONS ~
+DISTRIBUTIONS & TEMPLATES ~
 
 - Lazyvim <https://github.com/nvim-java/nvim-java/wiki/Lazyvim>
+- Kickstart <https://github.com/nvim-java/nvim-java/wiki/Kickstart>
 
 
 CUSTOM ~
