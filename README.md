@@ -316,6 +316,12 @@ want, following options are available
     -- Set following property value to false to disable the notification if
     -- you know what you are doing
     duplicate_setup_calls = true,
+
+    -- nvim-java checks if nvim-java/mason-registry is added correctly to
+    -- mason.nvim plugin.
+    -- IF it's not registered correctly, an error will be thrown and nvim-java
+    -- will stop setup
+    invalid_mason_registry = true,
   },
 }
 ```
