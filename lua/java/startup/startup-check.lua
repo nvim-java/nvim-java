@@ -5,6 +5,13 @@ local function get_checkers()
 	local config = vim.g.nvim_java_config
 	local checks = {}
 
+	if config.verification.invalid_mason_registry then
+		table.insert(
+			checks,
+			select(1, require('java.startup.mason-registry-check'))
+		)
+	end
+
 	if config.verification.invalid_order then
 		table.insert(checks, select(1, require('java.startup.exec-order-check')))
 	end

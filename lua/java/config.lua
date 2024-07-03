@@ -4,7 +4,7 @@
 ---@field java_debug_adapter { enable: boolean }
 ---@field jdk { auto_install: boolean }
 ---@field notifications { dap: boolean }
----@field verification { invalid_order: boolean, duplicate_setup_calls: boolean }
+---@field verification { invalid_order: boolean, duplicate_setup_calls: boolean, invalid_mason_registry: boolean }
 local config = {
 	--  list of file that exists in root of the project
 	root_markers = {
@@ -57,6 +57,12 @@ local config = {
 		-- Set following property value to false to disable the notification if
 		-- you know what you are doing
 		duplicate_setup_calls = true,
+
+		-- nvim-java checks if nvim-java/mason-registry is added correctly to
+		-- mason.nvim plugin.
+		-- IF it's not registered correctly, an error will be thrown and nvim-java
+		-- will stop setup
+		invalid_mason_registry = true,
 	},
 }
 
