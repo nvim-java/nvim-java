@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/nvim-java/nvim-java/compare/v1.8.0...v1.9.0) (2024-07-03)
+
+
+### Features
+
+* add mason registry check ([#225](https://github.com/nvim-java/nvim-java/issues/225)) ([ef7597d](https://github.com/nvim-java/nvim-java/commit/ef7597d158f0687c8c0bd2c11e5907c32e52574f))
+
 ## [1.8.0](https://github.com/nvim-java/nvim-java/compare/v1.7.0...v1.8.0) (2024-07-01)
 
 
