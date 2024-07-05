@@ -23,6 +23,10 @@ function M.setup(config)
 			table.insert(jdtls_plugins, 'java-debug-adapter')
 		end
 
+		if config.spring_boot_tools then
+			table.insert(jdtls_plugins, 'spring-boot-tools')
+		end
+
 		local default_config = server.get_config({
 			root_markers = config.root_markers,
 			jdtls_plugins = jdtls_plugins,
