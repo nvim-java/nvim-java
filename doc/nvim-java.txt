@@ -35,6 +35,7 @@ DEMO                                                          *nvim-java-demo*
 
 FEATURES                                                  *nvim-java-features*
 
+- Spring boot tools
 - Diagnostics & Auto Completion
 - Automatic DAP <https://github.com/mfussenegger/nvim-dap>
     debug configuration
@@ -49,6 +50,7 @@ WHY                                                            *nvim-java-why*
 - Realtime server settings updates is possible using neoconf <https://github.com/folke/neoconf.nvim>
 - Auto loads necessary `jdtls` plugins
     - Supported plugins are,
+        - `spring-boot-tools`
         - `lombok`
         - `java-test`
         - `java-debug-adapter`
