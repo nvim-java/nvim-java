@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/nvim-java/nvim-java/compare/v1.9.0...v1.9.1) (2024-07-05)
+
+
+### Bug Fixes
+
+* get_client func is failing on older neovim ([bb7d586](https://github.com/nvim-java/nvim-java/commit/bb7d586161bf3e10153dc6a1180984d310c025fe))
+
 ## [1.9.0](https://github.com/nvim-java/nvim-java/compare/v1.8.0...v1.9.0) (2024-07-03)
 
 
