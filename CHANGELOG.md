@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/nvim-java/nvim-java/compare/v1.9.1...v1.10.0) (2024-07-05)
+
+
+### Features
+
+* add spring boot tools support ([#232](https://github.com/nvim-java/nvim-java/issues/232)) ([028e870](https://github.com/nvim-java/nvim-java/commit/028e870c5a69cf5ee68e4776e9614a664cc65871))
+
 ## [1.9.1](https://github.com/nvim-java/nvim-java/compare/v1.9.0...v1.9.1) (2024-07-05)
 
 
