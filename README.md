@@ -17,6 +17,7 @@ Just install and start writing `public static void main(String[] args)`.
 
 ## :dizzy: Features
 
+- :white_check_mark: Spring boot tools
 - :white_check_mark: Diagnostics & Auto Completion
 - :white_check_mark: Automatic [DAP](https://github.com/mfussenegger/nvim-dap)
   debug configuration
@@ -30,6 +31,7 @@ Just install and start writing `public static void main(String[] args)`.
 - Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
 - Auto loads necessary `jdtls` plugins
   - Supported plugins are,
+    - `spring-boot-tools`
     - `lombok`
     - `java-test`
     - `java-debug-adapter`
