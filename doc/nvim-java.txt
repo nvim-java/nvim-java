@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 03
+*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 05
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -307,6 +307,10 @@ want, following options are available
     
       -- load java debugger plugins
       java_debug_adapter = {
+        enable = true,
+      },
+    
+      spring_boot_tools = {
         enable = true,
       },
     
