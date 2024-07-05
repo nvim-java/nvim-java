@@ -2,6 +2,7 @@
 ---@field root_markers string[]
 ---@field java_test { enable: boolean }
 ---@field java_debug_adapter { enable: boolean }
+---@field spring_boot_tools { enable: boolean }
 ---@field jdk { auto_install: boolean }
 ---@field notifications { dap: boolean }
 ---@field verification { invalid_order: boolean, duplicate_setup_calls: boolean, invalid_mason_registry: boolean }
@@ -26,6 +27,10 @@ local config = {
 
 	-- load java debugger plugins
 	java_debug_adapter = {
+		enable = true,
+	},
+
+	spring_boot_tools = {
 		enable = true,
 	},
 

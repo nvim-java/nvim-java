@@ -288,6 +288,10 @@ want, following options are available
     enable = true,
   },
 
+  spring_boot_tools = {
+    enable = true,
+  },
+
   jdk = {
     -- install jdk using mason.nvim
     auto_install = true,

@@ -6,6 +6,8 @@ local async = require('java-core.utils.async')
 local lazy = require('java.ui.lazy')
 local sync = async.sync
 
+local List = require('java-core.utils.list')
+
 local M = {}
 
 ---Install mason package dependencies for nvim-java
@@ -42,19 +44,26 @@ function M.refresh_and_install(packages)
 	mason_util.install_pkgs(packages)
 end
 
+---Returns a list of dependency packages
+---@param config java.Config
+---@return table
 function M.get_pkg_list(config)
-	local dependecies = {
+	local deps = List:new({
 		{ name = 'jdtls', version = 'v1.31.0' },
 		{ name = 'lombok-nightly', version = 'nightly' },
 		{ name = 'java-test', version = '0.40.1' },
 		{ name = 'java-debug-adapter', version = '0.55.0' },
-	}
+	})
 
 	if config.jdk.auto_install then
-		table.insert(dependecies, { name = 'openjdk-17', version = '17.0.2' })
+		deps:push({ name = 'openjdk-17', version = '17.0.2' })
 	end
 
-	return dependecies
+	if config.spring_boot_tools.enable then
+		deps:push({ name = 'spring-boot-tools', version = '1.55.1' })
+	end
+
+	return deps
 end
 
 return M
