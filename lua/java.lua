@@ -8,6 +8,7 @@ local dap = require('java.api.dap')
 local runner = require('java.api.runner')
 local profile_ui = require('java.ui.profile')
 local refactor = require('java.api.refactor')
+local build_api = require('java.api.build')
 
 local global_config = require('java.config')
 
@@ -31,6 +32,12 @@ function M.setup(custom_config)
 		dap.setup_dap_on_lsp_attach()
 	end
 end
+
+----------------------------------------------------------------------
+--                        Experimental APIs                         --
+----------------------------------------------------------------------
+M.build = {}
+M.build.build_workspace = build_api.full_build_workspace
 
 ----------------------------------------------------------------------
 --                             DAP APIs                             --

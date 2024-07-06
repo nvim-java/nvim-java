@@ -83,6 +83,10 @@ Yep! That's all :)
 
 <summary>:small_orange_diamond:details</summary>
 
+### Build
+
+- `JavaBuildWorkspace` - Runs a full workspace build
+
 ### Runner
 
 - `JavaRunnerRunMain` - Runs the application or selected main class (if there
@@ -124,6 +128,14 @@ Yep! That's all :)
 <details>
 
 <summary>:small_orange_diamond:details</summary>
+
+### Build
+
+- `build.build_workspace` - Runs a full workspace build
+
+```lua
+require('java').build.build_workspace()
+```
 
 ### Runner
 
@@ -397,7 +409,14 @@ For instance, to run the current test,
 
 ## :bookmark_tabs: Projects Acknowledgement
 
-[nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) is a plugin that follows
-"Keep it simple, stupid!" approach. If you love customizing things by yourself,
-then give nvim-jdtls a try. I may or may not have copied some code :wink:
-Beauty of Open source!
+- [spring-boot.nvim](https://github.com/JavaHello/spring-boot.nvim) is the one
+  that starts sts4 & do other necessary `jdtls` `sts4` sync command registration
+  in `nvim-java`.
+
+- [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls) is a plugin that follows
+  "Keep it simple, stupid!" approach. If you love customizing things by yourself,
+  then give nvim-jdtls a try.
+
+> [!WARNING]
+> You cannot use `nvim-java` alongside `nvim-jdtls`. So remove `nvim-jdtls`
+> before installing this

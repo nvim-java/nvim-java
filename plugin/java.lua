@@ -5,6 +5,8 @@ local function c(cmd, callback, opts)
 end
 
 local cmd_map = {
+	JavaBuildWorkspace = { java.build.build_workspace },
+
 	JavaDapConfig = { java.dap.config_dap },
 
 	JavaTestRunCurrentClass = { java.test.run_current_class },
