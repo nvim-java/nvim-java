@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/nvim-java/nvim-java/compare/v1.10.0...v1.11.0) (2024-07-06)
+
+
+### Features
+
+* add build workspace command ([4d92c3d](https://github.com/nvim-java/nvim-java/commit/4d92c3d8552aa3c80a3f4a98754e570a564addf5))
+
 ## [1.10.0](https://github.com/nvim-java/nvim-java/compare/v1.9.1...v1.10.0) (2024-07-05)
 
 
