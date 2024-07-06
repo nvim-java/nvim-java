@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 05
+*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 06
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -103,6 +103,11 @@ COMMANDS                                                  *nvim-java-commands*
 :small_orange_diamond:details ~
 
 
+BUILD ~
+
+- `JavaBuildWorkspace` - Runs a full workspace build
+
+
 RUNNER ~
 
 - `JavaRunnerRunMain` - Runs the application or selected main class (if there
@@ -145,6 +150,15 @@ REFACTOR ~
 APIS                                                          *nvim-java-apis*
 
 :small_orange_diamond:details ~
+
+
+BUILD ~
+
+- `build.build_workspace` - Runs a full workspace build
+
+>lua
+    require('java').build.build_workspace()
+<
 
 
 RUNNER ~
@@ -415,11 +429,16 @@ For instance, to run the current test,
 
 PROJECTS ACKNOWLEDGEMENT                  *nvim-java-projects-acknowledgement*
 
-nvim-jdtls <https://github.com/mfussenegger/nvim-jdtls> is a plugin that
-follows "Keep it simple, stupid!" approach. If you love customizing things by
-yourself, then give nvim-jdtls a try. I may or may not have copied some code
-Beautyof Open source!
+- spring-boot.nvim <https://github.com/JavaHello/spring-boot.nvim> is the one
+    that starts sts4 & do other necessary `jdtls` `sts4` sync command registration
+    in `nvim-java`.
+- nvim-jdtls <https://github.com/mfussenegger/nvim-jdtls> is a plugin that
+    follows "Keep it simple, stupid!" approach. If you love customizing things by
+    yourself, then give nvim-jdtls a try.
 
+
+  [!WARNING] You cannot use `nvim-java` alongside `nvim-jdtls`. So remove
+  `nvim-jdtls` before installing this
 ==============================================================================
 2. Links                                                     *nvim-java-links*
 
