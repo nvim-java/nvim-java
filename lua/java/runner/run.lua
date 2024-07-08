@@ -6,6 +6,7 @@ local notify = require('java-core.utils.notify')
 ---@field main_class string
 ---@field buffer number
 ---@field is_running boolean
+---@field is_manually_stoped boolean
 ---@field private cmd string
 ---@field private term_chan_id number
 ---@field private job_chan_id number | nil
@@ -46,6 +47,7 @@ function Run:stop()
 		return
 	end
 
+	self.is_manually_stoped = true
 	vim.fn.jobstop(self.job_chan_id)
 	vim.fn.jobwait({ self.job_chan_id }, 1000)
 	self.job_chan_id = nil
@@ -77,8 +79,9 @@ function Run:on_job_exit(exit_code)
 
 	self.is_running = false
 
-	if exit_code == 0 then
+	if exit_code == 0 or self.is_manually_stoped then
 		self.is_failure = false
+		self.is_manually_stoped = false
 	else
 		self.is_failure = true
 		notify.error(string.format('%s %s', self.name, message))
