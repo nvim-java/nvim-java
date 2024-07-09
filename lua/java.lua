@@ -1,3 +1,5 @@
+require('java.commands')
+
 local decomple_watch = require('java.startup.decompile-watcher')
 local mason_dep = require('java.startup.mason-dep')
 local setup_wrap = require('java.startup.lspconfig-setup-wrap')
@@ -10,17 +12,23 @@ local profile_ui = require('java.ui.profile')
 local refactor = require('java.api.refactor')
 local build_api = require('java.api.build')
 local settings_api = require('java.api.settings')
-local commands = require('java.commands')
 
 local global_config = require('java.config')
 
 local M = {}
 
 function M.setup(custom_config)
+	vim.api.nvim_exec_autocmds('User', { pattern = 'JavaPreSetup' })
+
 	local config =
 		vim.tbl_deep_extend('force', global_config, custom_config or {})
 
 	vim.g.nvim_java_config = config
+
+	vim.api.nvim_exec_autocmds(
+		'User',
+		{ pattern = 'JavaSetup', data = { config = config } }
+	)
 
 	if not startup_check() then
 		return
@@ -32,8 +40,12 @@ function M.setup(custom_config)
 		setup_wrap.setup(config)
 		decomple_watch.setup()
 		dap.setup_dap_on_lsp_attach()
-		commands.setup()
 	end
+
+	vim.api.nvim_exec_autocmds(
+		'User',
+		{ pattern = 'JavaPostSetup', data = { config = config } }
+	)
 end
 
 ----------------------------------------------------------------------

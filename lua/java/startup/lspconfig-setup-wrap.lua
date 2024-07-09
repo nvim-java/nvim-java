@@ -14,6 +14,8 @@ function M.setup(config)
 	local org_setup = lspconfig.jdtls.setup
 
 	lspconfig.jdtls.setup = function(user_config)
+		vim.api.nvim_exec_autocmds('User', { pattern = 'JavaJdtlsSetup' })
+
 		local jdtls_plugins = {}
 
 		if config.java_test.enable then

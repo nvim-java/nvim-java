@@ -1,4 +1,29 @@
-local Commands = {
+local log = require('java.utils.log')
+
+local M = {}
+
+local id
+
+id = vim.api.nvim_create_autocmd('LspAttach', {
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+		if client and client.name == 'jdtls' then
+			log.debug('adding vim.lsp.commands for java')
+
+			for key, handler in pairs(M.handlers) do
+				vim.lsp.commands[key] = handler
+			end
+
+			vim.api.nvim_del_autocmd(id)
+		end
+	end,
+
+	group = vim.api.nvim_create_augroup('JavaCommandReg', {}),
+})
+
+M.commands = {
+
 	OPEN_BROWSER = 'vscode.open',
 
 	OPEN_OUTPUT = 'java.open.output',
@@ -168,19 +193,8 @@ local Commands = {
 	OPEN_STATUS_SHORTCUT = '_java.openShortcuts',
 }
 
-local M = {}
-
 M.handlers = {
-	[Commands.COMPILE_WORKSPACE] = function(is_full_build)
+	[M.commands.COMPILE_WORKSPACE] = function(is_full_build)
 		require('java.api.build').full_build_workspace(is_full_build)
 	end,
 }
-
-function M.setup()
-	for key, handler in pairs(M.handlers) do
-		vim.print(key, handler)
-		vim.lsp.commands[key] = handler
-	end
-end
-
-return M
