@@ -9,6 +9,7 @@ local runner = require('java.api.runner')
 local profile_ui = require('java.ui.profile')
 local refactor = require('java.api.refactor')
 local build_api = require('java.api.build')
+local settings_api = require('java.api.settings')
 
 local global_config = require('java.config')
 
@@ -85,6 +86,12 @@ M.runner.built_in.switch_app = runner.built_in.switch_app
 ----------------------------------------------------------------------
 M.profile = {}
 M.profile.ui = profile_ui.ui
+
+----------------------------------------------------------------------
+--                             Settings                             --
+----------------------------------------------------------------------
+M.settings = {}
+M.settings.change_runtime = settings_api.change_runtime
 
 function M.__run()
 	test.debug_current_method()

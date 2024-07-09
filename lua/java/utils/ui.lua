@@ -4,10 +4,17 @@ local notify = require('java-core.utils.notify')
 
 local M = {}
 
-function M.select(prompt, values)
+---Async vim.ui.select function
+---@generic T
+---@param prompt string
+---@param values T[]
+---@param format_item fun(item: T): string
+---@return T
+function M.select(prompt, values, format_item)
 	return await(function(callback)
 		vim.ui.select(values, {
 			prompt = prompt,
+			format_item = format_item,
 		}, callback)
 	end)
 end

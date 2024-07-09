@@ -6,12 +6,14 @@ local M = {}
 function M.full_build_workspace()
 	return async(function()
 			local JavaCoreJdtlsClient = require('java-core.ls.clients.jdtls-client')
-			local jdtls = require('java.utils.jdtls')
+			local jdtls = require('java.utils.jdtls2')
 			local buf_util = require('java.utils.buffer')
 			local notify = require('java-core.utils.notify')
 
-			JavaCoreJdtlsClient:new(jdtls())
-				:java_build_workspace(true, buf_util.get_curr_buf())
+			JavaCoreJdtlsClient(jdtls()):java_build_workspace(
+				true,
+				buf_util.get_curr_buf()
+			)
 
 			notify.info('Workspace build successful!')
 		end)

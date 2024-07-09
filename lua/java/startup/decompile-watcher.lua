@@ -1,4 +1,4 @@
-local jdtls = require('java.utils.jdtls')
+local jdtls = require('java.utils.jdtls2')
 local get_error_handler = require('java.handlers.error')
 
 local async = require('java-core.utils.async').sync
@@ -22,11 +22,10 @@ function M.setup()
 			local done = false
 
 			async(function()
-					local client_obj = jdtls()
+					local client = jdtls()
 					local buffer = opts.buf
 
-					local text = JavaCoreJdtlsClient:new(client_obj)
-						:java_decompile(opts.file)
+					local text = JavaCoreJdtlsClient(client):java_decompile(opts.file)
 
 					local lines = vim.split(text, '\n')
 
@@ -38,8 +37,8 @@ function M.setup()
 					vim.bo[buffer].filetype = 'java'
 					vim.bo[buffer].modifiable = false
 
-					if not vim.lsp.buf_is_attached(buffer, client_obj.client.id) then
-						vim.lsp.buf_attach_client(buffer, client_obj.client.id)
+					if not vim.lsp.buf_is_attached(buffer, client.id) then
+						vim.lsp.buf_attach_client(buffer, client.id)
 					end
 
 					done = true

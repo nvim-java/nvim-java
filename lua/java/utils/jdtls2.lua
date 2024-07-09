@@ -1,7 +1,7 @@
 local get_error_handler = require('java.handlers.error')
 
 ---Returns an active jdtls client
----@return { client: LspClient }
+---@return vim.lsp.Client
 local function get_jdtls()
 	local clients
 
