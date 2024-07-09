@@ -38,7 +38,7 @@ function M.built_in.stop_app()
 	async(function()
 			M.runner:stop_run()
 		end)
-		.catch(get_error_handler('Failed to switch run'))
+		.catch(get_error_handler('Failed to stop run'))
 		.run()
 end
 
