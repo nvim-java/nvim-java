@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - README.md
+      - .github/workflows/panvimdoc.yml
 
 permissions:
   pull-requests: write
@@ -24,7 +27,7 @@ jobs:
           demojify: true
 
       - name: create pull request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           base: "main"
           commit-message: "chore(doc): automatic vimdoc update"
