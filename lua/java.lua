@@ -10,6 +10,7 @@ local profile_ui = require('java.ui.profile')
 local refactor = require('java.api.refactor')
 local build_api = require('java.api.build')
 local settings_api = require('java.api.settings')
+local commands = require('java.commands')
 
 local global_config = require('java.config')
 
@@ -31,6 +32,7 @@ function M.setup(custom_config)
 		setup_wrap.setup(config)
 		decomple_watch.setup()
 		dap.setup_dap_on_lsp_attach()
+		commands.setup()
 	end
 end
 

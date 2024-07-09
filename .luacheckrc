@@ -4,6 +4,7 @@ globals = {
 	'vim.wo',
 	'vim.bo',
 	'vim.opt',
+	'vim.lsp',
 }
 read_globals = {
 	'vim',
