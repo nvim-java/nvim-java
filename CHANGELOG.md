@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.12.0](https://github.com/nvim-java/nvim-java/compare/v1.11.0...v1.12.0) (2024-07-10)
+
+
+### Features
+
+* add command to change the runtime ([#244](https://github.com/nvim-java/nvim-java/issues/244)) ([af9c8ff](https://github.com/nvim-java/nvim-java/commit/af9c8ff3c7cf313611daa194409cb65e7831e98a))
+
+
+### Bug Fixes
+
+* remove github token from stylua workflow ([a6b1c8b](https://github.com/nvim-java/nvim-java/commit/a6b1c8b8a5569476c1a73bcb606ba2e33025d54e))
+* the manually stoped/restarted job show the error message ([#242](https://github.com/nvim-java/nvim-java/issues/242)) ([#243](https://github.com/nvim-java/nvim-java/issues/243)) ([0b9fac9](https://github.com/nvim-java/nvim-java/commit/0b9fac9cae5ac13590d5e8201d9611aebbbece73))
+
 ## [1.11.0](https://github.com/nvim-java/nvim-java/compare/v1.10.0...v1.11.0) (2024-07-06)
 
 
