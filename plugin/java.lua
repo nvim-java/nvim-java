@@ -30,6 +30,20 @@ local cmd_map = {
 		java.refactor.extract_variable,
 		{ range = 2 },
 	},
+
+	JavaRefactorExtractMethod = {
+		java.refactor.extract_method,
+	},
+
+	JavaRefactorExtractConstant = {
+		java.refactor.extract_constant,
+		{ range = 2 },
+	},
+
+	JavaRefactorExtractVariableAllOccurrence = {
+		java.refactor.extract_variable_all_occurrence,
+		{ range = 2 },
+	},
 }
 
 for cmd, details in pairs(cmd_map) do

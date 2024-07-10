@@ -119,7 +119,11 @@ Yep! That's all :)
 
 ### Refactor
 
-- `JavaRefactorExtractVariable` - Create a variable from returned value at cursor
+- `JavaRefactorExtractVariable` - Create a variable from value at cursor
+- `JavaRefactorExtractVariableAllOccurrence` - Create a variable for all
+  occurrences from value at cursor
+- `JavaRefactorExtractConstant` - Create a constant from the value at cursor
+- `JavaRefactorExtractMethod` - Create method from the value at cursor
 
 ### Settings
 
@@ -212,10 +216,29 @@ require('java').profile.ui()
 
 ### Refactor
 
-- `extract_variable` - Create a variable from returned value at cursor
+- `extract_variable` - Create a variable from value at cursor
 
 ```lua
 require('java').refactor.extract_variable()
+```
+
+- `extract_variable_all_occurrence` - Create a variable for all occurrences from
+  value at cursor
+
+```lua
+require('java').refactor.extract_variable_all_occurrence()
+```
+
+- `extract_constant` - Create a constant from the value at cursor
+
+```lua
+require('java').refactor.extract_constant()
+```
+
+- `extract_method` - Create method from the value at cursor
+
+```lua
+require('java').refactor.extract_method()
 ```
 
 ### Settings
