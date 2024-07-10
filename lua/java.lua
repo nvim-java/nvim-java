@@ -1,3 +1,5 @@
+require('java.commands')
+
 local decomple_watch = require('java.startup.decompile-watcher')
 local mason_dep = require('java.startup.mason-dep')
 local setup_wrap = require('java.startup.lspconfig-setup-wrap')
@@ -9,16 +11,24 @@ local runner = require('java.api.runner')
 local profile_ui = require('java.ui.profile')
 local refactor = require('java.api.refactor')
 local build_api = require('java.api.build')
+local settings_api = require('java.api.settings')
 
 local global_config = require('java.config')
 
 local M = {}
 
 function M.setup(custom_config)
+	vim.api.nvim_exec_autocmds('User', { pattern = 'JavaPreSetup' })
+
 	local config =
 		vim.tbl_deep_extend('force', global_config, custom_config or {})
 
 	vim.g.nvim_java_config = config
+
+	vim.api.nvim_exec_autocmds(
+		'User',
+		{ pattern = 'JavaSetup', data = { config = config } }
+	)
 
 	if not startup_check() then
 		return
@@ -31,6 +41,11 @@ function M.setup(custom_config)
 		decomple_watch.setup()
 		dap.setup_dap_on_lsp_attach()
 	end
+
+	vim.api.nvim_exec_autocmds(
+		'User',
+		{ pattern = 'JavaPostSetup', data = { config = config } }
+	)
 end
 
 ----------------------------------------------------------------------
@@ -85,6 +100,12 @@ M.runner.built_in.switch_app = runner.built_in.switch_app
 ----------------------------------------------------------------------
 M.profile = {}
 M.profile.ui = profile_ui.ui
+
+----------------------------------------------------------------------
+--                             Settings                             --
+----------------------------------------------------------------------
+M.settings = {}
+M.settings.change_runtime = settings_api.change_runtime
 
 function M.__run()
 	test.debug_current_method()

@@ -121,6 +121,10 @@ Yep! That's all :)
 
 - `JavaRefactorExtractVariable` - Create a variable from returned value at cursor
 
+### Settings
+
+- `JavaSettingsChangeRuntime` - Change the JDK version to another
+
 </details>
 
 ## :computer: APIs
@@ -212,6 +216,14 @@ require('java').profile.ui()
 
 ```lua
 require('java').refactor.extract_variable()
+```
+
+### Settings
+
+- `change_runtime` - Change the JDK version to another
+
+```lua
+require('java').settings.change_runtime()
 ```
 
 </details>
