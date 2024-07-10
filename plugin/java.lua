@@ -5,7 +5,7 @@ local function c(cmd, callback, opts)
 end
 
 local cmd_map = {
-	JavaChangeRuntime = { java.settings.change_runtime },
+	JavaSettingsChangeRuntime = { java.settings.change_runtime },
 
 	JavaBuildWorkspace = { java.build.build_workspace },
 
