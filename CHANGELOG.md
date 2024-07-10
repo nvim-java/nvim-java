@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/nvim-java/nvim-java/compare/v1.12.0...v1.13.0) (2024-07-10)
+
+
+### Features
+
+* add more extract commands ([0ec0f46](https://github.com/nvim-java/nvim-java/commit/0ec0f463efa7b3cc77d30660ced357e295ab7cd7))
+
 ## [1.12.0](https://github.com/nvim-java/nvim-java/compare/v1.11.0...v1.12.0) (2024-07-10)
 
 
