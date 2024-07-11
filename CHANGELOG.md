@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/nvim-java/nvim-java/compare/v1.13.0...v1.14.0) (2024-07-11)
+
+
+### Features
+
+* upgrade java debug adapter ([644c4cb](https://github.com/nvim-java/nvim-java/commit/644c4cbe7cda5d7bac08f7ec293e08078d4afac0))
+
 ## [1.13.0](https://github.com/nvim-java/nvim-java/compare/v1.12.0...v1.13.0) (2024-07-10)
 
 
