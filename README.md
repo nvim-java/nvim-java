@@ -42,16 +42,20 @@ Just install and start writing `public static void main(String[] args)`.
 
 <summary>:small_orange_diamond:details</summary>
 
-### Q & A
+### Pre-configured Starter Configurations (Recommend for newbies)
 
-If you face any issues, check our [Q & A](https://github.com/nvim-java/nvim-java/wiki/Q-&-A) wiki to see if that helps
+Following are forks of original repositories pre-configured for java. If you
+don't know how to get started, use one of the following to get started.
 
-### Distributions & Templates
+- [LazyVim](https://github.com/nvim-java/starter-lazyvim) - [All changes](https://github.com/LazyVim/starter/compare/main...nvim-java:starter-lazyvim:main)
+- [Kickstart](https://github.com/nvim-java/starter-kickstart) - [All changes](https://github.com/nvim-lua/kickstart.nvim/compare/master...nvim-java:starter-kickstart:master)
 
-- [Lazyvim](https://github.com/nvim-java/nvim-java/wiki/Lazyvim)
+### Distribution Specific Instructions
+
+- [LazyVim](https://github.com/nvim-java/nvim-java/wiki/Lazyvim)
 - [Kickstart](https://github.com/nvim-java/nvim-java/wiki/Kickstart)
 
-### Custom
+### Custom Configuration Instructions
 
 - Install the plugin
 
