@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/nvim-java/nvim-java/compare/v1.14.0...v1.15.0) (2024-07-12)
+
+
+### Features
+
+* add extract_field command ([aabca01](https://github.com/nvim-java/nvim-java/commit/aabca011b56b605f7bf12df0534f7d5b60b16fff))
+
 ## [1.14.0](https://github.com/nvim-java/nvim-java/compare/v1.13.0...v1.14.0) (2024-07-11)
 
 
