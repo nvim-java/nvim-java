@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 10
+*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 12
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -61,19 +61,22 @@ HOW TO INSTALL                                      *nvim-java-how-to-install*
 :small_orange_diamond:details ~
 
 
-Q & A ~
+STARTER CONFIGS (RECOMMEND FOR NEWBIES) ~
 
-If you face any issues, check our Q & A
-<https://github.com/nvim-java/nvim-java/wiki/Q-&-A> wiki to see if that helps
+Following are forks of original repositories pre-configured for java. If you
+don’t know how to get started, use one of the following to get started.
+
+- LazyVim <https://github.com/nvim-java/starter-lazyvim>
+- Kickstart <https://github.com/nvim-java/starter-kickstart>
 
 
-DISTRIBUTIONS & TEMPLATES ~
+DISTRIBUTION SPECIFIC INSTRUCTIONS ~
 
-- Lazyvim <https://github.com/nvim-java/nvim-java/wiki/Lazyvim>
+- LazyVim <https://github.com/nvim-java/nvim-java/wiki/Lazyvim>
 - Kickstart <https://github.com/nvim-java/nvim-java/wiki/Kickstart>
 
 
-CUSTOM ~
+CUSTOM CONFIGURATION INSTRUCTIONS ~
 
 - Install the plugin
 
@@ -144,11 +147,12 @@ PROFILES ~
 
 REFACTOR ~
 
-- `JavaRefactorExtractVariable` - Create a variable from value at cursor
+- `JavaRefactorExtractVariable` - Create a variable from value at cursor/selection
 - `JavaRefactorExtractVariableAllOccurrence` - Create a variable for all
-    occurrences from value at cursor
-- `JavaRefactorExtractConstant` - Create a constant from the value at cursor
-- `JavaRefactorExtractMethod` - Create method from the value at cursor
+    occurrences from value at cursor/selection
+- `JavaRefactorExtractConstant` - Create a constant from the value at cursor/selection
+- `JavaRefactorExtractMethod` - Create a method from the value at cursor/selection
+- `JavaRefactorExtractField` - Create a field from the value at cursor/selection
 
 
 SETTINGS ~
@@ -245,29 +249,35 @@ PROFILES ~
 
 REFACTOR ~
 
-- `extract_variable` - Create a variable from value at cursor
+- `extract_variable` - Create a variable from value at cursor/selection
 
 >lua
     require('java').refactor.extract_variable()
 <
 
 - `extract_variable_all_occurrence` - Create a variable for all occurrences from
-    value at cursor
+    value at cursor/selection
 
 >lua
     require('java').refactor.extract_variable_all_occurrence()
 <
 
-- `extract_constant` - Create a constant from the value at cursor
+- `extract_constant` - Create a constant from the value at cursor/selection
 
 >lua
     require('java').refactor.extract_constant()
 <
 
-- `extract_method` - Create method from the value at cursor
+- `extract_method` - Create method from the value at cursor/selection
 
 >lua
     require('java').refactor.extract_method()
+<
+
+- `extract_field` - Create a field from the value at cursor/selection
+
+>lua
+    require('java').refactor.extract_field()
 <
 
 
