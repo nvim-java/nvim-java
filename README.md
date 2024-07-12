@@ -123,11 +123,12 @@ Yep! That's all :)
 
 ### Refactor
 
-- `JavaRefactorExtractVariable` - Create a variable from value at cursor
+- `JavaRefactorExtractVariable` - Create a variable from value at cursor/selection
 - `JavaRefactorExtractVariableAllOccurrence` - Create a variable for all
-  occurrences from value at cursor
-- `JavaRefactorExtractConstant` - Create a constant from the value at cursor
-- `JavaRefactorExtractMethod` - Create method from the value at cursor
+  occurrences from value at cursor/selection
+- `JavaRefactorExtractConstant` - Create a constant from the value at cursor/selection
+- `JavaRefactorExtractMethod` - Create a method from the value at cursor/selection
+- `JavaRefactorExtractField` - Create a field from the value at cursor/selection
 
 ### Settings
 
@@ -220,29 +221,35 @@ require('java').profile.ui()
 
 ### Refactor
 
-- `extract_variable` - Create a variable from value at cursor
+- `extract_variable` - Create a variable from value at cursor/selection
 
 ```lua
 require('java').refactor.extract_variable()
 ```
 
 - `extract_variable_all_occurrence` - Create a variable for all occurrences from
-  value at cursor
+  value at cursor/selection
 
 ```lua
 require('java').refactor.extract_variable_all_occurrence()
 ```
 
-- `extract_constant` - Create a constant from the value at cursor
+- `extract_constant` - Create a constant from the value at cursor/selection
 
 ```lua
 require('java').refactor.extract_constant()
 ```
 
-- `extract_method` - Create method from the value at cursor
+- `extract_method` - Create method from the value at cursor/selection
 
 ```lua
 require('java').refactor.extract_method()
+```
+
+- `extract_field` - Create a field from the value at cursor/selection
+
+```lua
+require('java').refactor.extract_field()
 ```
 
 ### Settings

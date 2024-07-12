@@ -8,7 +8,7 @@ local M = {}
 ---@generic T
 ---@param prompt string
 ---@param values T[]
----@param format_item fun(item: T): string
+---@param format_item? fun(item: T): string
 ---@return T
 function M.select(prompt, values, format_item)
 	return await(function(callback)

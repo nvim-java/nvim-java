@@ -33,6 +33,7 @@ local cmd_map = {
 
 	JavaRefactorExtractMethod = {
 		java.refactor.extract_method,
+		{ range = 2 },
 	},
 
 	JavaRefactorExtractConstant = {
@@ -42,6 +43,11 @@ local cmd_map = {
 
 	JavaRefactorExtractVariableAllOccurrence = {
 		java.refactor.extract_variable_all_occurrence,
+		{ range = 2 },
+	},
+
+	JavaRefactorExtractField = {
+		java.refactor.extract_field,
 		{ range = 2 },
 	},
 }

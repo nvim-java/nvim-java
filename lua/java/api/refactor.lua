@@ -21,6 +21,10 @@ function M.extract_method()
 	M.extract('extractMethod')
 end
 
+function M.extract_field()
+	M.extract('extractField')
+end
+
 ---
 ---@param refactor_command jdtls.CodeActionCommand
 function M.extract(refactor_command)
