@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/nvim-java/nvim-java/compare/v1.16.0...v1.17.0) (2024-07-13)
+
+
+### Features
+
+* add generate constructor code action ([ea5371b](https://github.com/nvim-java/nvim-java/commit/ea5371bf0de96dd6856ae623455376d6e2062045))
+
 ## [1.16.0](https://github.com/nvim-java/nvim-java/compare/v1.15.0...v1.16.0) (2024-07-13)
 
 
