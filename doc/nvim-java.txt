@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 12
+*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 13
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -153,6 +153,7 @@ REFACTOR ~
 - `JavaRefactorExtractConstant` - Create a constant from the value at cursor/selection
 - `JavaRefactorExtractMethod` - Create a method from the value at cursor/selection
 - `JavaRefactorExtractField` - Create a field from the value at cursor/selection
+- `JavaRefactorConvertVariableToField` - Change a local variable to field
 
 
 SETTINGS ~
@@ -278,6 +279,12 @@ REFACTOR ~
 
 >lua
     require('java').refactor.extract_field()
+<
+
+- `convert_variable_to_field` - Change a local variable to field
+
+>lua
+    require('java').refactor.convert_variable_to_field()
 <
 
 
