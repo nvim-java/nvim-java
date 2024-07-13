@@ -1,5 +1,6 @@
 # :coffee: nvim-java
 
+![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)
 ![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
@@ -17,12 +18,14 @@ Just install and start writing `public static void main(String[] args)`.
 
 ## :dizzy: Features
 
-- :white_check_mark: Spring boot tools
+- :white_check_mark: Spring Boot Tools
 - :white_check_mark: Diagnostics & Auto Completion
 - :white_check_mark: Automatic [DAP](https://github.com/mfussenegger/nvim-dap)
   debug configuration
-- :white_check_mark: Running tests
+- :white_check_mark: Organize Imports & Code Formatting
+- :white_check_mark: Running Tests
 - :white_check_mark: Run & Debug profiles
+- :white_check_mark: Code Actions
 
 ## :bulb: Why
 
