@@ -194,6 +194,13 @@ M.commands = {
 }
 
 M.handlers = {
+	---@param _ lsp.Command
+	---@param params nvim.CodeActionParamsResponse
+	[M.commands.GENERATE_CONSTRUCTORS_PROMPT] = function(_, params)
+		require('java.api.generate').generate_constructor(params)
+	end,
+
+	---@param is_full_build boolean
 	[M.commands.COMPILE_WORKSPACE] = function(is_full_build)
 		require('java.api.build').full_build_workspace(is_full_build)
 	end,
