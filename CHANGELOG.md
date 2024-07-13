@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/nvim-java/nvim-java/compare/v1.15.0...v1.16.0) (2024-07-13)
+
+
+### Features
+
+* add convert to variable refactor command ([2635a64](https://github.com/nvim-java/nvim-java/commit/2635a640aebd007b52a3d288b1318cacca7dc44c))
+
 ## [1.15.0](https://github.com/nvim-java/nvim-java/compare/v1.14.0...v1.15.0) (2024-07-12)
 
 
