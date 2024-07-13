@@ -87,6 +87,7 @@ M.refactor.extract_variable = refactor.extract_variable
 M.refactor.extract_constant = refactor.extract_constant
 M.refactor.extract_method = refactor.extract_method
 M.refactor.extract_field = refactor.extract_field
+M.refactor.convert_variable_to_field = refactor.convert_variable_to_field
 M.refactor.extract_variable_all_occurrence =
 	refactor.extract_variable_all_occurrence
 

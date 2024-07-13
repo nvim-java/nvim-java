@@ -25,6 +25,10 @@ function M.extract_field()
 	M.extract('extractField')
 end
 
+function M.convert_variable_to_field()
+	M.extract('convertVariableToField')
+end
+
 ---
 ---@param refactor_command jdtls.CodeActionCommand
 function M.extract(refactor_command)
