@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.19.0](https://github.com/nvim-java/nvim-java/compare/v1.18.0...v1.19.0) (2024-07-14)
+
+
+### Features
+
+* add clean workspace command ([8a1171c](https://github.com/nvim-java/nvim-java/commit/8a1171cc21aaae58f8a08759562814aea87e694d))
+* add toString code action ([4b1e1bd](https://github.com/nvim-java/nvim-java/commit/4b1e1bd5206174b8914858d085fe6809482b5575))
+
 ## [1.18.0](https://github.com/nvim-java/nvim-java/compare/v1.17.0...v1.18.0) (2024-07-14)
 
 
