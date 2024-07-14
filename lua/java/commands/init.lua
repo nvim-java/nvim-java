@@ -1,8 +1,5 @@
 local log = require('java.utils.log')
 local notify = require('java-core.utils.notify')
-local ui = require('java.utils.ui')
-local get_error_handler = require('java.handlers.error')
-local runner = require('async.runner')
 
 local M = {}
 
@@ -122,6 +119,10 @@ M.handlers = {
 	---@param params nvim.CodeActionParamsResponse
 	[M.commands.GENERATE_CONSTRUCTORS_PROMPT] = function(_, params)
 		require('java.api.generate').generate_constructor(params)
+	end,
+
+	[M.commands.GENERATE_TOSTRING_PROMPT] = function(_, params)
+		require('java.api.generate').generate_to_string(params)
 	end,
 
 	---@param is_full_build boolean
