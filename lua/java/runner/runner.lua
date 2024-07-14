@@ -103,7 +103,14 @@ end
 function Runner.select_dap_config(args)
 	local dap = DapSetup(jdtls())
 	local dap_config_list = dap:get_dap_config()
-	local selected_dap_config = ui.select_from_dap_configs(dap_config_list)
+
+	local selected_dap_config = ui.select(
+		'Select the main class (module -> mainClass)',
+		dap_config_list,
+		function(config)
+			return config.name
+		end
+	)
 
 	if not selected_dap_config then
 		return nil, nil

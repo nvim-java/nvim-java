@@ -357,11 +357,25 @@ M.ProfileUI = ProfileUI
 
 function M.ui()
 	return async(function()
-			local dap_config = DapSetup(jdtls().client):get_dap_config()
-			local selected_config = ui.select_from_dap_configs(dap_config)
+			local configs = DapSetup(jdtls().client):get_dap_config()
+
+			if not configs or #configs == 0 then
+				notify.error('No classes with main methods are found')
+				return
+			end
+
+			local selected_config = ui.select(
+				'Select the main class (module -> mainClass)',
+				configs,
+				function(config)
+					return config.name
+				end
+			)
+
 			if not selected_config then
 				return
 			end
+
 			M.profile_ui = ProfileUI(selected_config.name)
 			return M.profile_ui:openMenu()
 		end)
