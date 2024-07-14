@@ -125,6 +125,10 @@ M.handlers = {
 		require('java.api.generate').generate_to_string(params)
 	end,
 
+	[M.commands.HASHCODE_EQUALS_PROMPT] = function(_, params)
+		require('java.api.generate').generate_hash_code_and_equals(params)
+	end,
+
 	---@param is_full_build boolean
 	[M.commands.COMPILE_WORKSPACE] = function(is_full_build)
 		require('java.api.build').full_build_workspace(is_full_build)

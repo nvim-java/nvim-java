@@ -97,4 +97,63 @@ function M.generate_to_string(params)
 		.run()
 end
 
+---@param params nvim.CodeActionParamsResponse
+function M.generate_hash_code_and_equals(params)
+	local instance = require('java.utils.instance_factory')
+	local get_error_handler = require('java.handlers.error')
+	local ui = require('java.utils.ui')
+
+	runner(function()
+			local jdtls = instance.jdtls_client()
+			local status = jdtls:java_check_hash_code_equals_status(params.params)
+
+			if not status or not status.fields or #status.fields < 1 then
+				local message = string.format(
+					'The operation is not applicable to the type %s.',
+					status.type
+				)
+				require('java-core.utils.notify').warn(message)
+				return
+			end
+
+			local regenerate = false
+
+			if status.existingMethods and #status.existingMethods > 0 then
+				local prompt = string.format(
+					'Methods %s already exists in the Class %s. Do you want to regenerate the implementation?',
+					'Regenerate',
+					'Cancel'
+				)
+
+				local choice = ui.select(prompt, { 'Regenerate', 'Cancel' })
+
+				if choice == 'Regenerate' then
+					regenerate = true
+				end
+			end
+
+			local fields = ui.multi_select(
+				'Select the fields to include in the hashCode() and equals() methods.',
+				status.fields,
+				function(field)
+					return field.name
+				end
+			)
+
+			if not fields or #fields < 1 then
+				return
+			end
+
+			local edit = jdtls:java_generate_hash_code_equals({
+				context = params.params,
+				fields = fields,
+				regenerate = regenerate,
+			})
+
+			vim.lsp.util.apply_workspace_edit(edit, 'utf-8')
+		end)
+		.catch(get_error_handler('Generating hash code failed'))
+		.run()
+end
+
 return M
