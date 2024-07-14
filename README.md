@@ -25,7 +25,7 @@ Just install and start writing `public static void main(String[] args)`.
 - :white_check_mark: Organize Imports & Code Formatting
 - :white_check_mark: Running Tests
 - :white_check_mark: Run & Debug profiles
-- :white_check_mark: Code Actions
+- :white_check_mark: [Code Actions](https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks#running-code-actions)
 
 ## :bulb: Why
 
