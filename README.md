@@ -20,11 +20,10 @@ Just install and start writing `public static void main(String[] args)`.
 
 - :white_check_mark: Spring Boot Tools
 - :white_check_mark: Diagnostics & Auto Completion
-- :white_check_mark: Automatic [DAP](https://github.com/mfussenegger/nvim-dap)
-  debug configuration
+- :white_check_mark: Automatic Debug Configuration
 - :white_check_mark: Organize Imports & Code Formatting
 - :white_check_mark: Running Tests
-- :white_check_mark: Run & Debug profiles
+- :white_check_mark: Run & Debug Profiles
 - :white_check_mark: [Code Actions](https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks#running-code-actions)
 
 ## :bulb: Why
