@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 13
+*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 14
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -42,7 +42,7 @@ FEATURES                                                  *nvim-java-features*
 - Organize Imports & Code Formatting
 - Running Tests
 - Run & Debug profiles
-- Code Actions
+- Code Actions <https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks#running-code-actions>
 
 
 WHY                                                            *nvim-java-why*
