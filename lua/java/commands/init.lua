@@ -1,5 +1,8 @@
 local log = require('java.utils.log')
 local notify = require('java-core.utils.notify')
+local ui = require('java.utils.ui')
+local get_error_handler = require('java.handlers.error')
+local runner = require('async.runner')
 
 local M = {}
 
@@ -124,6 +127,10 @@ M.handlers = {
 	---@param is_full_build boolean
 	[M.commands.COMPILE_WORKSPACE] = function(is_full_build)
 		require('java.api.build').full_build_workspace(is_full_build)
+	end,
+
+	[M.commands.CLEAN_WORKSPACE] = function()
+		require('java.api.build').clean_workspace()
 	end,
 }
 
