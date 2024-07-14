@@ -37,11 +37,10 @@ FEATURES                                                  *nvim-java-features*
 
 - Spring Boot Tools
 - Diagnostics & Auto Completion
-- Automatic DAP <https://github.com/mfussenegger/nvim-dap>
-    debug configuration
+- Automatic Debug Configuration
 - Organize Imports & Code Formatting
 - Running Tests
-- Run & Debug profiles
+- Run & Debug Profiles
 - Code Actions <https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks#running-code-actions>
 
 
@@ -66,16 +65,13 @@ HOW TO INSTALL                                      *nvim-java-how-to-install*
 STARTER CONFIGS (RECOMMEND FOR NEWBIES) ~
 
 Following are forks of original repositories pre-configured for java. If you
-don’t know how to get started, use one of the following to get started.
+don’t know how to get started, use one of the following to get started. You
+can click on **n commits ahead of** link to see the changes made on top of the
+original project
 
 - LazyVim <https://github.com/nvim-java/starter-lazyvim>
 - Kickstart <https://github.com/nvim-java/starter-kickstart>
-
-
-DISTRIBUTION SPECIFIC INSTRUCTIONS ~
-
-- LazyVim <https://github.com/nvim-java/nvim-java/wiki/Lazyvim>
-- Kickstart <https://github.com/nvim-java/nvim-java/wiki/Kickstart>
+- AstroNvim <https://github.com/nvim-java/starter-astronvim>
 
 
 CUSTOM CONFIGURATION INSTRUCTIONS ~
