@@ -132,7 +132,6 @@ Yep! That's all :)
 - `JavaRefactorExtractConstant` - Create a constant from the value at cursor/selection
 - `JavaRefactorExtractMethod` - Create a method from the value at cursor/selection
 - `JavaRefactorExtractField` - Create a field from the value at cursor/selection
-- `JavaRefactorConvertVariableToField` - Change a local variable to field
 
 ### Settings
 
@@ -254,12 +253,6 @@ require('java').refactor.extract_method()
 
 ```lua
 require('java').refactor.extract_field()
-```
-
-- `convert_variable_to_field` - Change a local variable to field
-
-```lua
-require('java').refactor.convert_variable_to_field()
 ```
 
 ### Settings

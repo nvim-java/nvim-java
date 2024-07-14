@@ -50,11 +50,6 @@ local cmd_map = {
 		java.refactor.extract_field,
 		{ range = 2 },
 	},
-
-	JavaRefactorConvertVariableToField = {
-		java.refactor.convert_variable_to_field,
-		{ range = 2 },
-	},
 }
 
 for cmd, details in pairs(cmd_map) do
