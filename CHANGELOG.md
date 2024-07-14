@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.0](https://github.com/nvim-java/nvim-java/compare/v1.19.0...v1.20.0) (2024-07-14)
+
+
+### Features
+
+* add generate hash code and equals code action ([6a714fe](https://github.com/nvim-java/nvim-java/commit/6a714fedc4a8a327d2acebe34d673b768dcbb0d8))
+
 ## [1.19.0](https://github.com/nvim-java/nvim-java/compare/v1.18.0...v1.19.0) (2024-07-14)
 
 
