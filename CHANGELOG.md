@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/nvim-java/nvim-java/compare/v1.17.0...v1.18.0) (2024-07-14)
+
+
+### Features
+
+* add warning on not yet implemented client commands ([a889ff4](https://github.com/nvim-java/nvim-java/commit/a889ff4ab49774849bd647d136370fa1b69c70f8))
+
 ## [1.17.0](https://github.com/nvim-java/nvim-java/compare/v1.16.0...v1.17.0) (2024-07-13)
 
 
