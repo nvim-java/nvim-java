@@ -47,15 +47,12 @@ Just install and start writing `public static void main(String[] args)`.
 ### Starter Configs (Recommend for newbies)
 
 Following are forks of original repositories pre-configured for java. If you
-don't know how to get started, use one of the following to get started.
+don't know how to get started, use one of the following to get started. 
+You can click on **n commits ahead of** link to see the changes made on top of the original project
 
 - [LazyVim](https://github.com/nvim-java/starter-lazyvim)
 - [Kickstart](https://github.com/nvim-java/starter-kickstart)
-
-### Distribution Specific Instructions
-
-- [LazyVim](https://github.com/nvim-java/nvim-java/wiki/Lazyvim)
-- [Kickstart](https://github.com/nvim-java/nvim-java/wiki/Kickstart)
+- [AstroNvim](https://github.com/nvim-java/starter-astronvim)
 
 ### Custom Configuration Instructions
 
