@@ -156,4 +156,83 @@ function M.generate_hash_code_and_equals(params)
 		.run()
 end
 
+---@param params nvim.CodeActionParamsResponse
+function M.generate_delegate_mothods_prompt(params)
+	local instance = require('java.utils.instance_factory')
+	local get_error_handler = require('java.handlers.error')
+	local ui = require('java.utils.ui')
+	local List = require('java-core.utils.list')
+
+	runner(function()
+			local jdtls = instance.jdtls_client()
+			local status = jdtls:java_check_delegate_methods_status(params.params)
+
+			if
+				not status
+				or not status.delegateFields
+				or #status.delegateFields < 1
+			then
+				require('notify').warn(
+					'All delegatable methods are already implemented.'
+				)
+				return
+			end
+
+			local selected_delegate_field = ui.select(
+				'Select target to generate delegates for.',
+				status.delegateFields,
+				function(field)
+					return field.field.name .. ': ' .. field.field.type
+				end
+			)
+
+			if not selected_delegate_field then
+				return
+			end
+
+			if #selected_delegate_field.delegateMethods < 1 then
+				require('notify').warn(
+					'All delegatable methods are already implemented.'
+				)
+				return
+			end
+
+			local selected_delegate_methods = ui.multi_select(
+				'Select methods to generate delegates for.',
+				selected_delegate_field.delegateMethods,
+				function(method)
+					return string.format(
+						'%s.%s(%s)',
+						selected_delegate_field.field.name,
+						method.name,
+						table.concat(method.parameters, ', ')
+					)
+				end
+			)
+
+			if not selected_delegate_methods or #selected_delegate_methods < 1 then
+				return
+			end
+
+			local delegate_entries = List:new(selected_delegate_methods):map(
+				---@param method jdtls.MethodBinding
+				function(method)
+					return {
+						field = selected_delegate_field.field,
+						delegateMethod = method,
+					}
+				end
+			)
+
+			local edit = jdtls:java_generate_delegate_methods({
+				context = params.params,
+				delegateEntries = delegate_entries,
+			})
+
+			vim.lsp.util.apply_workspace_edit(edit, 'utf-8')
+		end)
+		.catch(get_error_handler('Generating delegate mothods failed'))
+		.run()
+end
+
 return M
