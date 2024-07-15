@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.0](https://github.com/nvim-java/nvim-java/compare/v1.20.0...v1.21.0) (2024-07-15)
+
+
+### Features
+
+* adding delegate method generate code action ([9462546](https://github.com/nvim-java/nvim-java/commit/94625466f5023719c3625438fcf95f75f7d0c02d))
+
 ## [1.20.0](https://github.com/nvim-java/nvim-java/compare/v1.19.0...v1.20.0) (2024-07-14)
 
 
