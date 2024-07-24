@@ -67,7 +67,7 @@ local config = {
 		-- mason.nvim plugin.
 		-- IF it's not registered correctly, an error will be thrown and nvim-java
 		-- will stop setup
-		invalid_mason_registry = true,
+		invalid_mason_registry = false,
 	},
 }
 
