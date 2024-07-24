@@ -2,7 +2,6 @@ local class = require('java-core.utils.class')
 
 local M = class()
 
----@private
 ---@return vim.lsp.Client
 local function get_client()
 	local clients = vim.lsp.get_clients({ name = 'jdtls' })

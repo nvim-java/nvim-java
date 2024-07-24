@@ -1,17 +1,15 @@
-require('java.commands')
-
 local decomple_watch = require('java.startup.decompile-watcher')
 local mason_dep = require('java.startup.mason-dep')
 local setup_wrap = require('java.startup.lspconfig-setup-wrap')
 local startup_check = require('java.startup.startup-check')
 
-local test = require('java.api.test')
-local dap = require('java.api.dap')
-local runner = require('java.api.runner')
-local profile_ui = require('java.ui.profile')
-local refactor = require('java.api.refactor')
-local build_api = require('java.api.build')
+local command_util = require('java.utils.command')
+
+local test_api = require('java.api.test')
+local dap_api = require('java.api.dap')
+local runner_api = require('java.api.runner')
 local settings_api = require('java.api.settings')
+local profile_ui = require('java.ui.profile')
 
 local global_config = require('java.config')
 
@@ -36,11 +34,13 @@ function M.setup(custom_config)
 
 	local is_installing = mason_dep.install(config)
 
-	if not is_installing then
-		setup_wrap.setup(config)
-		decomple_watch.setup()
-		dap.setup_dap_on_lsp_attach()
+	if is_installing then
+		return
 	end
+
+	setup_wrap.setup(config)
+	decomple_watch.setup()
+	dap_api.setup_dap_on_lsp_attach()
 
 	vim.api.nvim_exec_autocmds(
 		'User',
@@ -48,58 +48,65 @@ function M.setup(custom_config)
 	)
 end
 
+---@param path string[]
+---@param command fun()
+---@param opts vim.api.keyset.user_command
+function M.register_api(path, command, opts)
+	local name = command_util.path_to_command_name(path)
+
+	vim.api.nvim_create_user_command(name, command, opts or {})
+
+	local last_index = #path - 1
+	local func_name = path[last_index]
+
+	table.remove(path, last_index)
+
+	local node = M
+
+	for _, v in ipairs(path) do
+		if not node[v] then
+			node[v] = {}
+		end
+
+		node = node[v]
+	end
+
+	node[func_name] = command
+end
+
 ----------------------------------------------------------------------
 --                        Experimental APIs                         --
 ----------------------------------------------------------------------
 M.build = {}
-M.build.build_workspace = build_api.full_build_workspace
+-- M.build.build_workspace = build_api.full_build_workspace
 
 ----------------------------------------------------------------------
 --                             DAP APIs                             --
 ----------------------------------------------------------------------
 M.dap = {}
-M.dap.config_dap = dap.config_dap
+M.dap.config_dap = dap_api.config_dap
 
 ----------------------------------------------------------------------
 --                            Test APIs                             --
 ----------------------------------------------------------------------
 M.test = {}
-M.test.run_current_class = test.run_current_class
-M.test.debug_current_class = test.debug_current_class
+M.test.run_current_class = test_api.run_current_class
+M.test.debug_current_class = test_api.debug_current_class
 
-M.test.run_current_method = test.run_current_method
-M.test.debug_current_method = test.debug_current_method
+M.test.run_current_method = test_api.run_current_method
+M.test.debug_current_method = test_api.debug_current_method
 
-M.test.view_last_report = test.view_last_report
-
-----------------------------------------------------------------------
---                            Manipulate                            --
-----------------------------------------------------------------------
-
-M.manipulate = {}
--- M.manipulate.organize_imports = {}
-
-----------------------------------------------------------------------
---                             Refactor                             --
-----------------------------------------------------------------------
-M.refactor = {}
-M.refactor.extract_variable = refactor.extract_variable
-M.refactor.extract_constant = refactor.extract_constant
-M.refactor.extract_method = refactor.extract_method
-M.refactor.extract_field = refactor.extract_field
-M.refactor.convert_variable_to_field = refactor.convert_variable_to_field
-M.refactor.extract_variable_all_occurrence =
-	refactor.extract_variable_all_occurrence
+M.test.view_last_report = test_api.view_last_report
 
 ----------------------------------------------------------------------
 --                            Runner APIs                           --
 ----------------------------------------------------------------------
 M.runner = {}
 M.runner.built_in = {}
-M.runner.built_in.run_app = runner.built_in.run_app
-M.runner.built_in.toggle_logs = runner.built_in.toggle_logs
-M.runner.built_in.stop_app = runner.built_in.stop_app
-M.runner.built_in.switch_app = runner.built_in.switch_app
+M.runner.built_in.run_app = runner_api.built_in.run_app
+M.runner.built_in.toggle_logs = runner_api.built_in.toggle_logs
+M.runner.built_in.stop_app = runner_api.built_in.stop_app
+M.runner.built_in.switch_app = runner_api.built_in.switch_app
 
 ----------------------------------------------------------------------
 --                             Profile UI                           --
@@ -112,9 +119,5 @@ M.profile.ui = profile_ui.ui
 ----------------------------------------------------------------------
 M.settings = {}
 M.settings.change_runtime = settings_api.change_runtime
-
-function M.__run()
-	test.debug_current_method()
-end
 
 return M
