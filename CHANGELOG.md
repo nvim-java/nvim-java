@@ -7,11 +7,6 @@
 
 * move all the client commands to nvim-refactor repo ([#278](https://github.com/nvim-java/nvim-java/issues/278))
 
-### Bug Fixes
-
-* **lint:** lint error ([5498e76](https://github.com/nvim-java/nvim-java/commit/5498e76364def449533199ea5bdbdde9a7eeb83c))
-
-
 ### Code Refactoring
 
 * move all the client commands to nvim-refactor repo ([#278](https://github.com/nvim-java/nvim-java/issues/278)) ([1c04d72](https://github.com/nvim-java/nvim-java/commit/1c04d72d10a4807583096848dc6ad92192a94ee1))
