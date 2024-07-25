@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/nvim-java/nvim-java/compare/v1.21.0...v2.0.0) (2024-07-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* move all the client commands to nvim-refactor repo ([#278](https://github.com/nvim-java/nvim-java/issues/278))
+
+### Code Refactoring
+
+* move all the client commands to nvim-refactor repo ([#278](https://github.com/nvim-java/nvim-java/issues/278)) ([1c04d72](https://github.com/nvim-java/nvim-java/commit/1c04d72d10a4807583096848dc6ad92192a94ee1))
+
 ## [1.21.0](https://github.com/nvim-java/nvim-java/compare/v1.20.0...v1.21.0) (2024-07-15)
 
 
