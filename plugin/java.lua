@@ -7,8 +7,6 @@ end
 local cmd_map = {
 	JavaSettingsChangeRuntime = { java.settings.change_runtime },
 
-	JavaBuildWorkspace = { java.build.build_workspace },
-
 	JavaDapConfig = { java.dap.config_dap },
 
 	JavaTestRunCurrentClass = { java.test.run_current_class },
@@ -25,31 +23,6 @@ local cmd_map = {
 	JavaRunnerSwitchLogs = { java.runner.built_in.switch_app },
 
 	JavaProfile = { java.profile.ui },
-
-	JavaRefactorExtractVariable = {
-		java.refactor.extract_variable,
-		{ range = 2 },
-	},
-
-	JavaRefactorExtractMethod = {
-		java.refactor.extract_method,
-		{ range = 2 },
-	},
-
-	JavaRefactorExtractConstant = {
-		java.refactor.extract_constant,
-		{ range = 2 },
-	},
-
-	JavaRefactorExtractVariableAllOccurrence = {
-		java.refactor.extract_variable_all_occurrence,
-		{ range = 2 },
-	},
-
-	JavaRefactorExtractField = {
-		java.refactor.extract_field,
-		{ range = 2 },
-	},
 }
 
 for cmd, details in pairs(cmd_map) do
