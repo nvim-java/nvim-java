@@ -56,7 +56,7 @@ function M.register_api(path, command, opts)
 
 	vim.api.nvim_create_user_command(name, command, opts or {})
 
-	local last_index = #path - 1
+	local last_index = #path
 	local func_name = path[last_index]
 
 	table.remove(path, last_index)

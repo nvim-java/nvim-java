@@ -47,7 +47,7 @@ Just install and start writing `public static void main(String[] args)`.
 ### Starter Configs (Recommend for newbies)
 
 Following are forks of original repositories pre-configured for java. If you
-don't know how to get started, use one of the following to get started. 
+don't know how to get started, use one of the following to get started.
 You can click on **n commits ahead of** link to see the changes made on top of the original project
 
 - [LazyVim](https://github.com/nvim-java/starter-lazyvim)
@@ -88,7 +88,11 @@ Yep! That's all :)
 
 ### Build
 
-- `JavaBuildWorkspace` - Runs a full workspace build
+- `JavaBuildBuildWorkspace` - Runs a full workspace build
+
+- `JavaBuildCleanWorkspace` - Clear the workspace cache
+  (for now you have to close and reopen to restart the language server after
+  the deletion)
 
 ### Runner
 
@@ -147,6 +151,14 @@ Yep! That's all :)
 
 ```lua
 require('java').build.build_workspace()
+```
+
+- `build.clean_workspace` - Clear the workspace cache
+  (for now you have to close and reopen to restart the language server after
+  the deletion)
+
+```lua
+require('java').build.clean_workspace()
 ```
 
 ### Runner
