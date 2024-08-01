@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/nvim-java/nvim-java/compare/v2.0.0...v2.0.1) (2024-08-01)
+
+
+### Bug Fixes
+
+* refactor and build lua API being registered incorrectly ([#284](https://github.com/nvim-java/nvim-java/issues/284)) ([b9e6b71](https://github.com/nvim-java/nvim-java/commit/b9e6b71c8cbb3f6db8ce7d3a9bd3f3cb805156f1))
+
 ## [2.0.0](https://github.com/nvim-java/nvim-java/compare/v1.21.0...v2.0.0) (2024-07-25)
 
 
