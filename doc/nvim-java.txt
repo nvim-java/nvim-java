@@ -1,4 +1,4 @@
-*nvim-java.txt*          For Neovim >= 0.9.4         Last change: 2024 July 14
+*nvim-java.txt*         For Neovim >= 0.9.4        Last change: 2024 August 01
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -106,7 +106,9 @@ COMMANDS                                                  *nvim-java-commands*
 
 BUILD ~
 
-- `JavaBuildWorkspace` - Runs a full workspace build
+- `JavaBuildBuildWorkspace` - Runs a full workspace build
+- `JavaBuildCleanWorkspace` - Clear the workspace cache (for now you have to
+    close and reopen to restart the language server after the deletion)
 
 
 RUNNER ~
@@ -169,6 +171,14 @@ BUILD ~
 
 >lua
     require('java').build.build_workspace()
+<
+
+- `build.clean_workspace` - Clear the workspace cache
+    (for now you have to close and reopen to restart the language server after
+    the deletion)
+
+>lua
+    require('java').build.clean_workspace()
 <
 
 
