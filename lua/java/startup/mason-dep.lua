@@ -18,13 +18,13 @@ function M.install(config)
 
 	if is_outdated then
 		sync(function()
-				M.refresh_and_install(packages)
-			end)
-			.catch(function(err)
-				notify.error('Failed to setup nvim-java ' .. tostring(err))
-				log.error('failed to setup nvim-java ' .. tostring(err))
-			end)
-			.run()
+			M.refresh_and_install(packages)
+		end)
+				.catch(function(err)
+					notify.error('Failed to setup nvim-java ' .. tostring(err))
+					log.error('failed to setup nvim-java ' .. tostring(err))
+				end)
+				.run()
 	end
 
 	return is_outdated
@@ -49,9 +49,9 @@ end
 ---@return table
 function M.get_pkg_list(config)
 	local deps = List:new({
-		{ name = 'jdtls', version = 'v1.37.0' },
-		{ name = 'lombok-nightly', version = 'nightly' },
-		{ name = 'java-test', version = '0.40.1' },
+		{ name = 'jdtls',              version = 'v1.38.0' },
+		{ name = 'lombok-nightly',     version = 'nightly' },
+		{ name = 'java-test',          version = '0.40.1' },
 		{ name = 'java-debug-adapter', version = '0.58.0' },
 	})
 
