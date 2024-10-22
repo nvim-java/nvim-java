@@ -9,8 +9,14 @@
 
 Just install and start writing `public static void main(String[] args)`.
 
-> [!WARNING]
+> [!CAUTION]
 > You cannot use `nvim-java` alongside `nvim-jdtls`. So remove `nvim-jdtls` before installing this
+
+> [!TIP]
+> You can find cool tips & tricks here https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks
+
+> [!NOTE]
+> If you are facing errors while using, please check troubleshoot wiki https://github.com/nvim-java/nvim-java/wiki/Troubleshooting
 
 ## :loudspeaker: Demo
 
