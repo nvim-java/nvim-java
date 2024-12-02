@@ -41,7 +41,7 @@ function Runner:start_run(args)
 	self.curr_run = run
 	self.logger:set_buffer(run.buffer)
 
-	run:start()
+	run:start(cmd)
 end
 
 ---Stops the user selected run
