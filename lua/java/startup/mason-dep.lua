@@ -52,7 +52,7 @@ function M.get_pkg_list(config)
 		{ name = 'jdtls', version = 'v1.37.0' },
 		{ name = 'lombok-nightly', version = 'nightly' },
 		{ name = 'java-test', version = '0.40.1' },
-		{ name = 'java-debug-adapter', version = '0.58.0' },
+		{ name = 'java-debug-adapter', version = '0.58.1' },
 	})
 
 	if config.jdk.auto_install then
