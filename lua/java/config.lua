@@ -44,7 +44,7 @@ local config = {
 
 	spring_boot_tools = {
 		enable = true,
-		version = '1.59.0',
+		version = '1.55.1',
 	},
 
 	jdk = {
