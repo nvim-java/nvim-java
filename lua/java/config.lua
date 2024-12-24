@@ -1,7 +1,9 @@
 ---@class java.Config
 ---@field root_markers string[]
----@field java_test { enable: boolean }
----@field java_debug_adapter { enable: boolean }
+---@field jdtls { version: string }
+---@field lombok { version: string }
+---@field java_test { enable: boolean, version: string }
+---@field java_debug_adapter { enable: boolean, version: string }
 ---@field spring_boot_tools { enable: boolean }
 ---@field jdk { auto_install: boolean }
 ---@field notifications { dap: boolean }
@@ -20,14 +22,24 @@ local config = {
 		'.git',
 	},
 
+	jdtls = {
+		version = 'v1.37.0',
+	},
+
+	lombok = {
+		version = 'nightly',
+	},
+
 	-- load java test plugins
 	java_test = {
 		enable = true,
+		version = '0.40.1',
 	},
 
 	-- load java debugger plugins
 	java_debug_adapter = {
 		enable = true,
+		version = '0.58.1',
 	},
 
 	spring_boot_tools = {
