@@ -33,7 +33,7 @@ local config = {
 	-- load java test plugins
 	java_test = {
 		enable = true,
-		version = '0.43.0',
+		version = '0.40.1',
 	},
 
 	-- load java debugger plugins
