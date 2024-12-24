@@ -356,7 +356,7 @@ want, following options are available
   },
 
   jdtls = {
-    version = 'v1.37.0',
+    version = 'v1.43.0',
   },
 
   lombok = {
@@ -366,7 +366,7 @@ want, following options are available
   -- load java test plugins
   java_test = {
     enable = true,
-    version = '0.40.1',
+    version = '0.43.0',
   },
 
   -- load java debugger plugins
@@ -377,11 +377,13 @@ want, following options are available
 
   spring_boot_tools = {
     enable = true,
+    version = '1.59.0',
   },
 
   jdk = {
     -- install jdk using mason.nvim
     auto_install = true,
+    version = '17.0.2',
   },
 
   notifications = {
