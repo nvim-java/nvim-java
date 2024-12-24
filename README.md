@@ -355,14 +355,24 @@ want, following options are available
     '.git',
   },
 
+  jdtls = {
+    version = 'v1.37.0',
+  },
+
+  lombok = {
+    version = 'nightly',
+  },
+
   -- load java test plugins
   java_test = {
     enable = true,
+    version = '0.40.1',
   },
 
   -- load java debugger plugins
   java_debug_adapter = {
     enable = true,
+    version = '0.58.1',
   },
 
   spring_boot_tools = {
@@ -402,7 +412,7 @@ want, following options are available
     -- mason.nvim plugin.
     -- IF it's not registered correctly, an error will be thrown and nvim-java
     -- will stop setup
-    invalid_mason_registry = true,
+    invalid_mason_registry = false,
   },
 }
 ```
