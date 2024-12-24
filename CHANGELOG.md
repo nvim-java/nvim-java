@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/nvim-java/nvim-java/compare/v2.0.1...v2.0.2) (2024-12-24)
+
+
+### Bug Fixes
+
+* runner cmd [#241](https://github.com/nvim-java/nvim-java/issues/241) ([#329](https://github.com/nvim-java/nvim-java/issues/329)) ([a36f50c](https://github.com/nvim-java/nvim-java/commit/a36f50c82f922f352d4ce7ac6a3c6b238b3e0a36))
+
 ## [2.0.1](https://github.com/nvim-java/nvim-java/compare/v2.0.0...v2.0.1) (2024-08-01)
 
 
