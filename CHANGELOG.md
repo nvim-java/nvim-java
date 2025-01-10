@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/nvim-java/nvim-java/compare/v2.0.2...v2.0.3) (2025-01-10)
+
+
+### Bug Fixes
+
+* **dap:** do not override previously defined user config ([#342](https://github.com/nvim-java/nvim-java/issues/342)) ([4d810a5](https://github.com/nvim-java/nvim-java/commit/4d810a546c262ca8f60228dc98ba51f81f5649c6))
+
 ## [2.0.2](https://github.com/nvim-java/nvim-java/compare/v2.0.1...v2.0.2) (2024-12-24)
 
 
