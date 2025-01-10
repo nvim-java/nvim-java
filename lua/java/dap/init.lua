@@ -105,7 +105,8 @@ function M:config_dap()
 		end
 	end
 	-- end
-	nvim_dap.configurations.java = dap_config
+	nvim_dap.configurations.java = nvim_dap.configurations.java or {}
+	vim.list_extend(nvim_dap.configurations.java, dap_config)
 end
 
 return M
