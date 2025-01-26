@@ -26,6 +26,30 @@ function M.select(prompt, values, format_item, opts)
 	end)
 end
 
+--Sync vim.ui.select function
+---@generic T
+---@param prompt string
+---@param values T[]
+---@param format_item? fun(item: T, index: number): string
+---@param opts? { return_one: boolean }
+---@return T | nil
+function M.select_sync(prompt, values, format_item, opts)
+	opts = opts or { prompt_single = false }
+
+	if not opts.prompt_single and #values == 1 then
+		return values[1]
+	end
+
+	local labels = { prompt }
+	for index, value in ipairs(values) do
+		table.insert(labels, format_item and format_item(value, index) or value)
+	end
+
+	local selected_index = vim.fn.inputlist(labels)
+
+	return values[selected_index]
+end
+
 ---Async vim.ui.select function
 ---@generic T
 ---@param prompt string
