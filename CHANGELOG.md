@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0](https://github.com/nvim-java/nvim-java/compare/v2.0.2...v2.1.0) (2025-01-26)
+
+
+### Features
+
+* add sync ui select util ([#345](https://github.com/nvim-java/nvim-java/issues/345)) ([c616f72](https://github.com/nvim-java/nvim-java/commit/c616f72fa2ea0ad9d7798e1d7cab56aa6de56108))
+
+
+### Bug Fixes
+
+* **dap:** do not override previously defined user config ([#342](https://github.com/nvim-java/nvim-java/issues/342)) ([4d810a5](https://github.com/nvim-java/nvim-java/commit/4d810a546c262ca8f60228dc98ba51f81f5649c6))
+
 ## [2.0.2](https://github.com/nvim-java/nvim-java/compare/v2.0.1...v2.0.2) (2024-12-24)
 
 
