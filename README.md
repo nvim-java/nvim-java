@@ -366,7 +366,7 @@ want, following options are available
   -- load java test plugins
   java_test = {
     enable = true,
-    version = '0.43.0',
+    version = '0.40.1',
   },
 
   -- load java debugger plugins
@@ -377,7 +377,7 @@ want, following options are available
 
   spring_boot_tools = {
     enable = true,
-    version = '1.59.0',
+    version = '1.55.1',
   },
 
   jdk = {
@@ -416,7 +416,16 @@ want, following options are available
     -- will stop setup
     invalid_mason_registry = false,
   },
+
+  mason = {
+    -- These mason registries will be prepended to the existing mason
+    -- configuration
+    registries = {
+      'github:nvim-java/mason-registry',
+    },
+  },
 }
+
 ```
 
 </details>

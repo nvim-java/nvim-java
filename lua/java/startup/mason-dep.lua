@@ -1,6 +1,7 @@
 local log = require('java.utils.log')
 local mason_ui = require('mason.ui')
 local mason_util = require('java.utils.mason')
+local list_util = require('java-core.utils.list')
 local notify = require('java-core.utils.notify')
 local async = require('java-core.utils.async')
 local lazy = require('java.ui.lazy')
@@ -13,6 +14,15 @@ local M = {}
 ---Install mason package dependencies for nvim-java
 ---@param config java.Config
 function M.install(config)
+	local mason_default_config = require('mason.settings').current
+
+	local registries = list_util
+		:new(config.mason.registries)
+		:concat(mason_default_config.registries)
+
+	require('mason').setup({
+		registries = registries,
+	})
 	local packages = M.get_pkg_list(config)
 	local is_outdated = mason_util.is_outdated(packages)
 

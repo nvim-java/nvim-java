@@ -8,6 +8,7 @@
 ---@field jdk { auto_install: boolean, version: string }
 ---@field notifications { dap: boolean }
 ---@field verification { invalid_order: boolean, duplicate_setup_calls: boolean, invalid_mason_registry: boolean }
+---@field mason { registries: string[] }
 local config = {
 	--  list of file that exists in root of the project
 	root_markers = {
@@ -82,6 +83,14 @@ local config = {
 		-- IF it's not registered correctly, an error will be thrown and nvim-java
 		-- will stop setup
 		invalid_mason_registry = false,
+	},
+
+	mason = {
+		-- These mason registries will be prepended to the existing mason
+		-- configuration
+		registries = {
+			'github:nvim-java/mason-registry',
+		},
 	},
 }
 
