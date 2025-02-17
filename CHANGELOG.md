@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/nvim-java/nvim-java/compare/v2.1.0...v2.1.1) (2025-02-16)
+
+
+### Bug Fixes
+
+* nvim-java mason reg is not added if the mason is not merging parent config in user end ([#355](https://github.com/nvim-java/nvim-java/issues/355)) ([db54fbf](https://github.com/nvim-java/nvim-java/commit/db54fbf6a022f2720f86c6b6d7383ba501211b80))
+
 ## [2.1.0](https://github.com/nvim-java/nvim-java/compare/v2.0.2...v2.1.0) (2025-01-26)
 
 
