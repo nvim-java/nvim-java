@@ -8,12 +8,14 @@ local M = {}
 function M.is_available(package_name, package_version)
 	-- guard clause
 	local has_pkg = mason_reg.has_package(package_name)
-	if not has_pkg then return false end
+	if not has_pkg then
+		return false
+	end
 
 	-- check
 	local pkg = mason_reg.get_package(package_name)
 	local version = pkg:get_installed_version()
-  local has_version = version == package_version
+	local has_version = version == package_version
 
 	return has_version
 end
@@ -22,7 +24,9 @@ function M.is_installed(package_name, package_version)
 	-- guard clause
 	local pkg = mason_reg.get_package(package_name)
 	local is_installed = pkg:is_installed()
-	if not is_installed then return false end
+	if not is_installed then
+		return false
+	end
 
 	-- check
 	local installed_version = pkg:get_installed_version()
