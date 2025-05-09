@@ -6,42 +6,33 @@ local await = async.wait_handle_ok
 local M = {}
 
 function M.is_available(package_name, package_version)
+	-- guard clause
 	local has_pkg = mason_reg.has_package(package_name)
-
 	if not has_pkg then
 		return false
 	end
 
-	local has_version = false
-
+	-- check
 	local pkg = mason_reg.get_package(package_name)
-	pkg:get_installed_version(function(success, version)
-		if success and version == package_version then
-			has_version = true
-		end
-	end)
+	local version = pkg:get_installed_version()
+	local has_version = version == package_version
 
 	return has_version
 end
 
 function M.is_installed(package_name, package_version)
+	-- guard clause
 	local pkg = mason_reg.get_package(package_name)
 	local is_installed = pkg:is_installed()
-
 	if not is_installed then
 		return false
 	end
 
-	local installed_version
-	pkg:get_installed_version(function(ok, version)
-		if not ok then
-			return
-		end
+	-- check
+	local installed_version = pkg:get_installed_version()
+	is_installed = installed_version == package_version
 
-		installed_version = version
-	end)
-
-	return installed_version == package_version
+	return is_installed
 end
 
 function M.is_outdated(packages)
