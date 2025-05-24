@@ -288,8 +288,8 @@ require('java').settings.change_runtime()
 ### Method 1
 
 [Neoconf](https://github.com/folke/neoconf.nvim) can be used to manage LSP
-setting including jdtls. Neoconf allows global configuration as well as project
-vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
+setting including jdtls. Neoconf allows global configuration as well as project-wise
+configurations. Here is how you can set Jdtls setting on `neoconf.json`
 
 ```json
 {
