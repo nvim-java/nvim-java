@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/nvim-java/nvim-java/compare/v2.1.1...v2.1.2) (2025-05-24)
+
+
+### Bug Fixes
+
+* **typo:** project vise -&gt; project-wise ([#390](https://github.com/nvim-java/nvim-java/issues/390)) ([7c2e81c](https://github.com/nvim-java/nvim-java/commit/7c2e81caa301b0d1bc7992b88981af883b3b5d6b))
+
 ## [2.1.1](https://github.com/nvim-java/nvim-java/compare/v2.1.0...v2.1.1) (2025-02-16)
 
 
