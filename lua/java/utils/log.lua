@@ -51,7 +51,7 @@ log.new = function(config, standalone)
 
 	local outfile = string.format(
 		'%s/%s.log',
-		vim.api.nvim_call_function('stdpath', { 'data' }),
+		vim.api.nvim_call_function('stdpath', { 'state' }),
 		config.plugin
 	)
 
