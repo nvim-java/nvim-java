@@ -15,11 +15,12 @@ function M.is_available(package_name, package_version)
 	local has_version = false
 
 	local pkg = mason_reg.get_package(package_name)
-	pkg:get_installed_version(function(success, version)
-		if success and version == package_version then
+	if pkg:is_installed() then
+		local installed_version = pkg:get_installed_version()
+		if installed_version == package_version then
 			has_version = true
 		end
-	end)
+	end
 
 	return has_version
 end
@@ -32,14 +33,7 @@ function M.is_installed(package_name, package_version)
 		return false
 	end
 
-	local installed_version
-	pkg:get_installed_version(function(ok, version)
-		if not ok then
-			return
-		end
-
-		installed_version = version
-	end)
+	local installed_version = pkg:get_installed_version()
 
 	return installed_version == package_version
 end
