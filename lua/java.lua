@@ -40,7 +40,9 @@ function M.setup(custom_config)
 
 	setup_wrap.setup(config)
 	decomple_watch.setup()
-	dap_api.setup_dap_on_lsp_attach()
+	if config.java_debug_adapter.enable then
+		dap_api.setup_dap_on_lsp_attach()
+	end
 
 	vim.api.nvim_exec_autocmds(
 		'User',
