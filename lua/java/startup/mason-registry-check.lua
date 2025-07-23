@@ -7,7 +7,7 @@ local M = {
 function M.is_valid()
 	local has_reg = false
 
-	for reg in mason_source.iter() do
+	for reg in mason_source:iterate() do
 		if reg.id == M.JAVA_REG_ID then
 			has_reg = true
 			goto continue

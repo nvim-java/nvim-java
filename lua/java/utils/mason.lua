@@ -6,40 +6,27 @@ local await = async.wait_handle_ok
 local M = {}
 
 function M.is_available(package_name, package_version)
-	local has_pkg = mason_reg.has_package(package_name)
+	-- get_package errors if the package is not available in Mason 2.0
+	local has_pkg, pkg = pcall(mason_reg.get_package, package_name)
 
 	if not has_pkg then
 		return false
 	end
 
-	local has_version = false
+	local installed_version = pkg:get_installed_version()
 
-	local pkg = mason_reg.get_package(package_name)
-	pkg:get_installed_version(function(success, version)
-		if success and version == package_version then
-			has_version = true
-		end
-	end)
-
-	return has_version
+	return installed_version == package_version
 end
 
 function M.is_installed(package_name, package_version)
-	local pkg = mason_reg.get_package(package_name)
-	local is_installed = pkg:is_installed()
+	-- get_package errors if the package is not available in Mason 2.0
+	local found, pkg = pcall(mason_reg.get_package, package_name)
 
-	if not is_installed then
+	if not found or not pkg:is_installed() then
 		return false
 	end
 
-	local installed_version
-	pkg:get_installed_version(function(ok, version)
-		if not ok then
-			return
-		end
-
-		installed_version = version
-	end)
+	local installed_version = pkg:get_installed_version()
 
 	return installed_version == package_version
 end
@@ -69,10 +56,13 @@ function M.install_pkgs(packages)
 		if not M.is_installed(dep.name, dep.version) then
 			local pkg = mason_reg.get_package(dep.name)
 
-			pkg:install({
-				version = dep.version,
-				force = true,
-			})
+			-- install errors if installation is already running in Mason 2.0
+			if not pkg:is_installing() then
+				pkg:install({
+					version = dep.version,
+					force = true,
+				})
+			end
 		end
 	end
 end
