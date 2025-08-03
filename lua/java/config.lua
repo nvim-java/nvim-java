@@ -40,7 +40,7 @@ local config = {
 	-- load java debugger plugins
 	java_debug_adapter = {
 		enable = true,
-		version = '0.58.1',
+		version = '0.58.2',
 	},
 
 	spring_boot_tools = {
