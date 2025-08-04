@@ -16,9 +16,8 @@ local M = {}
 function M.add_custom_registries(registries)
 	local mason_default_config = require('mason.settings').current
 
-	local new_registries = list_util
-		:new(registries)
-		:concat(mason_default_config.registries)
+	local new_registries =
+		list_util:new(registries):concat(mason_default_config.registries)
 
 	require('mason').setup({
 		registries = new_registries,
