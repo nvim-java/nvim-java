@@ -28,6 +28,8 @@ function M.setup(custom_config)
 		{ pattern = 'JavaSetup', data = { config = config } }
 	)
 
+	mason_dep.add_custom_registries(config.mason.registries)
+
 	if not startup_check() then
 		return
 	end
