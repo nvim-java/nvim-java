@@ -11,18 +11,22 @@ local List = require('java-core.utils.list')
 
 local M = {}
 
+---Add custom registries to mason
+---@param registries java.Config
+function M.add_custom_registries(registries)
+	local mason_default_config = require('mason.settings').current
+
+	local new_registries =
+		list_util:new(registries):concat(mason_default_config.registries)
+
+	require('mason').setup({
+		registries = new_registries,
+	})
+end
+
 ---Install mason package dependencies for nvim-java
 ---@param config java.Config
 function M.install(config)
-	local mason_default_config = require('mason.settings').current
-
-	local registries = list_util
-		:new(config.mason.registries)
-		:concat(mason_default_config.registries)
-
-	require('mason').setup({
-		registries = registries,
-	})
 	local packages = M.get_pkg_list(config)
 	local is_outdated = mason_util.is_outdated(packages)
 
