@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.1.2](https://github.com/nvim-java/nvim-java/compare/v2.1.1...v2.1.2) (2025-08-04)
+
+
+### Bug Fixes
+
+* java-debug-adapter doean't install ([#407](https://github.com/nvim-java/nvim-java/issues/407)) ([2776094](https://github.com/nvim-java/nvim-java/commit/2776094c745af0d99b5acb24a4594d85b4f99545))
+* mason registry verification fails ([#405](https://github.com/nvim-java/nvim-java/issues/405)) ([4fd68c4](https://github.com/nvim-java/nvim-java/commit/4fd68c4025acaafb9efbf2e0cf69e017bcc4476c))
+* **typo:** project vise -&gt; project-wise ([#390](https://github.com/nvim-java/nvim-java/issues/390)) ([7c2e81c](https://github.com/nvim-java/nvim-java/commit/7c2e81caa301b0d1bc7992b88981af883b3b5d6b))
+
 ## [2.1.1](https://github.com/nvim-java/nvim-java/compare/v2.1.0...v2.1.1) (2025-02-16)
 
 
