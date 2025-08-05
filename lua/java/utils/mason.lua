@@ -23,7 +23,7 @@ function M.is_available(package_name, package_version)
 	else
 		-- the compiler will complain when mason 2.x is in use
 		---@diagnostic disable-next-line: param-type-mismatch
-		pkg:get_installed_version(function (success, version)
+		pkg:get_installed_version(function(success, version)
 			if success then
 				installed_version = version
 			end
@@ -50,7 +50,7 @@ function M.is_installed(package_name, package_version)
 	else
 		-- the compiler will complain when Mason 2.x is in use
 		---@diagnostic disable-next-line: param-type-mismatch
-		pkg:get_installed_version(function (success, version)
+		pkg:get_installed_version(function(success, version)
 			if success then
 				installed_version = version
 			end

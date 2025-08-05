@@ -1,8 +1,10 @@
-local mason_v2 = require('mason.version').MAJOR_VERSION==2
+local mason_v2 = require('mason.version').MAJOR_VERSION == 2
 
 local mason_sources
 
 if mason_v2 then
+	-- compiler will complain when Mason 1.x is used
+	---@diagnostic disable-next-line: undefined-field
 	mason_sources = require('mason-registry').sources
 else
 	mason_sources = require('mason-registry.sources')
@@ -33,7 +35,7 @@ function M.is_valid()
 		if reg.id == M.JAVA_REG_ID then
 			return {
 				success = true,
-				continue = true
+				continue = true,
 			}
 		end
 	end
