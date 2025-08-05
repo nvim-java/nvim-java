@@ -30,7 +30,6 @@ function M.is_valid()
 		iterator = mason_sources.iter
 	end
 
-
 	for reg in iterator(mason_sources) do
 		if reg.id == M.JAVA_REG_ID then
 			return {
