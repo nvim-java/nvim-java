@@ -1,26 +1,42 @@
-local mason_source = require('mason-registry.sources')
+local mason_v2 = require('mason.version').MAJOR_VERSION == 2
 
-local M = {
-	JAVA_REG_ID = 'github:nvim-java/mason-registry',
-}
+local mason_sources
+
+if mason_v2 then
+	-- compiler will complain when Mason 1.x is used
+	---@diagnostic disable-next-line: undefined-field
+	mason_sources = require('mason-registry').sources
+else
+	mason_sources = require('mason-registry.sources')
+end
+
+local M = {}
+if mason_v2 then
+	M.JAVA_REG_ID = 'nvim-java/mason-registry'
+else
+	M.JAVA_REG_ID = 'github:nvim-java/mason-registry'
+end
 
 function M.is_valid()
-	local has_reg = false
+	local iterator
 
-	for reg in mason_source.iter() do
-		if reg.id == M.JAVA_REG_ID then
-			has_reg = true
-			goto continue
-		end
+	if mason_v2 then
+		-- the compiler will complain when Mason 1.x is in use
+		---@diagnostic disable-next-line: undefined-field
+		iterator = mason_sources.iterate
+	else
+		-- the compiler will complain when Mason 2.x is in use
+		---@diagnostic disable-next-line: undefined-field
+		iterator = mason_sources.iter
 	end
 
-	::continue::
-
-	if has_reg then
-		return {
-			success = true,
-			continue = true,
-		}
+	for reg in iterator(mason_sources) do
+		if reg.id == M.JAVA_REG_ID then
+			return {
+				success = true,
+				continue = true,
+			}
+		end
 	end
 
 	return {

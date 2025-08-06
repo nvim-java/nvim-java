@@ -6,14 +6,15 @@ local notify = require('java-core.utils.notify')
 local async = require('java-core.utils.async')
 local lazy = require('java.ui.lazy')
 local sync = async.sync
+local mason_v2 = require('mason.version').MAJOR_VERSION == 2
 
 local List = require('java-core.utils.list')
 
 local M = {}
 
----Add custom registries to mason
+---Add custom registries to Mason 1.x
 ---@param registries java.Config
-function M.add_custom_registries(registries)
+local function add_custom_registries_v1(registries)
 	local mason_default_config = require('mason.settings').current
 
 	local new_registries =
@@ -22,6 +23,21 @@ function M.add_custom_registries(registries)
 	require('mason').setup({
 		registries = new_registries,
 	})
+end
+
+---Add custom registries to Mason 2.x
+---@param registries java.Config
+local function add_custom_registries_v2(registries)
+	for _, reg in ipairs(registries) do
+		---@diagnostic disable-next-line: undefined-field
+		require('mason-registry').sources:prepend(reg)
+	end
+end
+
+if mason_v2 then
+	M.add_custom_registries = add_custom_registries_v2
+else
+	M.add_custom_registries = add_custom_registries_v1
 end
 
 ---Install mason package dependencies for nvim-java
@@ -51,7 +67,7 @@ function M.refresh_and_install(packages)
 		lazy.close_lazy_if_opened()
 
 		mason_ui.open()
-		notify.warn('Please close and re-open after dependecies are installed')
+		notify.warn('Please close and re-open after dependencies are installed')
 	end)
 
 	mason_util.refresh_registry()
