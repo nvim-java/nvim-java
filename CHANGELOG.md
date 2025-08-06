@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.0.0](https://github.com/nvim-java/nvim-java/compare/v2.1.2...v3.0.0) (2025-08-06)
+
+
+### Features
+
+* [@logrusx](https://github.com/logrusx) adds Mason 2.0 support ([#402](https://github.com/nvim-java/nvim-java/issues/402)) ([58c25cd](https://github.com/nvim-java/nvim-java/commit/58c25cd45d867fc512af48a457c71bb26d9d778d))
+
+
+### Miscellaneous Chores
+
+* release 3.0.0 ([3cecf73](https://github.com/nvim-java/nvim-java/commit/3cecf7362e5f83e4a34e84e4f14c65bad81968f1))
+
 ## [2.1.2](https://github.com/nvim-java/nvim-java/compare/v2.1.1...v2.1.2) (2025-08-04)
 
 
