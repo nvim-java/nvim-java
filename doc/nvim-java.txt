@@ -1,4 +1,4 @@
-*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2025 February 16
+*nvim-java.txt*          For Neovim >= 0.9.4          Last change: 2025 May 24
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -312,8 +312,9 @@ HOW TO USE JDK X.X VERSION?            *nvim-java-how-to-use-jdk-x.x-version?*
 METHOD 1 ~
 
 Neoconf <https://github.com/folke/neoconf.nvim> can be used to manage LSP
-setting including jdtls. Neoconf allows global configuration as well as project
-vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
+setting including jdtls. Neoconf allows global configuration as well as
+project-wise configurations. Here is how you can set Jdtls setting on
+`neoconf.json`
 
 >json
     {
