@@ -9,6 +9,4 @@ on:
 
 jobs:
   trigger-integration-tests:
-    runs-on: ubuntu-latest
-    name: Trigger workflow in nvim-java/tests
     uses: nvim-java/tests/.github/workflows/test-nvim-java.yml@main
