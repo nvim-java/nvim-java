@@ -1,8 +1,6 @@
 name: Trigger Tests in nvim-java/tests
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
   workflow_call:
 
