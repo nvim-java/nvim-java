@@ -18,7 +18,6 @@ jobs:
         REPO="tests"
 
         # Get workflows and extract URL and ID for "Test nvim-java Plugin"
-
         response=$(curl -s -L \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer $TEST_TOKEN" \
