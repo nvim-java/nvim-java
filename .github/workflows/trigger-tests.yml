@@ -23,6 +23,7 @@ jobs:
           "https://api.github.com/repos/$OWNER/$REPO/actions/workflows")
 
         echo "11111111111"
+        echo "$response"
 
         # Extract URL and ID using jq
         workflow_url=$(echo "$response" | jq -r '.workflows[] | select(.name == "Test nvim-java Plugin") | .url')
