@@ -22,15 +22,20 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           "https://api.github.com/repos/$OWNER/$REPO/actions/workflows")
 
+        echo "11111111111"
+
         # Extract URL and ID using jq
         workflow_url=$(echo "$response" | jq -r '.workflows[] | select(.name == "Test nvim-java Plugin") | .url')
+        echo "22222222222"
         workflow_id=$(echo "$response" | jq -r '.workflows[] | select(.name == "Test nvim-java Plugin") | .id')
+        echo "33333333333"
 
         echo "Workflow URL: $workflow_url"
         echo "Workflow ID: $workflow_id"
 
         # Trigger workflow dispatch
         if [ ! -z "$workflow_id" ]; then
+          echo "44444444444"
           dispatch_response=$(curl -s -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
@@ -39,6 +44,7 @@ jobs:
             "https://api.github.com/repos/$OWNER/$REPO/actions/workflows/$workflow_id/dispatches" \
             -d '{"ref":"main"}')
           
+          echo "55555555555"
           echo "Workflow dispatch triggered"
           if [ ! -z "$dispatch_response" ]; then
             echo "Response:"
