@@ -12,17 +12,101 @@ jobs:
     
     steps:
     - name: Trigger workflow in nvim-java/tests
-      uses: actions/github-script@v7
-      with:
-        github-token: ${{ secrets.INTEGRATION_TEST_TOKEN }}
-        script: |
-          github.rest.repos.createDispatchEvent({
-            owner: 'nvim-java',
-            repo: 'tests',
-            event_type: 'test-nvim-java',
-            client_payload: {
-              triggered_by: context.repo.repo,
-              ref: context.sha,
-              event_type: context.eventName
-            }
-          });
+      runs: |
+        OWNER="nvim-java"
+        REPO="tests"
+
+        # Get workflows and extract URL and ID for "Test nvim-java Plugin"
+        response=$(curl -s -L \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer $TOKEN" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          "https://api.github.com/repos/$OWNER/$REPO/actions/workflows")
+
+        # Extract URL and ID using jq
+        workflow_url=$(echo "$response" | jq -r '.workflows[] | select(.name == "Test nvim-java Plugin") | .url')
+        workflow_id=$(echo "$response" | jq -r '.workflows[] | select(.name == "Test nvim-java Plugin") | .id')
+
+        echo "Workflow URL: $workflow_url"
+        echo "Workflow ID: $workflow_id"
+
+        # Trigger workflow dispatch
+        if [ ! -z "$workflow_id" ]; then
+          dispatch_response=$(curl -s -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$OWNER/$REPO/actions/workflows/$workflow_id/dispatches" \
+            -d '{"ref":"main"}')
+          
+          echo "Workflow dispatch triggered"
+          if [ ! -z "$dispatch_response" ]; then
+            echo "Response:"
+            echo "$dispatch_response" | jq '.'
+          else
+            echo "No response body (successful dispatch returns empty response)"
+          fi
+
+          # Wait for the workflow run to start and get the run ID
+          echo "Waiting for workflow run to start..."
+          run_id=""
+          start_time=$(date +%s)
+          timeout=60  # 60 seconds timeout
+          
+          while [ -z "$run_id" ]; do
+            current_time=$(date +%s)
+            if [ $((current_time - start_time)) -gt $timeout ]; then
+              echo "Timeout waiting for workflow to start"
+              exit 1
+            fi
+            
+            sleep 5
+            runs_response=$(curl -s -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$OWNER/$REPO/actions/workflows/$workflow_id/runs?per_page=1")
+            
+            latest_run_id=$(echo "$runs_response" | jq -r '.workflow_runs[0].id')
+            latest_run_time=$(echo "$runs_response" | jq -r '.workflow_runs[0].created_at')
+            
+            # Check if this run was created after we triggered the workflow
+            if [ ! -z "$latest_run_id" ] && [ "$latest_run_id" != "null" ]; then
+              run_created=$(date -d "$latest_run_time" +%s 2>/dev/null || echo "0")
+              if [ $run_created -gt $((start_time - 10)) ]; then
+                run_id=$latest_run_id
+                echo "Found new workflow run: $run_id"
+              fi
+            fi
+          done
+
+          # Wait for workflow to complete
+          echo "Waiting for workflow run $run_id to complete..."
+          while true; do
+            run_response=$(curl -s -L \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$OWNER/$REPO/actions/runs/$run_id")
+            
+            status=$(echo "$run_response" | jq -r '.status')
+            conclusion=$(echo "$run_response" | jq -r '.conclusion')
+            
+            echo "Workflow status: $status"
+            
+            if [ "$status" = "completed" ]; then
+              echo "Workflow completed with conclusion: $conclusion"
+              if [ "$conclusion" = "success" ]; then
+                echo "Workflow succeeded!"
+                exit 0
+              else
+                echo "Workflow failed with conclusion: $conclusion"
+                exit 1
+              fi
+            fi
+            
+            sleep 10
+          done
+        fi
+
