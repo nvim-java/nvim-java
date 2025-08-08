@@ -11,7 +11,7 @@ jobs:
     
     steps:
     - name: Trigger workflow in nvim-java/tests
-      runs: |
+      run: |
         OWNER="nvim-java"
         REPO="tests"
 
