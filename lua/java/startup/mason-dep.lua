@@ -46,7 +46,7 @@ function M.install(config)
 	local packages = M.get_pkg_list(config)
 	local is_outdated = mason_util.is_outdated(packages)
 
-	if is_outdated then
+	if (not config.mason.disable_automatic_update) and is_outdated then
 		sync(function()
 				M.refresh_and_install(packages)
 			end)

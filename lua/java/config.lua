@@ -8,7 +8,7 @@
 ---@field jdk { auto_install: boolean, version: string }
 ---@field notifications { dap: boolean }
 ---@field verification { invalid_order: boolean, duplicate_setup_calls: boolean, invalid_mason_registry: boolean }
----@field mason { registries: string[] }
+---@field mason { disable_automatic_update?:boolean, registries: string[] }
 local config = {
 	--  list of file that exists in root of the project
 	root_markers = {
