@@ -23,8 +23,6 @@ local MessageId = {
 	ActualEnd = '%ACTUALE',
 	TraceStart = '%TRACES',
 	TraceEnd = '%TRACEE',
-	IGNORE_TEST_PREFIX = '@Ignore: ',
-	ASSUMPTION_FAILED_TEST_PREFIX = '@AssumptionFailure: ',
 }
 
 return MessageId

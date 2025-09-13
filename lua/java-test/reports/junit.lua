@@ -2,7 +2,7 @@ local class = require('java-core.utils.class')
 local log = require('java-core.utils.log2')
 
 ---@class java-test.JUnitTestReport
----@field private conn uv_tcp_t
+---@field private conn uv.uv_tcp_t
 ---@field private result_parser java-test.TestParser
 ---@field private result_parser_fac java-test.TestParserFactory
 ---@field private report_viewer java-test.ReportViewer
@@ -29,7 +29,7 @@ function JUnitReport:show_report()
 end
 
 ---Returns a stream reader function
----@param conn uv_tcp_t
+---@param conn uv.uv_tcp_t
 ---@return fun(err: string, buffer: string) # callback function
 function JUnitReport:get_stream_reader(conn)
 	self.conn = conn

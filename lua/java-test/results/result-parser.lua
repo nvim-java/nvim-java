@@ -19,6 +19,13 @@ TestParser.node_parsers = {
 	[MessageId.TestStart] = 'parse_test_start',
 	[MessageId.TestEnd] = 'parse_test_end',
 	[MessageId.TestFailed] = 'parse_test_failed',
+	[MessageId.TestError] = 'parse_test_failed',
+}
+
+---@private
+TestParser.skip_prefixes = {
+	'@Ignore:',
+	'@AssumptionFailure:',
 }
 
 ---@private
@@ -101,6 +108,12 @@ function TestParser:parse_test_end(data)
 	local node = self:find_result_node(test_id)
 	assert(node)
 	node.result.execution = TestExecStatus.Ended
+
+	for _, prefix in ipairs(TestParser.skip_prefixes) do
+		if string.match(data[2], '^'..prefix) then
+			node.result.status = TestStatus.Skipped
+		end
+	end
 end
 
 ---@private
@@ -109,7 +122,13 @@ function TestParser:parse_test_failed(data, line_iter)
 	local node = self:find_result_node(test_id)
 	assert(node)
 
-	node.result.status = TestStatus.Failed
+	node.result.status = node.result.status or TestStatus.Failed
+
+	for _, prefix in ipairs(TestParser.skip_prefixes) do
+		if string.match(data[2], '^'..prefix) then
+			node.result.status = TestStatus.Skipped
+		end
+	end
 
 	while true do
 		local line = line_iter()
