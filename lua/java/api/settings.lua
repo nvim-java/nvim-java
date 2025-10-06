@@ -1,4 +1,4 @@
-local get_jdtls = require('java.utils.jdtls2')
+local get_jdtls = require('java.utils.jdtls')
 local JdtlsClient = require('java-core.ls.clients.jdtls-client')
 local conf_utils = require('java.utils.config')
 local notify = require('java-core.utils.notify')
@@ -9,7 +9,7 @@ local get_error_handler = require('java.handlers.error')
 local M = {}
 
 function M.change_runtime()
-	local client = get_jdtls()
+	local client = get_jdtls().client
 
 	---@type RuntimeOption[]
 	local runtimes = conf_utils.get_property_from_conf(

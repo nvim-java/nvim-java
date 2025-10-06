@@ -8,7 +8,7 @@ local class = require('java-core.utils.class')
 local dap_api = require('java.api.dap')
 local log = require('java.utils.log')
 local DapSetup = require('java-dap.api.setup')
-local jdtls = require('java.utils.jdtls')
+local get_jdtls = require('java.utils.jdtls')
 local ui = require('java.utils.ui')
 
 local new_profile = 'New Profile'
@@ -356,8 +356,9 @@ local get_error_handler = require('java.handlers.error')
 M.ProfileUI = ProfileUI
 
 function M.ui()
+	local client = get_jdtls().client
 	return async(function()
-			local configs = DapSetup(jdtls().client):get_dap_config()
+			local configs = DapSetup(client):get_dap_config()
 
 			if not configs or #configs == 0 then
 				notify.error('No classes with main methods are found')

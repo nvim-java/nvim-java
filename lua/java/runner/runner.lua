@@ -1,6 +1,6 @@
 local ui = require('java.utils.ui')
 local class = require('java-core.utils.class')
-local jdtls = require('java.utils.jdtls2')
+local get_jdtls = require('java.utils.jdtls')
 local profile_config = require('java.api.profile_config')
 local Run = require('java.runner.run')
 local RunLogger = require('java.runner.run-logger')
@@ -101,7 +101,8 @@ end
 ---@return string[] | nil
 ---@return java-dap.DapLauncherConfig | nil
 function Runner.select_dap_config(args)
-	local dap = DapSetup(jdtls())
+	local client = get_jdtls().client
+	local dap = DapSetup(client)
 	local dap_config_list = dap:get_dap_config()
 
 	local selected_dap_config = ui.select(
