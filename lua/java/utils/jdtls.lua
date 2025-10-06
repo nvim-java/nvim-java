@@ -5,7 +5,7 @@ local get_error_handler = require('java.handlers.error')
 local function get_jdtls()
 	local clients
 
-	if vim.fn.has("nvim-0.11") == 1 then
+	if vim.lsp.get_clients then
 		clients = vim.lsp.get_clients({ name = 'jdtls' })
 	else
 		clients = vim.lsp.get_active_clients({ name = 'jdtls' })

@@ -1,4 +1,4 @@
-local get_jdtls = require('java.utils.jdtls')
+local jdtls = require('java.utils.jdtls')
 local get_error_handler = require('java.handlers.error')
 
 local async = require('java-core.utils.async').sync
@@ -22,7 +22,7 @@ function M.setup()
 			local done = false
 
 			async(function()
-					local client = get_jdtls().client
+					local client = jdtls().client
 					local buffer = opts.buf
 
 					local text = JavaCoreJdtlsClient(client):java_decompile(opts.file)
