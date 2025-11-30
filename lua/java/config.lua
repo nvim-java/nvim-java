@@ -13,7 +13,7 @@ local jdtls_version_map = {
 local V = jdtls_version_map[JDTLS_VERSION]
 
 ---@class java.Config
----@field checks { nvim_version: boolean }
+---@field checks { nvim_version: boolean, nvim_jdtls_conflict: boolean }
 ---@field jdtls { version: string }
 ---@field lombok { enable: boolean, version: string }
 ---@field java_test { enable: boolean, version: string }
@@ -24,7 +24,7 @@ local V = jdtls_version_map[JDTLS_VERSION]
 ---@field log java-core.Log2Config
 
 ---@class java.PartialConfig
----@field checks? { nvim_version?: boolean }
+---@field checks? { nvim_version?: boolean, nvim_jdtls_conflict?: boolean }
 ---@field jdtls? { version?: string }
 ---@field lombok? { enable?: boolean, version?: string }
 ---@field java_test? { enable?: boolean, version?: string }
@@ -38,6 +38,7 @@ local V = jdtls_version_map[JDTLS_VERSION]
 local config = {
 	checks = {
 		nvim_version = true,
+		nvim_jdtls_conflict = true,
 	},
 
 	jdtls = {
