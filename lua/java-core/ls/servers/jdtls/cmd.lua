@@ -20,7 +20,7 @@ function M.get_cmd(opts)
 	return function(dispatchers, config)
 		local cmd = M.get_jvm_args(opts):concat(M.get_jar_args())
 
-		M.validate_java_version()
+		M.validate_java_version(config.cmd_env)
 
 		log.debug('Starting jdtls with cmd', cmd)
 
@@ -97,8 +97,9 @@ function M.get_jar_args(cwd)
 end
 
 ---@private
-function M.validate_java_version()
-	local curr_ver = M.get_java_major_version()
+---@param env table
+function M.validate_java_version(env)
+	local curr_ver = M.get_java_major_version(env)
 	local exp_ver = java_version_map[conf.jdtls.version]
 
 	if not (curr_ver >= exp_ver.to and curr_ver <= exp_ver.from) then
@@ -115,8 +116,11 @@ function M.validate_java_version()
 end
 
 ---@private
-function M.get_java_major_version()
-	local version = vim.fn.system('java -version')
+---@param env table
+function M.get_java_major_version(env)
+	local proc = vim.system({ 'java', '-version' }, { env = env }):wait()
+	local version = proc.stderr or proc.stdout or ''
+
 	local major = version:match('version (%d+)')
 		or version:match('version "(%d+)')
 		or version:match('openjdk (%d+)')
