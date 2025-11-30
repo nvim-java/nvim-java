@@ -98,16 +98,16 @@ end
 
 ---@private
 function M.validate_java_version()
-	local v = M.get_java_major_version()
+	local curr_ver = M.get_java_major_version()
 	local exp_ver = java_version_map[conf.jdtls.version]
 
-	if v <= exp_ver.from and v >= exp_ver.to then
+	if not (curr_ver >= exp_ver.to and curr_ver <= exp_ver.from) then
 		local msg = string.format(
-			'Java version mismatch: JDTLS %s requires Java %d - %d, but found Java %d',
+			'Java version mismatch: JDTLS %s requires Java %d <= java >= %d, but found Java %d',
 			conf.jdtls.version,
 			exp_ver.from,
 			exp_ver.to,
-			v
+			curr_ver
 		)
 
 		err.throw(msg)
