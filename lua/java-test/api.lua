@@ -37,6 +37,8 @@ end
 ---@param file_uri string uri of the class
 ---@return java-core.TestDetailsWithRange[] # list of test methods
 function M:get_test_methods(file_uri)
+	log.debug('finding test methods for uri: ' .. file_uri)
+
 	local classes = self.test_client:find_test_types_and_methods(file_uri)
 	local methods = {}
 
@@ -48,6 +50,8 @@ function M:get_test_methods(file_uri)
 		end
 	end
 
+	log.debug('found ' .. #methods .. ' test methods')
+
 	return methods
 end
 
@@ -56,12 +60,16 @@ end
 ---@param report java-test.JUnitTestReport
 ---@param config? java-dap.DapLauncherConfigOverridable config to override the default values in test launcher config
 function M:run_class_by_buffer(buffer, report, config)
+	log.debug('running test class from buffer: ' .. buffer)
+
 	local tests = self:get_test_class_by_buffer(buffer)
 
 	if #tests < 1 then
 		notify.warn('No tests found in the current buffer')
 		return
 	end
+
+	log.debug('found ' .. #tests .. ' test classes')
 
 	self:run_test(tests, report, config)
 end
@@ -82,9 +90,15 @@ end
 ---@param report java-test.JUnitTestReport
 ---@param config? java-dap.DapLauncherConfigOverridable config to override the default values in test launcher config
 function M:run_test(tests, report, config)
+	log.debug('running ' .. #tests .. ' tests')
+
 	local launch_args = self.test_client:resolve_junit_launch_arguments(test_adapters.tests_to_junit_launch_params(tests))
 
+	log.debug('resolved launch args - mainClass: ' .. launch_args.mainClass .. ', projectName: ' .. launch_args.projectName)
+
 	local java_exec = self.debug_client:resolve_java_executable(launch_args.mainClass, launch_args.projectName)
+
+	log.debug('java executable: ' .. vim.inspect(java_exec))
 
 	local dap_launcher_config = dap_adapters.junit_launch_args_to_dap_config(launch_args, java_exec, {
 		debug = true,
@@ -92,6 +106,8 @@ function M:run_test(tests, report, config)
 	})
 
 	dap_launcher_config = vim.tbl_deep_extend('force', dap_launcher_config, config or {})
+
+	log.debug('launching tests with config: ' .. vim.inspect(dap_launcher_config))
 
 	self.runner:run_by_config(dap_launcher_config, report)
 end
