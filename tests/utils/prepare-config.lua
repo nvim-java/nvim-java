@@ -31,11 +31,23 @@ require('lazy').setup({
 		'nvim-java/nvim-java',
 		dir = '.',
 		config = function()
-			require('java').setup({
+			local is_nixos = vim.fn.filereadable('/etc/NIXOS') == 1
+			local is_ci = vim.env.CI ~= nil
+
+			local config = {
 				jdk = {
-					auto_install = false,
+					auto_install = not is_nixos,
 				},
-			})
+			}
+
+			if is_ci then
+				config.log = {
+					level = 'debug',
+					use_console = true,
+				}
+			end
+
+			require('java').setup(config)
 			vim.lsp.enable('jdtls')
 		end,
 	},
