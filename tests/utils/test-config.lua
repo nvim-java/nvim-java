@@ -18,11 +18,21 @@ vim.opt.runtimepath:append(temp_path .. '/nvim-dap')
 vim.opt.runtimepath:append('.')
 
 local is_nixos = vim.fn.filereadable('/etc/NIXOS') == 1
+local is_ci = vim.env.CI ~= nil
 
-require('java').setup({
+local config = {
 	jdk = {
 		auto_install = not is_nixos,
 	},
-})
+}
+
+if is_ci then
+	config.log = {
+		level = 'debug',
+		use_console = true,
+	}
+end
+
+require('java').setup(config)
 
 vim.lsp.enable('jdtls')
