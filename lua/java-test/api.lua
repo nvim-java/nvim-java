@@ -94,7 +94,9 @@ function M:run_test(tests, report, config)
 
 	local launch_args = self.test_client:resolve_junit_launch_arguments(test_adapters.tests_to_junit_launch_params(tests))
 
-	log.debug('resolved launch args - mainClass: ' .. launch_args.mainClass .. ', projectName: ' .. launch_args.projectName)
+	log.debug(
+		'resolved launch args - mainClass: ' .. launch_args.mainClass .. ', projectName: ' .. launch_args.projectName
+	)
 
 	local java_exec = self.debug_client:resolve_java_executable(launch_args.mainClass, launch_args.projectName)
 
