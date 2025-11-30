@@ -1,22 +1,18 @@
-local get_jdtls = require('java.utils.jdtls2')
+local lsp_utils = require('java-core.utils.lsp')
 local JdtlsClient = require('java-core.ls.clients.jdtls-client')
 local conf_utils = require('java.utils.config')
 local notify = require('java-core.utils.notify')
-local ui = require('java.utils.ui')
-local async = require('java-core.utils.async').sync
-local get_error_handler = require('java.handlers.error')
+local ui = require('java.ui.utils')
+local runner = require('async.runner')
+local get_error_handler = require('java-core.utils.error_handler')
 
 local M = {}
 
 function M.change_runtime()
-	local client = get_jdtls()
+	local client = lsp_utils.get_jdtls()
 
 	---@type RuntimeOption[]
-	local runtimes = conf_utils.get_property_from_conf(
-		client.config,
-		'settings.java.configuration.runtimes',
-		{}
-	)
+	local runtimes = conf_utils.get_property_from_conf(client.config, 'settings.java.configuration.runtimes', {})
 
 	if #runtimes < 1 then
 		notify.error(
@@ -29,18 +25,12 @@ function M.change_runtime()
 
 	local jdtls = JdtlsClient(client)
 
-	async(function()
-			local sel_runtime = ui.select(
-				'Select Runtime',
-				runtimes,
-				function(runtime)
-					return runtime.name .. '::' .. runtime.path
-				end
-			)
+	runner(function()
+			local sel_runtime = ui.select('Select Runtime', runtimes, function(runtime)
+				return runtime.name .. '::' .. runtime.path
+			end)
 
-			for _, runtime in
-				ipairs(client.config.settings.java.configuration.runtimes)
-			do
+			for _, runtime in ipairs(client.config.settings.java.configuration.runtimes) do
 				if sel_runtime.path == runtime.path then
 					runtime.default = true
 				else

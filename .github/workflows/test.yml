@@ -8,12 +8,13 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
         nvim-versions: ["stable", "nightly"]
 
-    name: test
+    name: test (${{ matrix.os }}, nvim-${{ matrix.nvim-versions }})
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -24,4 +25,4 @@ jobs:
           version: ${{ matrix.nvim-versions }}
 
       - name: run tests
-        run: make test
+        run: make tests

@@ -1,0 +1,6 @@
+---@class nvim.CodeActionParamsResponse
+---@field bufnr number
+---@field client_id number
+---@field method string
+---@field params lsp.CodeActionParams
+---@field version number

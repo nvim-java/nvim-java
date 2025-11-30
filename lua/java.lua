@@ -1,98 +1,98 @@
-local decomple_watch = require('java.startup.decompile-watcher')
-local mason_dep = require('java.startup.mason-dep')
-local setup_wrap = require('java.startup.lspconfig-setup-wrap')
-local startup_check = require('java.startup.startup-check')
-
-local command_util = require('java.utils.command')
-
-local test_api = require('java.api.test')
-local dap_api = require('java.api.dap')
 local runner_api = require('java.api.runner')
 local settings_api = require('java.api.settings')
 local profile_ui = require('java.ui.profile')
 
-local global_config = require('java.config')
-
 local M = {}
 
+---@param custom_config java.PartialConfig | nil
 function M.setup(custom_config)
-	vim.api.nvim_exec_autocmds('User', { pattern = 'JavaPreSetup' })
+	local default_conf = require('java.config')
+	local test_api = require('java-test')
 
-	local config =
-		vim.tbl_deep_extend('force', global_config, custom_config or {})
+	local config = vim.tbl_deep_extend('force', default_conf, custom_config or {})
 
 	vim.g.nvim_java_config = config
 
-	vim.api.nvim_exec_autocmds(
-		'User',
-		{ pattern = 'JavaSetup', data = { config = config } }
-	)
-
-	mason_dep.add_custom_registries(config.mason.registries)
-
-	if not startup_check() then
-		return
-	end
-
-	local is_installing = mason_dep.install(config)
-
-	if is_installing then
-		return
-	end
-
-	setup_wrap.setup(config)
-	decomple_watch.setup()
-	dap_api.setup_dap_on_lsp_attach()
-
-	vim.api.nvim_exec_autocmds(
-		'User',
-		{ pattern = 'JavaPostSetup', data = { config = config } }
-	)
-end
-
----@param path string[]
----@param command fun()
----@param opts vim.api.keyset.user_command
-function M.register_api(path, command, opts)
-	local name = command_util.path_to_command_name(path)
-
-	vim.api.nvim_create_user_command(name, command, opts or {})
-
-	local last_index = #path
-	local func_name = path[last_index]
-
-	table.remove(path, last_index)
-
-	local node = M
-
-	for _, v in ipairs(path) do
-		if not node[v] then
-			node[v] = {}
+	----------------------------------------------------------------------
+	--                       neovim version check                       --
+	----------------------------------------------------------------------
+	if config.checks.nvim_version then
+		if vim.fn.has('nvim-0.11.5') ~= 1 then
+			local err = require('java-core.utils.errors')
+			err.throw([[
+					nvim-java is only tested on Neovim 0.11.5 or greater
+					Please upgrade to Neovim 0.11.5 or greater.
+					If you are sure it works on your version, disable the version check:
+					 checks = { nvim_version = false }'
+				]])
 		end
-
-		node = node[v]
 	end
 
-	node[func_name] = command
+	----------------------------------------------------------------------
+	--                          logger setup                            --
+	----------------------------------------------------------------------
+	if config.log then
+		require('java-core.utils.log2').setup(config.log --[[@as java-core.PartialLog2Config]])
+	end
+
+	----------------------------------------------------------------------
+	--                       package installation                       --
+	----------------------------------------------------------------------
+	local Manager = require('pkgm.manager')
+	local pkgm = Manager()
+
+	pkgm:install('jdtls', config.jdtls.version)
+
+	if config.java_test.enable then
+		----------------------------------------------------------------------
+		--                               test                               --
+		----------------------------------------------------------------------
+		pkgm:install('java-test', config.java_test.version)
+
+		M.test = {
+			run_current_class = test_api.run_current_class,
+			debug_current_class = test_api.debug_current_class,
+
+			run_current_method = test_api.run_current_method,
+			debug_current_method = test_api.debug_current_method,
+
+			view_last_report = test_api.view_last_report,
+		}
+	end
+
+	if config.java_debug_adapter.enable then
+		----------------------------------------------------------------------
+		--                             debugger                             --
+		----------------------------------------------------------------------
+		pkgm:install('java-debug', config.java_debug_adapter.version)
+		require('java-dap').setup()
+
+		M.dap = {
+			config_dap = function()
+				require('java-dap').config_dap()
+			end,
+		}
+	end
+
+	if config.spring_boot_tools.enable then
+		pkgm:install('spring-boot-tools', config.spring_boot_tools.version)
+	end
+
+	if config.lombok.enable then
+		pkgm:install('lombok', config.lombok.version)
+	end
+
+	if config.jdk.auto_install then
+		pkgm:install('openjdk', config.jdk.version)
+	end
+
+	----------------------------------------------------------------------
+	--                               init                               --
+	----------------------------------------------------------------------
+	require('java.startup.lsp_setup').setup(config)
+	require('java.startup.decompile-watcher').setup()
+	require('java-refactor').setup()
 end
-
-----------------------------------------------------------------------
---                             DAP APIs                             --
-----------------------------------------------------------------------
-M.dap = {}
-M.dap.config_dap = dap_api.config_dap
-
-----------------------------------------------------------------------
---                            Test APIs                             --
-----------------------------------------------------------------------
-M.test = {}
-M.test.run_current_class = test_api.run_current_class
-M.test.debug_current_class = test_api.debug_current_class
-
-M.test.run_current_method = test_api.run_current_method
-M.test.debug_current_method = test_api.debug_current_method
-
-M.test.view_last_report = test_api.view_last_report
 
 ----------------------------------------------------------------------
 --                            Runner APIs                           --

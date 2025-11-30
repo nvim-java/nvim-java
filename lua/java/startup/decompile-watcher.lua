@@ -1,7 +1,7 @@
-local jdtls = require('java.utils.jdtls2')
-local get_error_handler = require('java.handlers.error')
+local lsp_utils = require('java-core.utils.lsp')
+local get_error_handler = require('java-core.utils.error_handler')
 
-local async = require('java-core.utils.async').sync
+local runner = require('async.runner')
 
 local JavaCoreJdtlsClient = require('java-core.ls.clients.jdtls-client')
 
@@ -21,8 +21,8 @@ function M.setup()
 		callback = function(opts)
 			local done = false
 
-			async(function()
-					local client = jdtls()
+			runner(function()
+					local client = lsp_utils.get_jdtls()
 					local buffer = opts.buf
 
 					local text = JavaCoreJdtlsClient(client):java_decompile(opts.file)
@@ -43,7 +43,7 @@ function M.setup()
 
 					done = true
 				end)
-				.catch(get_error_handler('decompilation failed for ' .. opts.file))
+				.catch(get_error_handler('Decompilation failed for ' .. opts.file))
 				.run()
 
 			vim.wait(10000, function()

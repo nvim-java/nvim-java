@@ -12,3 +12,6 @@ read_globals = {
 	'it',
 	'assert',
 }
+ignore = {
+	'212/self',
+}

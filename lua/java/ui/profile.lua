@@ -1,15 +1,16 @@
 local event = require('nui.utils.autocmd').event
-local Layout = require('nui.layout')
-local Menu = require('nui.menu')
-local Popup = require('nui.popup')
 local notify = require('java-core.utils.notify')
 local profile_config = require('java.api.profile_config')
 local class = require('java-core.utils.class')
-local dap_api = require('java.api.dap')
-local log = require('java.utils.log')
-local DapSetup = require('java-dap.api.setup')
-local jdtls = require('java.utils.jdtls')
-local ui = require('java.utils.ui')
+local dap_api = require('java-dap')
+local log = require('java-core.utils.log2')
+local lsp_utils = require('java-core.utils.lsp')
+local ui = require('java.ui.utils')
+
+local Layout = require('nui.layout')
+local Menu = require('nui.menu')
+local Popup = require('nui.popup')
+local DapSetup = require('java-dap.setup')
 
 local new_profile = 'New Profile'
 
@@ -147,27 +148,22 @@ function ProfileUI:get_menu()
 		},
 		on_submit = function(item)
 			if item.text == new_profile then
-				self:_open_profile_editor()
+				self:open_profile_editor()
 			else
 				local profile_name = clear_active_postfix(item.text)
-				self:_open_profile_editor(profile_name)
+				self:open_profile_editor(profile_name)
 			end
 		end,
 	})
 end
 
+---@private
 --- @param title string
 --- @param key string
 --- @param target_profile string
 --- @param enter boolean|nil
 --- @param keymaps boolean|nil
-function ProfileUI:_get_and_fill_popup(
-	title,
-	key,
-	target_profile,
-	enter,
-	keymaps
-)
+function ProfileUI:get_and_fill_popup(title, key, target_profile, enter, keymaps)
 	local style = self.style
 	local text = {
 		top = '[' .. title .. ']',
@@ -203,29 +199,12 @@ function ProfileUI:_get_and_fill_popup(
 	return popup
 end
 
-function ProfileUI:_open_profile_editor(target_profile)
+---@private
+function ProfileUI:open_profile_editor(target_profile)
 	local popups = {
-		name = self:_get_and_fill_popup(
-			'Name',
-			'name',
-			target_profile,
-			true,
-			false
-		),
-		vm_args = self:_get_and_fill_popup(
-			'VM arguments',
-			'vm_args',
-			target_profile,
-			false,
-			false
-		),
-		prog_args = self:_get_and_fill_popup(
-			'Program arguments',
-			'prog_args',
-			target_profile,
-			false,
-			true
-		),
+		name = self:get_and_fill_popup('Name', 'name', target_profile, true, false),
+		vm_args = self:get_and_fill_popup('VM arguments', 'vm_args', target_profile, false, false),
+		prog_args = self:get_and_fill_popup('Program arguments', 'prog_args', target_profile, false, true),
 	}
 
 	local layout = Layout(
@@ -279,20 +258,18 @@ function ProfileUI:_open_profile_editor(target_profile)
 	)
 end
 
+---@private
 --- @return boolean
-function ProfileUI:_is_selected_profile_modifiable()
-	if
-		self.focus_item == nil
-		or self.focus_item.text == nil
-		or self.focus_item.text == new_profile
-	then
+function ProfileUI:is_selected_profile_modifiable()
+	if self.focus_item == nil or self.focus_item.text == nil or self.focus_item.text == new_profile then
 		return false
 	end
 	return true
 end
 
-function ProfileUI:_set_active_profile()
-	if not self:_is_selected_profile_modifiable() then
+---@private
+function ProfileUI:set_active_profile()
+	if not self:is_selected_profile_modifiable() then
 		notify.error('Failed to set profile as active')
 		return
 	end
@@ -307,8 +284,9 @@ function ProfileUI:_set_active_profile()
 	self:openMenu()
 end
 
-function ProfileUI:_delete_profile()
-	if not self:_is_selected_profile_modifiable() then
+---@private
+function ProfileUI:delete_profile()
+	if not self:is_selected_profile_modifiable() then
 		notify.error('Failed to delete profile')
 		return
 	end
@@ -339,38 +317,34 @@ function ProfileUI:openMenu()
 		self.menu:unmount()
 	end, { noremap = true, nowait = true })
 	self.menu:map('n', 'a', function()
-		self:_set_active_profile()
+		self:set_active_profile()
 	end, { noremap = true, nowait = true })
 	-- delete
 	self.menu:map('n', 'd', function()
-		self:_delete_profile()
+		self:delete_profile()
 	end, { noremap = true, nowait = true })
 end
 
 local M = {}
 
-local async = require('java-core.utils.async').sync
-local get_error_handler = require('java.handlers.error')
+local runner = require('async.runner')
+local get_error_handler = require('java-core.utils.error_handler')
 
 --- @type ProfileUI
 M.ProfileUI = ProfileUI
 
 function M.ui()
-	return async(function()
-			local configs = DapSetup(jdtls().client):get_dap_config()
+	return runner(function()
+			local configs = DapSetup(lsp_utils.get_jdtls()):get_dap_config()
 
 			if not configs or #configs == 0 then
 				notify.error('No classes with main methods are found')
 				return
 			end
 
-			local selected_config = ui.select(
-				'Select the main class (module -> mainClass)',
-				configs,
-				function(config)
-					return config.name
-				end
-			)
+			local selected_config = ui.select('Select the main class (module -> mainClass)', configs, function(config)
+				return config.name
+			end)
 
 			if not selected_config then
 				return
