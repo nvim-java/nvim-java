@@ -110,7 +110,7 @@ function TestParser:parse_test_end(data)
 	node.result.execution = TestExecStatus.Ended
 
 	for _, prefix in ipairs(TestParser.skip_prefixes) do
-		if string.match(data[2], '^'..prefix) then
+		if string.match(data[2], '^' .. prefix) then
 			node.result.status = TestStatus.Skipped
 		end
 	end
@@ -125,7 +125,7 @@ function TestParser:parse_test_failed(data, line_iter)
 	node.result.status = node.result.status or TestStatus.Failed
 
 	for _, prefix in ipairs(TestParser.skip_prefixes) do
-		if string.match(data[2], '^'..prefix) then
+		if string.match(data[2], '^' .. prefix) then
 			node.result.status = TestStatus.Skipped
 		end
 	end
