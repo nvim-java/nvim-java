@@ -94,15 +94,11 @@ end
 ---@param arguments? lsp.LSPAny[]
 ---@param buffer? integer
 ---@return lsp.LSPAny
-function JdtlsClient:workspace_execute_command(command, arguments, buffer)
-	return await(function(callback)
-		self.client:exec_cmd(
-			---@diagnostic disable-next-line: missing-fields
-			{ command = command, arguments = arguments },
-			{ bufnr = buffer },
-			callback
-		)
-	end)
+function JdtlsClient:workspace_execute_command(command, params, buffer)
+	return self:request('workspace/executeCommand', {
+		command = command,
+		arguments = params,
+	}, buffer)
 end
 
 ---@class jdtls.ResourceMoveDestination
