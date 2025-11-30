@@ -14,19 +14,9 @@ function M.setup(custom_config)
 	vim.g.nvim_java_config = config
 
 	----------------------------------------------------------------------
-	--                       neovim version check                       --
+	--                              checks                              --
 	----------------------------------------------------------------------
-	if config.checks.nvim_version then
-		if vim.fn.has('nvim-0.11.5') ~= 1 then
-			local err = require('java-core.utils.errors')
-			err.throw([[
-					nvim-java is only tested on Neovim 0.11.5 or greater
-					Please upgrade to Neovim 0.11.5 or greater.
-					If you are sure it works on your version, disable the version check:
-					 checks = { nvim_version = false }'
-				]])
-		end
-	end
+	require('java.checks').run(config)
 
 	----------------------------------------------------------------------
 	--                          logger setup                            --
