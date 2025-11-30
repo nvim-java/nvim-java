@@ -9,9 +9,6 @@
 
 Just install and start writing `public static void main(String[] args)`.
 
-> [!CAUTION]
-> You cannot use `nvim-java` alongside `nvim-jdtls`. So remove `nvim-jdtls` before installing this
-
 > [!TIP]
 > You can find cool tips & tricks here https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks
 
@@ -35,7 +32,7 @@ Just install and start writing `public static void main(String[] args)`.
 ## :bulb: Why
 
 - Everything necessary will be installed automatically
-- Uses [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) to setup `jdtls`
+- Uses native `vim.lsp.config` to setup `jdtls`
 - Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
 - Auto loads necessary `jdtls` plugins
   - Supported plugins are,
