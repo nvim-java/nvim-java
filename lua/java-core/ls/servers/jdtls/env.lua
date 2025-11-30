@@ -28,8 +28,10 @@ function M.get_env(opts)
 
 	local java_bin = path.join(java_home, 'bin')
 
+	local separator = system.get_os() == 'win' and ';' or ':'
+
 	local env = {
-		['PATH'] = java_bin .. ':' .. vim.fn.getenv('PATH'),
+		['PATH'] = java_bin .. separator .. vim.fn.getenv('PATH'),
 		['JAVA_HOME'] = java_home,
 	}
 
