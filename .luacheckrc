@@ -15,3 +15,4 @@ read_globals = {
 ignore = {
 	'212/self',
 }
+max_line_length = false
