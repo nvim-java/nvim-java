@@ -123,4 +123,8 @@ vim.keymap.set('n', '<leader>dt', function()
 	require('dap').terminate()
 end, { desc = 'Terminate' })
 
+vim.keymap.set('n', 'gd', function()
+	vim.lsp.buf.definition()
+end, { desc = 'Terminate' })
+
 vim.keymap.set('n', '<leader>m', "<cmd>vnew<Cr><cmd>put = execute('messages')<Cr>")
