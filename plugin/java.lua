@@ -7,15 +7,39 @@ end
 local cmd_map = {
 	JavaSettingsChangeRuntime = { java.settings.change_runtime },
 
-	JavaDapConfig = { java.dap.config_dap },
+	JavaDapConfig = {
+		function()
+			require('java-dap').config_dap()
+		end,
+	},
 
-	JavaTestRunCurrentClass = { java.test.run_current_class },
-	JavaTestDebugCurrentClass = { java.test.debug_current_class },
+	JavaTestRunCurrentClass = {
+		function()
+			require('java-test').run_current_class()
+		end,
+	},
+	JavaTestDebugCurrentClass = {
+		function()
+			require('java-test').debug_current_class()
+		end,
+	},
 
-	JavaTestRunCurrentMethod = { java.test.run_current_method },
-	JavaTestDebugCurrentMethod = { java.test.debug_current_method },
+	JavaTestRunCurrentMethod = {
+		function()
+			require('java-test').run_current_method()
+		end,
+	},
+	JavaTestDebugCurrentMethod = {
+		function()
+			require('java-test').debug_current_method()
+		end,
+	},
 
-	JavaTestViewLastReport = { java.test.view_last_report },
+	JavaTestViewLastReport = {
+		function()
+			require('java-test').view_last_report()
+		end,
+	},
 
 	JavaRunnerRunMain = { java.runner.built_in.run_app, { nargs = '?' } },
 	JavaRunnerStopMain = { java.runner.built_in.stop_app },

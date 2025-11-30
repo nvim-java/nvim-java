@@ -1,57 +1,74 @@
+local JDTLS_VERSION = '1.43.0'
+
+local jdtls_version_map = {
+	['1.43.0'] = {
+		lombok = '1.18.40',
+		java_test = '0.40.1',
+		java_debug_adapter = '0.58.2',
+		spring_boot_tools = '1.55.1',
+		jdk = '17',
+	},
+}
+
+local V = jdtls_version_map[JDTLS_VERSION]
+
 ---@class java.Config
----@field root_markers string[]
+---@field checks { nvim_version: boolean }
 ---@field jdtls { version: string }
----@field lombok { version: string }
+---@field lombok { enable: boolean, version: string }
 ---@field java_test { enable: boolean, version: string }
 ---@field java_debug_adapter { enable: boolean, version: string }
 ---@field spring_boot_tools { enable: boolean, version: string }
 ---@field jdk { auto_install: boolean, version: string }
 ---@field notifications { dap: boolean }
----@field verification { invalid_order: boolean, duplicate_setup_calls: boolean, invalid_mason_registry: boolean }
----@field mason { registries: string[] }
+---@field log java-core.Log2Config
+
+---@class java.PartialConfig
+---@field checks? { nvim_version?: boolean }
+---@field jdtls? { version?: string }
+---@field lombok? { enable?: boolean, version?: string }
+---@field java_test? { enable?: boolean, version?: string }
+---@field java_debug_adapter? { enable?: boolean, version?: string }
+---@field spring_boot_tools? { enable?: boolean, version?: string }
+---@field jdk? { auto_install?: boolean, version?: string }
+---@field notifications? { dap?: boolean }
+---@field log? java-core.PartialLog2Config
+
+---@type java.Config
 local config = {
-	--  list of file that exists in root of the project
-	root_markers = {
-		'settings.gradle',
-		'settings.gradle.kts',
-		'pom.xml',
-		'build.gradle',
-		'mvnw',
-		'gradlew',
-		'build.gradle',
-		'build.gradle.kts',
-		'.git',
+	checks = {
+		nvim_version = true,
 	},
 
 	jdtls = {
-		version = 'v1.43.0',
+		version = JDTLS_VERSION,
 	},
 
 	lombok = {
-		version = 'nightly',
+		enable = true,
+		version = V.lombok,
 	},
 
 	-- load java test plugins
 	java_test = {
 		enable = true,
-		version = '0.40.1',
+		version = V.java_test,
 	},
 
 	-- load java debugger plugins
 	java_debug_adapter = {
 		enable = true,
-		version = '0.58.2',
+		version = V.java_debug_adapter,
 	},
 
 	spring_boot_tools = {
 		enable = true,
-		version = '1.55.1',
+		version = V.spring_boot_tools,
 	},
 
 	jdk = {
-		-- install jdk using mason.nvim
 		auto_install = true,
-		version = '17.0.2',
+		version = V.jdk,
 	},
 
 	notifications = {
@@ -59,38 +76,13 @@ local config = {
 		dap = true,
 	},
 
-	-- We do multiple verifications to make sure things are in place to run this
-	-- plugin
-	verification = {
-		-- nvim-java checks for the order of execution of following
-		-- * require('java').setup()
-		-- * require('lspconfig').jdtls.setup()
-		-- IF they are not executed in the correct order, you will see a error
-		-- notification.
-		-- Set following to false to disable the notification if you know what you
-		-- are doing
-		invalid_order = true,
-
-		-- nvim-java checks if the require('java').setup() is called multiple
-		-- times.
-		-- IF there are multiple setup calls are executed, an error will be shown
-		-- Set following property value to false to disable the notification if
-		-- you know what you are doing
-		duplicate_setup_calls = true,
-
-		-- nvim-java checks if nvim-java/mason-registry is added correctly to
-		-- mason.nvim plugin.
-		-- IF it's not registered correctly, an error will be thrown and nvim-java
-		-- will stop setup
-		invalid_mason_registry = false,
-	},
-
-	mason = {
-		-- These mason registries will be prepended to the existing mason
-		-- configuration
-		registries = {
-			'github:nvim-java/mason-registry',
-		},
+	log = {
+		use_console = true,
+		use_file = true,
+		level = 'info',
+		log_file = vim.fn.stdpath('state') .. '/nvim-java.log',
+		max_lines = 1000,
+		show_location = false,
 	},
 }
 

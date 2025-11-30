@@ -1,5 +1,5 @@
-local async = require('java-core.utils.async').sync
-local get_error_handler = require('java.handlers.error')
+local runner = require('async.runner')
+local get_error_handler = require('java-core.utils.error_handler')
 local class = require('java-core.utils.class')
 
 local config_path = vim.fn.stdpath('data') .. '/nvim-java-profiles.json'
@@ -89,19 +89,15 @@ function M.load_current_project_profiles()
 	for dap_config_name, dap_config_name_val in pairs(current) do
 		result[dap_config_name] = {}
 		for _, profile in pairs(dap_config_name_val) do
-			result[dap_config_name][profile.name] = Profile(
-				profile.vm_args,
-				profile.prog_args,
-				profile.name,
-				profile.is_active
-			)
+			result[dap_config_name][profile.name] =
+				Profile(profile.vm_args, profile.prog_args, profile.name, profile.is_active)
 		end
 	end
 	return result
 end
 
 function M.save()
-	return async(function()
+	return runner(function()
 			local full_config = read_full_config()
 			local updated_profiles = {}
 			for dap_config_name, val in pairs(M.project_profiles) do
@@ -157,7 +153,7 @@ end
 --- @param dap_config_name string
 --- @param profile_name string
 function M.set_active_profile(profile_name, dap_config_name)
-	if not M.__has_profile(profile_name, dap_config_name) then
+	if not M.has_profile(profile_name, dap_config_name) then
 		return
 	end
 
@@ -175,11 +171,7 @@ end
 --- @param dap_config_name string
 --- @param current_profile_name string|nil
 --- @param new_profile Profile
-function M.add_or_update_profile(
-	new_profile,
-	current_profile_name,
-	dap_config_name
-)
+function M.add_or_update_profile(new_profile, current_profile_name, dap_config_name)
 	assert(new_profile.name, 'Profile name is required')
 	if current_profile_name then
 		M.project_profiles[dap_config_name][current_profile_name] = nil
@@ -205,7 +197,7 @@ end
 --- @param dap_config_name string
 --- @param profile_name string
 function M.delete_profile(profile_name, dap_config_name)
-	if not M.__has_profile(profile_name, dap_config_name) then
+	if not M.has_profile(profile_name, dap_config_name) then
 		return
 	end
 
@@ -213,10 +205,11 @@ function M.delete_profile(profile_name, dap_config_name)
 	M.save()
 end
 
+---@private
 ---Returns true if a profile exists by given name
 ---@param profile_name string
 ---@param dap_config_name string
-function M.__has_profile(profile_name, dap_config_name)
+function M.has_profile(profile_name, dap_config_name)
 	if M.project_profiles[dap_config_name][profile_name] then
 		return true
 	end
@@ -228,7 +221,7 @@ end
 M.Profile = Profile
 
 M.setup = function()
-	async(function()
+	runner(function()
 			M.current_project_path = vim.fn.getcwd()
 			M.project_profiles = M.load_current_project_profiles()
 		end)

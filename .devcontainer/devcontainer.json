@@ -1,0 +1,21 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/refs/heads/main/schemas/devContainer.base.schema.json",
+  "name": "nvim-java",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/java:1": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers-extra/features/wget-apt-get:1": {},
+    "ghcr.io/duduribeiro/devcontainer-features/neovim:1": {
+      "version": "nightly"
+    },
+    "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {}
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": ["sumneko.lua"]
+    }
+  }
+}
