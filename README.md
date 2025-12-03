@@ -15,11 +15,10 @@
 
 Just install and start writing `public static void main(String[] args)`.
 
+---
+
 > [!TIP]
 > You can find cool tips & tricks here https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks
-
-> [!NOTE]
-> If you are facing errors while using, please check troubleshoot wiki https://github.com/nvim-java/nvim-java/wiki/Troubleshooting
 
 ## :loudspeaker: Demo
 
@@ -37,17 +36,6 @@ Just install and start writing `public static void main(String[] args)`.
 - :white_check_mark: Profile Management UI
 - :white_check_mark: Decompiler Support
 - :white_check_mark: [Code Actions](https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks#running-code-actions)
-
-## :bulb: Why
-
-- Everything necessary will be installed automatically
-- Uses native `vim.lsp.config` to setup `jdtls`
-- Auto loads necessary `jdtls` plugins
-  - Supported plugins are,
-    - `spring-boot-tools`
-    - `lombok`
-    - `java-test`
-    - `java-debug-adapter`
 
 ## :hammer: How to Install
 
