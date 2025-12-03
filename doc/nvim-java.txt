@@ -6,7 +6,6 @@ Table of Contents                                *nvim-java-table-of-contents*
 1. nvim-java                                             |nvim-java-nvim-java|
   - Demo                                                      |nvim-java-demo|
   - Features                                              |nvim-java-features|
-  - Why                                                        |nvim-java-why|
   - How to Install                                  |nvim-java-how-to-install|
   - Commands                                              |nvim-java-commands|
   - APIs                                                      |nvim-java-apis|
@@ -48,19 +47,6 @@ FEATURES                                                  *nvim-java-features*
 - Running Tests
 - Run & Debug Profiles
 - Code Actions <https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks#running-code-actions>
-
-
-WHY                                                            *nvim-java-why*
-
-- Everything necessary will be installed automatically
-- Uses nvim-lspconfig <https://github.com/neovim/nvim-lspconfig> to setup `jdtls`
-- Realtime server settings updates is possible using neoconf <https://github.com/folke/neoconf.nvim>
-- Auto loads necessary `jdtls` plugins
-    - Supported plugins are,
-        - `spring-boot-tools`
-        - `lombok`
-        - `java-test`
-        - `java-debug-adapter`
 
 
 HOW TO INSTALL                                      *nvim-java-how-to-install*
