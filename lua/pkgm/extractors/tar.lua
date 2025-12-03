@@ -30,7 +30,7 @@ function Tar:extract()
 		-- Windows: convert backslashes to forward slashes (tar accepts them)
 		local source = self.source:gsub('\\', '/')
 		local dest = self.dest:gsub('\\', '/')
-		cmd = string.format('%s --no-same-owner -xf "%s" -C "%s"', tar_cmd, source, dest)
+		cmd = string.format('%s --no-same-owner --force-local -xf "%s" -C "%s"', tar_cmd, source, dest)
 	else
 		-- Unix: use shellescape
 		cmd = string.format(
