@@ -7,6 +7,12 @@
 ![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
 ![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
 
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows11&logoColor=white)
+![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)
+
+---
+
 Just install and start writing `public static void main(String[] args)`.
 
 > [!TIP]
@@ -27,13 +33,15 @@ Just install and start writing `public static void main(String[] args)`.
 - :white_check_mark: Organize Imports & Code Formatting
 - :white_check_mark: Running Tests
 - :white_check_mark: Run & Debug Profiles
+- :white_check_mark: Built-in Application Runner with Log Viewer
+- :white_check_mark: Profile Management UI
+- :white_check_mark: Decompiler Support
 - :white_check_mark: [Code Actions](https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks#running-code-actions)
 
 ## :bulb: Why
 
 - Everything necessary will be installed automatically
 - Uses native `vim.lsp.config` to setup `jdtls`
-- Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
 - Auto loads necessary `jdtls` plugins
   - Supported plugins are,
     - `spring-boot-tools`
@@ -367,11 +375,6 @@ require('java').setup({
   jdk = {
     auto_install = true,
     version = '17',
-  },
-
-  -- Notifications
-  notifications = {
-    dap = true, -- Show DAP configuration messages
   },
 
   -- Logging
