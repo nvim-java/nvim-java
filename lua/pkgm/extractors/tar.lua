@@ -44,8 +44,8 @@ function Tar:extract()
 		local dest = self.dest:gsub('\\', '/')
 		cmd = string.format(
 			'%s --no-same-owner %s -xf "%s" -C "%s"',
-			self:tar_supports_force_local(tar_cmd) and '--force-local' or '',
 			tar_cmd,
+			self:tar_supports_force_local(tar_cmd) and '--force-local' or '',
 			source,
 			dest
 		)
