@@ -1,5 +1,29 @@
 # Changelog
 
+## [4.0.0](https://github.com/nvim-java/nvim-java/compare/v3.0.0...v4.0.0) (2025-12-03)
+
+
+### Features
+
+* add jproperties filetype support ([56e82af](https://github.com/nvim-java/nvim-java/commit/56e82afd514a47b28437b158dd43332814f08523))
+* v4.0.0 ([84b9253](https://github.com/nvim-java/nvim-java/commit/84b92531b1de55ee9bd1d0614a05e9965481d386))
+
+
+### Bug Fixes
+
+* java validation is invalid ([ad5d370](https://github.com/nvim-java/nvim-java/commit/ad5d3701ea007720960062110ea11d588e4f3311))
+* java version check does not consider env passed for LSP ([41d72bf](https://github.com/nvim-java/nvim-java/commit/41d72bf9fb9ec8d6edf8cdaea2cee970276d6c55))
+* nvim-java does not work on mac with the embeded jdk ([293ee31](https://github.com/nvim-java/nvim-java/commit/293ee310b4c51c14d7571be24117c09025f320bf))
+* PATH env separator is not windows compatible ([9743dde](https://github.com/nvim-java/nvim-java/commit/9743ddefa6e0c1af78cfa5094658231215918794))
+* update nvim version check to 0.11 ([c3e3129](https://github.com/nvim-java/nvim-java/commit/c3e31292f731f281f6294adb543b9943a8331593))
+* windows compatibility issue ([#439](https://github.com/nvim-java/nvim-java/issues/439)) ([e1bb01d](https://github.com/nvim-java/nvim-java/commit/e1bb01db00f20be381eb9937a8517a347fa57bf6))
+* workspace_execute calling client command handler ([20191fe](https://github.com/nvim-java/nvim-java/commit/20191fe610d0c11dc12e7a6310f18bd56ea68d4d))
+
+
+### Miscellaneous Chores
+
+* release 4.0.0 ([47f3ea4](https://github.com/nvim-java/nvim-java/commit/47f3ea45db76563c54f8876358c226eeebdd2705))
+
 ## [3.0.0](https://github.com/nvim-java/nvim-java/compare/v2.1.2...v3.0.0) (2025-08-06)
 
 
