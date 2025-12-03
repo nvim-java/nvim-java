@@ -1,6 +1,7 @@
 local class = require('java-core.utils.class')
 local log = require('java-core.utils.log2')
 local err_util = require('java-core.utils.errors')
+local path = require('java-core.utils.path')
 
 ---@class java-core.PowerShell
 ---@field url string
@@ -21,7 +22,9 @@ function PowerShell:_init(opts)
 
 	if not opts.dest then
 		local filename = vim.fs.basename(opts.url)
-		self.dest = vim.fn.tempname() .. '-' .. filename
+		local tmp_dir = vim.fn.tempname()
+		vim.fn.mkdir(tmp_dir, 'p')
+		self.dest = path.join(tmp_dir, filename)
 		log.debug('Using temp destination:', self.dest)
 	else
 		self.dest = opts.dest

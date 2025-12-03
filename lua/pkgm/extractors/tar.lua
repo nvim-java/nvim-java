@@ -17,6 +17,18 @@ function Tar:_init(opts)
 	self.dest = opts.dest
 end
 
+---@private
+---Check if tar supports --force-local
+---@param tar_cmd string
+---@return boolean
+function Tar:tar_supports_force_local(tar_cmd)
+	local ok, out = pcall(vim.fn.system, { tar_cmd, '--help' })
+	if not ok then
+		return false
+	end
+	return out:match('%-%-force%-local') ~= nil
+end
+
 ---Extract tar file using tar
 ---@return boolean|nil # true on success, nil on failure
 ---@return string|nil # Error message if failed
@@ -30,7 +42,13 @@ function Tar:extract()
 		-- Windows: convert backslashes to forward slashes (tar accepts them)
 		local source = self.source:gsub('\\', '/')
 		local dest = self.dest:gsub('\\', '/')
-		cmd = string.format('%s --no-same-owner --force-local -xf "%s" -C "%s"', tar_cmd, source, dest)
+		cmd = string.format(
+			'%s --no-same-owner %s -xf "%s" -C "%s"',
+			tar_cmd,
+			self:tar_supports_force_local(tar_cmd) and '--force-local' or '',
+			source,
+			dest
+		)
 	else
 		-- Unix: use shellescape
 		cmd = string.format(
