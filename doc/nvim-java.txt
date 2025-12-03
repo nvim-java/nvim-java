@@ -1,4 +1,4 @@
-*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2025 February 16
+*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2025 December 03
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -20,17 +20,15 @@ Table of Contents                                *nvim-java-table-of-contents*
 
 
 
+
+
+------------------------------------------------------------------------------
 Just install and start writing `public static void main(String[] args)`.
 
-
-  [!CAUTION] You cannot use `nvim-java` alongside `nvim-jdtls`. So remove
-  `nvim-jdtls` before installing this
+------------------------------------------------------------------------------
 
   [!TIP] You can find cool tips & tricks here
   https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks
-
-  [!NOTE] If you are facing errors while using, please check troubleshoot wiki
-  https://github.com/nvim-java/nvim-java/wiki/Troubleshooting
 
 DEMO                                                          *nvim-java-demo*
 
@@ -46,6 +44,9 @@ FEATURES                                                  *nvim-java-features*
 - Organize Imports & Code Formatting
 - Running Tests
 - Run & Debug Profiles
+- Built-in Application Runner with Log Viewer
+- Profile Management UI
+- Decompiler Support
 - Code Actions <https://github.com/nvim-java/nvim-java/wiki/Tips-&-Tricks#running-code-actions>
 
 
@@ -53,27 +54,40 @@ HOW TO INSTALL                                      *nvim-java-how-to-install*
 
 :small_orange_diamond:details ~
 
+**Requirements:** Neovim 0.11+
 
-CUSTOM CONFIGURATION INSTRUCTIONS ~
 
-- Install the plugin
-
-Using lazy.nvim <https://github.com/folke/lazy.nvim>
+USING VIM.PACK ~
 
 >lua
-    return {'nvim-java/nvim-java'}
-<
-
-- Setup nvim-java before `lspconfig`
-
->lua
+    vim.pack.add({
+      {
+        src = 'https://github.com/JavaHello/spring-boot.nvim',
+        version = '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0',
+      },
+      'https://github.com/MunifTanjim/nui.nvim',
+      'https://github.com/mfussenegger/nvim-dap',
+    
+      'https://github.com/nvim-java/nvim-java',
+    })
+    
     require('java').setup()
+    vim.lsp.enable('jdtls')
 <
 
-- Setup jdtls like you would usually do
+
+USING LAZY.NVIM ~
+
+Install using lazy.nvim <https://github.com/folke/lazy.nvim>:
 
 >lua
-    require('lspconfig').jdtls.setup({})
+    {
+      'nvim-java/nvim-java',
+      config = function()
+        require('java').setup()
+        vim.lsp.enable('jdtls')
+      end,
+    }
 <
 
 Yep! That’s all :)
@@ -282,44 +296,20 @@ HOW TO USE JDK X.X VERSION?            *nvim-java-how-to-use-jdk-x.x-version?*
 
 :small_orange_diamond:details ~
 
-
-METHOD 1 ~
-
-Neoconf <https://github.com/folke/neoconf.nvim> can be used to manage LSP
-setting including jdtls. Neoconf allows global configuration as well as project
-vice configurations. Here is how you can set Jdtls setting on `neoconf.json`
-
->json
-    {
-      "lspconfig": {
-        "jdtls": {
-          "java.configuration.runtimes": [
-            {
-              "name": "JavaSE-21",
-              "path": "/opt/jdk-21",
-              "default": true
-            }
-          ]
-        }
-      }
-    }
-<
-
-
-METHOD 2 ~
-
-Pass the settings to Jdtls setup.
+Use `vim.lsp.config()` to override the default JDTLS settings:
 
 >lua
-    require('lspconfig').jdtls.setup({
-      settings = {
-        java = {
-          configuration = {
-            runtimes = {
-              {
-                name = "JavaSE-21",
-                path = "/opt/jdk-21",
-                default = true,
+    vim.lsp.config('jdtls', {
+      default_config = {
+        settings = {
+          java = {
+            configuration = {
+              runtimes = {
+                {
+                  name = "JavaSE-21",
+                  path = "/opt/jdk-21",
+                  default = true,
+                }
               }
             }
           }
@@ -334,41 +324,35 @@ CONFIGURATION                                        *nvim-java-configuration*
 :small_orange_diamond:details ~
 
 For most users changing the default configuration is not necessary. But if you
-want, following options are available
+want, following options are available:
 
 >lua
-    {
-      --  list of file that exists in root of the project
-      root_markers = {
-        'settings.gradle',
-        'settings.gradle.kts',
-        'pom.xml',
-        'build.gradle',
-        'mvnw',
-        'gradlew',
-        'build.gradle',
-        'build.gradle.kts',
-        '.git',
+    require('java').setup({
+      -- Startup checks
+      checks = {
+        nvim_version = true,        -- Check Neovim version
+        nvim_jdtls_conflict = true, -- Check for nvim-jdtls conflict
       },
     
+      -- JDTLS configuration
       jdtls = {
-        version = 'v1.43.0',
+        version = '1.43.0',
       },
     
+      -- Extensions
       lombok = {
-        version = 'nightly',
+        enable = true,
+        version = '1.18.40',
       },
     
-      -- load java test plugins
       java_test = {
         enable = true,
         version = '0.40.1',
       },
     
-      -- load java debugger plugins
       java_debug_adapter = {
         enable = true,
-        version = '0.58.1',
+        version = '0.58.2',
       },
     
       spring_boot_tools = {
@@ -376,46 +360,22 @@ want, following options are available
         version = '1.55.1',
       },
     
+      -- JDK installation
       jdk = {
-        -- install jdk using mason.nvim
         auto_install = true,
-        version = '17.0.2',
-      },
-
-      -- We do multiple verifications to make sure things are in place to run this
-      -- plugin
-      verification = {
-        -- nvim-java checks for the order of execution of following
-        -- * require('java').setup()
-        -- * require('lspconfig').jdtls.setup()
-        -- IF they are not executed in the correct order, you will see a error
-        -- notification.
-        -- Set following to false to disable the notification if you know what you
-        -- are doing
-        invalid_order = true,
-    
-        -- nvim-java checks if the require('java').setup() is called multiple
-        -- times.
-        -- IF there are multiple setup calls are executed, an error will be shown
-        -- Set following property value to false to disable the notification if
-        -- you know what you are doing
-        duplicate_setup_calls = true,
-    
-        -- nvim-java checks if nvim-java/mason-registry is added correctly to
-        -- mason.nvim plugin.
-        -- IF it's not registered correctly, an error will be thrown and nvim-java
-        -- will stop setup
-        invalid_mason_registry = false,
+        version = '17',
       },
     
-      mason = {
-        -- These mason registries will be prepended to the existing mason
-        -- configuration
-        registries = {
-          'github:nvim-java/mason-registry',
-        },
+      -- Logging
+      log = {
+        use_console = true,
+        use_file = true,
+        level = 'info',
+        log_file = vim.fn.stdpath('state') .. '/nvim-java.log',
+        max_lines = 1000,
+        show_location = false,
       },
-    }
+    })
 <
 
 
@@ -486,9 +446,6 @@ PROJECTS ACKNOWLEDGEMENT                  *nvim-java-projects-acknowledgement*
     follows "Keep it simple, stupid!" approach. If you love customizing things by
     yourself, then give nvim-jdtls a try.
 
-
-  [!WARNING] You cannot use `nvim-java` alongside `nvim-jdtls`. So remove
-  `nvim-jdtls` before installing this
 ==============================================================================
 2. Links                                                     *nvim-java-links*
 
@@ -498,6 +455,9 @@ PROJECTS ACKNOWLEDGEMENT                  *nvim-java-projects-acknowledgement*
 4. *Apache Maven*: https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white
 5. *Neovim*: https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white
 6. *Lua*: https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white
+7. *Linux*: https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black
+8. *Windows*: https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows11&logoColor=white
+9. *macOS*: https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white
 
 Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
 
