@@ -7,11 +7,11 @@
 ![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
 ![Lua](https://img.shields.io/badge/lua-%232C2D72.svg?style=for-the-badge&logo=lua&logoColor=white)
 
-Works on,
-
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows11&logoColor=white)
 ![macOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white)
+
+---
 
 Just install and start writing `public static void main(String[] args)`.
 
@@ -39,7 +39,6 @@ Just install and start writing `public static void main(String[] args)`.
 
 - Everything necessary will be installed automatically
 - Uses native `vim.lsp.config` to setup `jdtls`
-- Realtime server settings updates is possible using [neoconf](https://github.com/folke/neoconf.nvim)
 - Auto loads necessary `jdtls` plugins
   - Supported plugins are,
     - `spring-boot-tools`
