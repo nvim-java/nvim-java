@@ -55,21 +55,9 @@ Just install and start writing `public static void main(String[] args)`.
 
 <summary>:small_orange_diamond:details</summary>
 
-### Starter Configs (Recommend for newbies)
-
-Following are forks of original repositories pre-configured for java. If you
-don't know how to get started, use one of the following to get started.
-You can click on **n commits ahead of** link to see the changes made on top of the original project
-
-- [LazyVim](https://github.com/nvim-java/starter-lazyvim)
-- [Kickstart](https://github.com/nvim-java/starter-kickstart)
-- [AstroNvim](https://github.com/nvim-java/starter-astronvim)
-
-### Manual Installation Instructions
-
 **Requirements:** Neovim 0.11+
 
-#### Using `vim.pack`
+### Using `vim.pack`
 
 ```lua
 vim.pack.add({
@@ -87,7 +75,7 @@ require('java').setup()
 vim.lsp.enable('jdtls')
 ```
 
-#### Using `lazy.nvim`
+### Using `lazy.nvim`
 
 Install using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
