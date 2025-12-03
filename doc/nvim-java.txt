@@ -68,18 +68,6 @@ HOW TO INSTALL                                      *nvim-java-how-to-install*
 :small_orange_diamond:details ~
 
 
-STARTER CONFIGS (RECOMMEND FOR NEWBIES) ~
-
-Following are forks of original repositories pre-configured for java. If you
-don’t know how to get started, use one of the following to get started. You
-can click on **n commits ahead of** link to see the changes made on top of the
-original project
-
-- LazyVim <https://github.com/nvim-java/starter-lazyvim>
-- Kickstart <https://github.com/nvim-java/starter-kickstart>
-- AstroNvim <https://github.com/nvim-java/starter-astronvim>
-
-
 CUSTOM CONFIGURATION INSTRUCTIONS ~
 
 - Install the plugin
