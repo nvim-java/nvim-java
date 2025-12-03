@@ -20,7 +20,6 @@ local V = jdtls_version_map[JDTLS_VERSION]
 ---@field java_debug_adapter { enable: boolean, version: string }
 ---@field spring_boot_tools { enable: boolean, version: string }
 ---@field jdk { auto_install: boolean, version: string }
----@field notifications { dap: boolean }
 ---@field log java-core.Log2Config
 
 ---@class java.PartialConfig
@@ -31,7 +30,6 @@ local V = jdtls_version_map[JDTLS_VERSION]
 ---@field java_debug_adapter? { enable?: boolean, version?: string }
 ---@field spring_boot_tools? { enable?: boolean, version?: string }
 ---@field jdk? { auto_install?: boolean, version?: string }
----@field notifications? { dap?: boolean }
 ---@field log? java-core.PartialLog2Config
 
 ---@type java.Config
@@ -70,11 +68,6 @@ local config = {
 	jdk = {
 		auto_install = true,
 		version = V.jdk,
-	},
-
-	notifications = {
-		-- enable 'Configuring DAP' & 'DAP configured' messages on start up
-		dap = true,
 	},
 
 	log = {

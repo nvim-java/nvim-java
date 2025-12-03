@@ -407,12 +407,7 @@ want, following options are available
         auto_install = true,
         version = '17.0.2',
       },
-    
-      notifications = {
-        -- enable 'Configuring DAP' & 'DAP configured' messages on start up
-        dap = true,
-      },
-    
+
       -- We do multiple verifications to make sure things are in place to run this
       -- plugin
       verification = {

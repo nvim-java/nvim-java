@@ -374,11 +374,6 @@ require('java').setup({
     version = '17',
   },
 
-  -- Notifications
-  notifications = {
-    dap = true, -- Show DAP configuration messages
-  },
-
   -- Logging
   log = {
     use_console = true,
