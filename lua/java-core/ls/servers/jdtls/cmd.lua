@@ -20,7 +20,14 @@ function M.get_cmd(opts)
 	return function(dispatchers, config)
 		local cmd = M.get_jvm_args(opts):concat(M.get_jar_args())
 
-		M.validate_java_version(config.cmd_env)
+		-- NOTE: eventhough we are setting the PATH env var, due to a bug, it's not
+		-- working on Windows. So just lanching 'java' will result in executing the
+		-- system java. So as a workaround, we use the absolute path to java instead
+		-- So following check is not needed when we have auto_install set to true
+		-- @see https://github.com/neovim/neovim/issues/36818
+		if not conf.jdk.auto_install then
+			M.validate_java_version(config.cmd_env)
+		end
 
 		log.debug('Starting jdtls with cmd', cmd)
 
@@ -40,8 +47,25 @@ end
 function M.get_jvm_args(opts)
 	local jdtls_config = path.join(jdtls_root, system.get_config_suffix())
 
+	local java_exe = 'java'
+
+	-- NOTE: eventhough we are setting the PATH env var, due to a bug, it's not
+	-- working on Windows. So we are using the absolute path to java instead
+	-- @see https://github.com/neovim/neovim/issues/36818
+	if conf.jdk.auto_install then
+		local jdk_root = Manager:get_install_dir('openjdk', conf.jdk.version)
+		local java_home
+		if system.get_os() == 'mac' then
+			java_home = vim.fn.glob(path.join(jdk_root, 'jdk-*', 'Contents', 'Home'))
+		else
+			java_home = vim.fn.glob(path.join(jdk_root, 'jdk-*'))
+		end
+
+		java_exe = path.join(java_home, 'bin', 'java')
+	end
+
 	local jvm_args = List:new({
-		'java',
+		java_exe,
 		'-Declipse.application=org.eclipse.jdt.ls.core.id1',
 		'-Dosgi.bundles.defaultStartLevel=4',
 		'-Declipse.product=org.eclipse.jdt.ls.core.product',
