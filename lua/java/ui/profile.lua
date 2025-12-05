@@ -3,7 +3,6 @@ local notify = require('java-core.utils.notify')
 local profile_config = require('java.api.profile_config')
 local class = require('java-core.utils.class')
 local dap_api = require('java-dap')
-local log = require('java-core.utils.log2')
 local lsp_utils = require('java-core.utils.lsp')
 local ui = require('java.ui.utils')
 
@@ -184,7 +183,6 @@ function ProfileUI:get_and_fill_popup(title, key, target_profile, enter, keymaps
 		win_options = self.win_options,
 	})
 
-	log.error(vim.inspect(popup.border))
 	-- fill the popup with the config value
 	-- if target_profile is nil, it's a new profile
 	if target_profile then
