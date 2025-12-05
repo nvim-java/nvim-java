@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1](https://github.com/nvim-java/nvim-java/compare/v4.0.0...v4.0.1) (2025-12-05)
+
+
+### Bug Fixes
+
+* user config is not applied due to default config import in some modules ([#443](https://github.com/nvim-java/nvim-java/issues/443)) ([7875237](https://github.com/nvim-java/nvim-java/commit/787523792f71816d049772d4ffc16ded6bac497f))
+
 ## [4.0.0](https://github.com/nvim-java/nvim-java/compare/v3.0.0...v4.0.0) (2025-12-03)
 
 
