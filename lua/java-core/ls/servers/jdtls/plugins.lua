@@ -3,10 +3,6 @@ local List = require('java-core.utils.list')
 local Manager = require('pkgm.manager')
 local log = require('java-core.utils.log2')
 
---- @TODO: importing stuff from java main package feels wrong.
---- We should fix this in the future
-local config = require('java.config')
-
 local M = {}
 
 local plug_jar_map = {
@@ -35,17 +31,22 @@ local plug_jar_map = {
 	['spring-boot-tools'] = { 'extension/jars/*.jar' },
 }
 
-local plugin_version_map = {
-	['java-test'] = config.java_test.version,
-	['java-debug'] = config.java_debug_adapter.version,
-	['spring-boot-tools'] = config.spring_boot_tools.version,
-}
+function M.get_plugin_version_map(config)
+	return {
+		['java-test'] = config.java_test.version,
+		['java-debug'] = config.java_debug_adapter.version,
+		['spring-boot-tools'] = config.spring_boot_tools.version,
+	}
+end
 
 ---Returns a list of .jar file paths for given list of jdtls plugins
----@param opts { plugins: string[] }
+---@param config java.Config
+---@param plugins string[]
 ---@return string[] # list of .jar file paths
-function M.get_plugins(opts)
-	return List:new(opts.plugins)
+function M.get_plugins(config, plugins)
+	local plugin_version_map = M.get_plugin_version_map(config)
+
+	return List:new(plugins)
 		:map(function(plugin_name)
 			local version = plugin_version_map[plugin_name]
 			local root = Manager:get_install_dir(plugin_name, version)

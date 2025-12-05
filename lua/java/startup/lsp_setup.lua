@@ -32,9 +32,8 @@ function M.setup(config)
 	end
 
 	local default_config = server.get_config({
+		config = config,
 		plugins = jdtls_plugins,
-		use_jdk = config.jdk.auto_install,
-		use_lombok = config.lombok.enable,
 	})
 
 	vim.lsp.config('jdtls', default_config)

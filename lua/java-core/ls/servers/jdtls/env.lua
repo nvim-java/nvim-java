@@ -3,16 +3,12 @@ local Manager = require('pkgm.manager')
 local log = require('java-core.utils.log2')
 local system = require('java-core.utils.system')
 
---- @TODO: importing stuff from java main package feels wrong.
---- We should fix this in the future
-local config = require('java.config')
-
 local M = {}
 
---- @param opts { use_jdk: boolean }
-function M.get_env(opts)
-	if not opts.use_jdk then
-		log.debug('use_jdk disabled, returning empty env')
+--- @param config java.Config
+function M.get_env(config)
+	if not config.jdk.auto_install then
+		log.debug('config.jdk.auto_install disabled, returning empty env')
 		return {}
 	end
 
