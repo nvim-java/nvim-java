@@ -21,7 +21,15 @@ require('lazy').setup({
 		'nvim-java/nvim-java',
 		dir = '/workspaces/nvim-java',
 		config = function()
-			require('java').setup()
+			require('java').setup({
+				jdk = {
+					auto_install = false,
+				},
+				log = {
+					use_console = false,
+					level = 'debug',
+				},
+			})
 			vim.lsp.config('jdtls', {
 				handlers = {
 					['language/status'] = function(_, data)
@@ -47,84 +55,98 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = false
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
-vim.keymap.set('n', '<c-q>', '<cmd>q<CR>')
+local k = vim.keymap.set
+
+k('n', '<c-q>', '<cmd>q<CR>')
 
 if colemak then
-	vim.keymap.set('n', '<c-l>', '<c-i>')
-	vim.keymap.set('n', 'E', 'K')
-	vim.keymap.set('n', 'H', 'I')
-	vim.keymap.set('n', 'K', 'N')
-	vim.keymap.set('n', 'L', 'E')
-	vim.keymap.set('n', 'N', 'J')
-	vim.keymap.set('n', 'e', '<up>')
-	vim.keymap.set('n', 'h', 'i')
-	vim.keymap.set('n', 'i', '<right>')
-	vim.keymap.set('n', 'j', 'm')
-	vim.keymap.set('n', 'k', 'n')
-	vim.keymap.set('n', 'l', 'e')
-	vim.keymap.set('n', 'm', '<left>')
-	vim.keymap.set('n', 'n', '<down>')
+	k('n', '<c-l>', '<c-i>')
+	k('n', 'E', 'K')
+	k('n', 'H', 'I')
+	k('n', 'K', 'N')
+	k('n', 'L', 'E')
+	k('n', 'N', 'J')
+	k('n', 'e', '<up>')
+	k('n', 'h', 'i')
+	k('n', 'i', '<right>')
+	k('n', 'j', 'm')
+	k('n', 'k', 'n')
+	k('n', 'l', 'e')
+	k('n', 'm', '<left>')
+	k('n', 'n', '<down>')
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
 	callback = function(args)
 		vim.lsp.completion.enable(true, args.data.client_id, args.buf, { autotrigger = true })
-		vim.keymap.set('i', '<C-Space>', function()
+		k('i', '<C-Space>', function()
 			vim.lsp.completion.get()
 		end, { buffer = args.buf })
 
 		if colemak then
-			vim.keymap.set('i', '<C-n>', '<C-n>', { buffer = args.buf })
-			vim.keymap.set('i', '<C-e>', '<C-p>', { buffer = args.buf })
+			k('i', '<C-n>', '<C-n>', { buffer = args.buf })
+			k('i', '<C-e>', '<C-p>', { buffer = args.buf })
 		end
 	end,
 })
 
-vim.keymap.set('n', ']d', function()
+k('n', ']d', function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end, { desc = 'Jump to next diagnostic' })
 
-vim.keymap.set('n', '[d', function()
+k('n', '[d', function()
 	vim.diagnostic.jump({ count = -1, float = true })
 end, { desc = 'Jump to previous diagnostic' })
 
-vim.keymap.set('n', '<leader>ta', vim.lsp.buf.code_action, {})
+k('n', '<leader>ta', vim.lsp.buf.code_action, {})
 
 -- DAP keymaps
-vim.keymap.set('n', '<leader>dd', function()
+k('n', '<leader>dd', function()
 	require('dap').toggle_breakpoint()
 end, { desc = 'Toggle breakpoint' })
 
-vim.keymap.set('n', '<leader>dc', function()
+k('n', '<leader>dc', function()
 	require('dap').continue()
 end, { desc = 'Continue' })
 
-vim.keymap.set('n', '<leader>dn', function()
+k('n', '<leader>dn', function()
 	require('dap').step_over()
 end, { desc = 'Step over' })
 
-vim.keymap.set('n', '<leader>di', function()
+k('n', '<leader>di', function()
 	require('dap').step_into()
 end, { desc = 'Step into' })
 
-vim.keymap.set('n', '<leader>do', function()
+k('n', '<leader>do', function()
 	require('dap').step_out()
 end, { desc = 'Step out' })
 
-vim.keymap.set('n', '<leader>dr', function()
+k('n', '<leader>dr', function()
 	require('dap').repl.open()
 end, { desc = 'Open REPL' })
 
-vim.keymap.set('n', '<leader>dl', function()
+k('n', '<leader>dl', function()
 	require('dap').run_last()
 end, { desc = 'Run last' })
 
-vim.keymap.set('n', '<leader>dt', function()
+k('n', '<leader>dt', function()
 	require('dap').terminate()
 end, { desc = 'Terminate' })
 
-vim.keymap.set('n', 'gd', function()
+k('n', 'gd', function()
 	vim.lsp.buf.definition()
 end, { desc = 'Terminate' })
 
-vim.keymap.set('n', '<leader>m', "<cmd>vnew<Cr><cmd>put = execute('messages')<Cr>")
+k('n', '<leader>m', "<cmd>vnew<Cr><cmd>put = execute('messages')<Cr>")
+
+k('n', '<leader>nn', '<CMD>JavaRunnerRunMain<CR>', { desc = 'Run main' })
+k('n', '<leader>ne', '<CMD>JavaRunnerStopMain<CR>', { desc = 'Stop main' })
+k('n', '<leader>nt', '<CMD>JavaTestDebugCurrentClass<CR>', { desc = 'Debug test' })
+k('n', '<leader>ns', '<CMD>JavaTestRunCurrentClass<CR>', { desc = 'Run test' })
+
+k('t', 'yy', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+k('n', '<c-n>', '<c-w>j', { desc = 'Window down' })
+k('n', '<c-e>', '<c-w>k', { desc = 'Window up' })
+k('n', '<c-m>', '<c-w>h', { desc = 'Window left' })
+k('n', '<c-i>', '<c-w>l', { desc = 'Window right' })
