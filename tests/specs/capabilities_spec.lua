@@ -2,7 +2,7 @@ local lsp_utils = dofile('tests/utils/lsp-utils.lua')
 local capabilities = dofile('tests/constants/capabilities.lua')
 local List = require('java-core.utils.list')
 local assert = require('luassert')
-local log = require('java-core.utils.log2')
+local err = require('java-core.utils.errors')
 
 describe('LSP Capabilities', function()
 	it('should have all required commands', function()
@@ -21,8 +21,7 @@ describe('LSP Capabilities', function()
 		end)
 
 		if #extra_cmds > 0 then
-			log.error('Additional commands found that are not in required list:', extra_cmds)
-			error('Additional commands found that are not in required list:' .. vim.inspect(extra_cmds))
+			err.throw('Additional commands found that are not in required list:', extra_cmds)
 		end
 	end)
 end)

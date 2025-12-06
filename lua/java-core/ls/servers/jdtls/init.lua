@@ -21,6 +21,8 @@ function M.get_config(opts)
 	base_conf.root_markers = root.get_root_markers()
 	base_conf.filetypes = filetype.get_filetypes()
 
+	log.debug('jdtls config', base_conf)
+
 	return base_conf
 end
 

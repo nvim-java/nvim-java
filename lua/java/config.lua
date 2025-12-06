@@ -1,4 +1,4 @@
-local JDTLS_VERSION = '1.43.0'
+local JDTLS_VERSION = '1.54.0'
 
 local jdtls_version_map = {
 	['1.43.0'] = {
@@ -7,6 +7,13 @@ local jdtls_version_map = {
 		java_debug_adapter = '0.58.2',
 		spring_boot_tools = '1.55.1',
 		jdk = '17',
+	},
+	['1.54.0'] = {
+		lombok = '1.18.42',
+		java_test = '0.43.2',
+		java_debug_adapter = '0.58.3',
+		spring_boot_tools = '1.55.1',
+		jdk = '25',
 	},
 }
 

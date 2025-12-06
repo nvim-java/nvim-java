@@ -100,7 +100,7 @@ function M:run_test(tests, report, config)
 
 	local java_exec = self.debug_client:resolve_java_executable(launch_args.mainClass, launch_args.projectName)
 
-	log.debug('java executable: ' .. vim.inspect(java_exec))
+	log.debug('java executable', java_exec)
 
 	local dap_launcher_config = dap_adapters.junit_launch_args_to_dap_config(launch_args, java_exec, {
 		debug = true,
@@ -109,7 +109,7 @@ function M:run_test(tests, report, config)
 
 	dap_launcher_config = vim.tbl_deep_extend('force', dap_launcher_config, config or {})
 
-	log.debug('launching tests with config: ' .. vim.inspect(dap_launcher_config))
+	log.debug('launching tests with config', dap_launcher_config)
 
 	self.runner:run_by_config(dap_launcher_config, report)
 end
