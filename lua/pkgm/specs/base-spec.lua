@@ -22,7 +22,7 @@ local BaseSpec = class()
 
 ---@param config pkgm.BaseSpecConfig
 function BaseSpec:_init(config)
-	log.debug('Initializing BaseSpec with config: ' .. vim.inspect(config))
+	log.debug('Initializing BaseSpec with config', config)
 
 	self._name = config.name
 	self._version = config.version
@@ -42,7 +42,7 @@ function BaseSpec:_init(config)
 		end
 	end
 
-	log.debug('Template vars: ' .. vim.inspect(self._template_vars))
+	log.debug('Template vars', self._template_vars)
 end
 
 ---@return string
