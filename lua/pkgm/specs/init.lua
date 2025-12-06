@@ -75,4 +75,34 @@ return {
 			},
 		},
 	}),
+
+	-- https://download.java.net/java/GA/jdk25.0.1/2fbf10d8c78e40bd87641c434705079d/8/GPL/openjdk-25.0.1_linux-x64_bin.tar.gz
+
+	BaseSpec({
+		name = 'openjdk',
+		version = '25',
+		urls = {
+			linux = {
+				arm = {
+					['64bit'] = 'https://download.oracle.com/java/{{version}}/latest/jdk-{{version}}_linux-aarch64_bin.tar.gz',
+				},
+				x86 = {
+					['64bit'] = 'https://download.oracle.com/java/{{version}}/latest/jdk-{{version}}_linux-x64_bin.tar.gz',
+				},
+			},
+			mac = {
+				arm = {
+					['64bit'] = 'https://download.oracle.com/java/{{version}}/latest/jdk-{{version}}_macos-aarch64_bin.tar.gz',
+				},
+				x86 = {
+					['64bit'] = 'https://download.oracle.com/java/{{version}}/latest/jdk-{{version}}_macos-x64_bin.tar.gz',
+				},
+			},
+			win = {
+				x86 = {
+					['64bit'] = 'https://download.oracle.com/java/{{version}}/latest/jdk-{{version}}_windows-x64_bin.zip',
+				},
+			},
+		},
+	}),
 }

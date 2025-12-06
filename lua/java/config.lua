@@ -13,7 +13,7 @@ local jdtls_version_map = {
 		java_test = '0.43.2',
 		java_debug_adapter = '0.58.3',
 		spring_boot_tools = '1.55.1',
-		jdk = '17',
+		jdk = '25',
 	},
 }
 
