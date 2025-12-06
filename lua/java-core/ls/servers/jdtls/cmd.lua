@@ -6,6 +6,7 @@ local log = require('java-core.utils.log2')
 local err = require('java-core.utils.errors')
 local java_version_map = require('java-core.constants.java_version')
 local lsp_utils = require('java-core.utils.lsp')
+local str = require('java-core.utils.str')
 
 local M = {}
 
@@ -128,7 +129,20 @@ function M.validate_java_version(config, env)
 	local curr_ver = M.get_java_major_version(env)
 	local exp_ver = java_version_map[config.jdtls.version]
 
-	if not (curr_ver >= exp_ver.to and curr_ver <= exp_ver.from) then
+	if not exp_ver then
+		err.throw(
+			str.multiline(
+				'We maintain a jdlts to java version map to provide a better error message.',
+				'The jdtls version you are using is not supported yet',
+				'Please open an issue on https://github.com/nvim-java/nvim-java/issues',
+				'OR submit a PR',
+				'Version map:',
+				'https://github.com/nvim-java/nvim-java/blob/main/lua/java-core/constants/java_version.lua'
+			)
+		)
+	end
+
+	if not (curr_ver >= exp_ver.from and curr_ver <= exp_ver.to) then
 		local msg = string.format(
 			'Java version mismatch: JDTLS %s requires Java %d <= java >= %d, but found Java %d',
 			config.jdtls.version,
