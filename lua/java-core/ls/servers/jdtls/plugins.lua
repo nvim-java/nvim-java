@@ -1,35 +1,4 @@
-local file = require('java-core.utils.file')
-local List = require('java-core.utils.list')
-local Manager = require('pkgm.manager')
-local log = require('java-core.utils.log2')
-
 local M = {}
-
-local plug_jar_map = {
-	['java-test'] = {
-		'extension/server/junit-jupiter-api_*.jar',
-		'extension/server/junit-jupiter-engine_*.jar',
-		'extension/server/junit-jupiter-migrationsupport_*.jar',
-		'extension/server/junit-jupiter-params_*.jar',
-		'extension/server/junit-platform-commons_*.jar',
-		'extension/server/junit-platform-engine_*.jar',
-		'extension/server/junit-platform-launcher_*.jar',
-		'extension/server/junit-platform-runner_*.jar',
-		'extension/server/junit-platform-suite-api_*.jar',
-		'extension/server/junit-platform-suite-commons_*.jar',
-		'extension/server/junit-platform-suite-engine_*.jar',
-		'extension/server/junit-vintage-engine_*.jar',
-		'extension/server/org.apiguardian.api_*.jar',
-		'extension/server/org.eclipse.jdt.junit4.runtime_*.jar',
-		'extension/server/org.eclipse.jdt.junit5.runtime_*.jar',
-		'extension/server/org.opentest4j_*.jar',
-		'extension/server/com.microsoft.java.test.plugin-*.jar',
-	},
-	['java-debug'] = {
-		'extension/server/com.microsoft.java.debug.plugin-*.jar',
-	},
-	['spring-boot-tools'] = { 'extension/jars/*.jar' },
-}
 
 function M.get_plugin_version_map(config)
 	return {
@@ -44,22 +13,36 @@ end
 ---@param plugins string[]
 ---@return string[] # list of .jar file paths
 function M.get_plugins(config, plugins)
+	local file = require('java-core.utils.file')
+	local List = require('java-core.utils.list')
+	local Manager = require('pkgm.manager')
+	local path = require('java-core.utils.path')
+	local err = require('java-core.utils.errors')
+	local str = require('java-core.utils.str')
+
 	local plugin_version_map = M.get_plugin_version_map(config)
 
 	return List:new(plugins)
 		:map(function(plugin_name)
 			local version = plugin_version_map[plugin_name]
-			local root = Manager:get_install_dir(plugin_name, version)
-			local jars = file.resolve_paths(root, plug_jar_map[plugin_name])
 
-			if #jars == 0 then
-				-- stylua: ignore
-				log.error(string.format( 'No jars found for plugin "%s" (version: %s) at %s', plugin_name, version, root))
-				-- stylua: ignore
-				error(string.format( 'Failed to load plugin "%s". No jars found at %s', plugin_name, root))
+			local pkg_path = Manager:get_install_dir(plugin_name, version)
+			local plugin_root = path.join(pkg_path, 'extension')
+			local package_json_str = vim.fn.readfile(path.join(plugin_root, 'package.json'))
+			local package_json = vim.json.decode(table.concat(package_json_str, '\n'))
+			local java_extensions = package_json.contributes.javaExtensions
+
+			local ext_jars = file.resolve_paths(plugin_root, java_extensions)
+
+			if #ext_jars ~= #java_extensions then
+				err.throw(
+					str
+						.multiline('Failed to load some jars for "%s"', 'Expected %d jars but only %d found')
+						:format(plugin_name, #java_extensions, #ext_jars)
+				)
 			end
 
-			return jars
+			return ext_jars
 		end)
 		:flatten()
 end
