@@ -1,4 +1,4 @@
-*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2025 December 03
+*nvim-java.txt*        For Neovim >= 0.9.4       Last change: 2025 December 10
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -300,16 +300,14 @@ Use `vim.lsp.config()` to override the default JDTLS settings:
 
 >lua
     vim.lsp.config('jdtls', {
-      default_config = {
-        settings = {
-          java = {
-            configuration = {
-              runtimes = {
-                {
-                  name = "JavaSE-21",
-                  path = "/opt/jdk-21",
-                  default = true,
-                }
+      settings = {
+        java = {
+          configuration = {
+            runtimes = {
+              {
+                name = "JavaSE-21",
+                path = "/opt/jdk-21",
+                default = true,
               }
             }
           }
