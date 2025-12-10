@@ -284,16 +284,14 @@ Use `vim.lsp.config()` to override the default JDTLS settings:
 
 ```lua
 vim.lsp.config('jdtls', {
-  default_config = {
-    settings = {
-      java = {
-        configuration = {
-          runtimes = {
-            {
-              name = "JavaSE-21",
-              path = "/opt/jdk-21",
-              default = true,
-            }
+  settings = {
+    java = {
+      configuration = {
+        runtimes = {
+          {
+            name = "JavaSE-21",
+            path = "/opt/jdk-21",
+            default = true,
           }
         }
       }
