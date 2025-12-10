@@ -72,7 +72,7 @@ end
 ---Runs when the current job exists
 ---@param exit_code number
 function Run:on_job_exit(exit_code)
-	local message = string.format('Process finished with exit code::%s', exit_code)
+	local message = string.format('Process finished with exit code::%s\n', exit_code)
 	self:send_term(message)
 
 	self.is_running = false
