@@ -8,7 +8,7 @@ return {
 			advancedOrganizeImportsSupport = true,
 			advancedUpgradeGradleSupport = true,
 			classFileContentsSupport = true,
-			clientDocumentSymbolProvider = true,
+			clientDocumentSymbolProvider = false,
 			clientHoverProvider = false,
 			executeClientCommandSupport = true,
 			extractInterfaceSupport = true,
