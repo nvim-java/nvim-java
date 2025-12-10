@@ -44,6 +44,18 @@ require('lazy').setup({
 			vim.lsp.enable('jdtls')
 		end,
 	},
+	{
+		'ibhagwan/fzf-lua',
+		-- optional for icon support
+		dependencies = { 'nvim-tree/nvim-web-devicons' },
+		-- or if using mini.icons/mini.nvim
+		-- dependencies = { "nvim-mini/mini.icons" },
+		---@module "fzf-lua"
+		---@type fzf-lua.Config|{}
+		---@diagnostics disable: missing-fields
+		opts = {},
+		---@diagnostics enable: missing-fields
+	},
 })
 
 -- Basic settings
@@ -54,6 +66,8 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = false
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 local k = vim.keymap.set
 
@@ -136,6 +150,10 @@ end, { desc = 'Terminate' })
 k('n', 'gd', function()
 	vim.lsp.buf.definition()
 end, { desc = 'Terminate' })
+
+k('n', '<leader>tt', function()
+	require('fzf-lua').lsp_document_symbols()
+end)
 
 k('n', '<leader>m', "<cmd>vnew<Cr><cmd>put = execute('messages')<Cr>")
 

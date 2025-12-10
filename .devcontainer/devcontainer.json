@@ -11,7 +11,8 @@
     "ghcr.io/duduribeiro/devcontainer-features/neovim:1": {
       "version": "nightly"
     },
-    "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {}
+    "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {},
+    "ghcr.io/devcontainers-extra/features/fzf:1": {}
   },
   "postCreateCommand": "bash .devcontainer/setup.sh",
   "customizations": {
