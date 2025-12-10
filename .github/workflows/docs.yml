@@ -23,7 +23,7 @@ jobs:
         with:
           vimdoc: "nvim-java"
           dedupsubheadings: false
-          version: "Neovim >= 0.9.4"
+          version: "Neovim >= 0.11.5"
           demojify: true
 
       - name: create pull request
