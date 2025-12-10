@@ -43,7 +43,7 @@ Just install and start writing `public static void main(String[] args)`.
 
 <summary>:small_orange_diamond:details</summary>
 
-**Requirements:** Neovim 0.11+
+**Requirements:** Neovim 0.11.5+
 
 ### Using `vim.pack`
 
