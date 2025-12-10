@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.2](https://github.com/nvim-java/nvim-java/compare/v4.0.1...v4.0.2) (2025-12-10)
+
+
+### Bug Fixes
+
+* vim.lsp.buf.document_symbol returns nothing for jdtls ([#449](https://github.com/nvim-java/nvim-java/issues/449)) ([625f48f](https://github.com/nvim-java/nvim-java/commit/625f48ffedc735ac6284316e16daa99ba012a996))
+
 ## [4.0.1](https://github.com/nvim-java/nvim-java/compare/v4.0.0...v4.0.1) (2025-12-05)
 
 
