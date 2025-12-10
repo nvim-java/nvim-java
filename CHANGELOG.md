@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.3](https://github.com/nvim-java/nvim-java/compare/v4.0.2...v4.0.3) (2025-12-10)
+
+
+### Bug Fixes
+
+* **doc:** invalid JDTLS settings in README ([#451](https://github.com/nvim-java/nvim-java/issues/451)) ([df1ff5f](https://github.com/nvim-java/nvim-java/commit/df1ff5f85df8d4b7b8d92215084d7c183520893f))
+
 ## [4.0.2](https://github.com/nvim-java/nvim-java/compare/v4.0.1...v4.0.2) (2025-12-10)
 
 
