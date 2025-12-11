@@ -41,11 +41,17 @@ end
 function Setup:enrich_config(config)
 	config = vim.deepcopy(config)
 
+	-- skip enriching if already enriched
+	if config.mainClass and config.projectName and config.modulePaths and config.classPaths and config.javaExec then
+		return config
+	end
+
 	local main = config.mainClass
-	local project = config.projectName
+	-- when we set it to empty string, it will create a project with some random
+	-- string as name
+	local project = config.projectName or ''
 
 	assert(main, 'To enrich the config, mainClass should already be present')
-	assert(project, 'To enrich the config, projectName should already be present')
 
 	if config.request == 'launch' then
 		self.java_debug:build_workspace(main, project, nil, false)
