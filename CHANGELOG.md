@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.4](https://github.com/nvim-java/nvim-java/compare/v4.0.3...v4.0.4) (2025-12-11)
+
+
+### Bug Fixes
+
+* **dap:** allow running mains without project ([#459](https://github.com/nvim-java/nvim-java/issues/459)) ([9b6c907](https://github.com/nvim-java/nvim-java/commit/9b6c907e2616a8ada8419d7b3e68e85056ba5d57))
+
 ## [4.0.3](https://github.com/nvim-java/nvim-java/compare/v4.0.2...v4.0.3) (2025-12-10)
 
 
