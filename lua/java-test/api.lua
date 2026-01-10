@@ -157,4 +157,38 @@ function M:find_current_test_method()
 	end
 end
 
+---Run all tests in the workspace
+---@param report java-test.JUnitTestReport
+---@param config java-dap.DapLauncherConfigOverridable
+function M:execute_all_tests(report, config)
+	log.debug('running all tests')
+
+	local projects = self.test_client:find_java_projects()
+
+	if #projects < 1 then
+		notify.warn('No Java projects found')
+		return
+	end
+
+	-- Discover test classes from all projects
+	local all_tests = {}
+	for _, project in ipairs(projects) do
+		local packages = self.test_client:find_test_packages_and_types(project.jdtHandler)
+		for _, pkg in ipairs(packages or {}) do
+			-- Package children are the test classes
+			for _, test_class in ipairs(pkg.children or {}) do
+				table.insert(all_tests, test_class)
+			end
+		end
+	end
+
+	if #all_tests < 1 then
+		notify.warn('No tests found in workspace')
+		return
+	end
+
+	log.debug('found ' .. #all_tests .. ' test classes')
+	self:run_test(all_tests, report, config)
+end
+
 return M

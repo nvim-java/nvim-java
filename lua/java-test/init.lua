@@ -71,6 +71,34 @@ function M.run_current_method()
 		.run()
 end
 
+function M.run_all_tests()
+	log.info('run all tests')
+
+	return runner(function()
+			local test_api = JavaTestApi:new({
+				client = lsp_utils.get_jdtls(),
+				runner = DapRunner(),
+			})
+			return test_api:execute_all_tests(M.get_report(), { noDebug = true })
+		end)
+		.catch(get_error_handler('failed to run all tests'))
+		.run()
+end
+
+function M.debug_all_tests()
+	log.info('debug all tests')
+
+	return runner(function()
+			local test_api = JavaTestApi:new({
+				client = lsp_utils.get_jdtls(),
+				runner = DapRunner(),
+			})
+			return test_api:execute_all_tests(M.get_report(), {})
+		end)
+		.catch(get_error_handler('failed to debug all tests'))
+		.run()
+end
+
 function M.view_last_report()
 	if M.last_report then
 		M.last_report:show_report()
