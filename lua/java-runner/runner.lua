@@ -99,10 +99,9 @@ end
 
 ---Writes classpath to a temp file and returns the @argfile argument
 ---@private
----@param class_paths string[]
+---@param classpath_str string
 ---@return string argfile_arg the @argfile argument to pass to java
-function Runner:write_classpath_argfile(class_paths)
-	local classpath_str = table.concat(class_paths, path.classpath_seperator)
+function Runner:write_classpath_argfile(classpath_str)
 	local tmpfile = vim.fn.tempname() .. '.argfile'
 	local file = io.open(tmpfile, 'w')
 	if file then
@@ -131,6 +130,7 @@ function Runner:select_dap_config(args)
 
 	local enriched_config = dap:enrich_config(selected_dap_config)
 
+	local classpaths = table.concat(enriched_config.classPaths, path.classpath_seperator)
 	local main_class = enriched_config.mainClass
 	local java_exec = enriched_config.javaExec
 
@@ -144,15 +144,16 @@ function Runner:select_dap_config(args)
 		vm_args = active_profile.vm_args or ''
 	end
 
-	local argfile = self:write_classpath_argfile(enriched_config.classPaths)
+	local is_windows = vim.fn.has('win32') == 1 or vim.fn.has('win32unix') == 1
+	local cmd_length = #java_exec + #vm_args + #classpaths + #main_class + #(prog_args or '')
 
-	local cmd = {
-		java_exec,
-		vm_args,
-		argfile,
-		main_class,
-		prog_args,
-	}
+	local cmd
+	if is_windows and cmd_length > 8000 then
+		local argfile = self:write_classpath_argfile(classpaths)
+		cmd = { java_exec, vm_args, argfile, main_class, prog_args }
+	else
+		cmd = { java_exec, vm_args, '-cp', classpaths, main_class, prog_args }
+	end
 
 	return cmd, selected_dap_config
 end
