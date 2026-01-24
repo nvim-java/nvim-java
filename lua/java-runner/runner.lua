@@ -2,6 +2,7 @@ local ui = require('java.ui.utils')
 local class = require('java-core.utils.class')
 local lsp_utils = require('java-core.utils.lsp')
 local profile_config = require('java.api.profile_config')
+local path = require('java-core.utils.path')
 local Run = require('java-runner.run')
 local RunLogger = require('java-runner.run-logger')
 local DapSetup = require('java-dap.setup')
@@ -96,6 +97,22 @@ function Runner:select_run()
 	return self.runs[selected_main]
 end
 
+---Writes classpath to a temp file and returns the @argfile argument
+---@private
+---@param class_paths string[]
+---@return string argfile_arg the @argfile argument to pass to java
+function Runner:write_classpath_argfile(class_paths)
+	local classpath_str = table.concat(class_paths, path.classpath_seperator)
+	local tmpfile = vim.fn.tempname() .. '.argfile'
+	local file = io.open(tmpfile, 'w')
+	if file then
+		file:write('-cp\n')
+		file:write(classpath_str .. '\n')
+		file:close()
+	end
+	return '@' .. tmpfile
+end
+
 ---Returns the dap config for user selected main
 ---@param args string additional program arguments to pass
 ---@return string[] | nil
@@ -114,7 +131,6 @@ function Runner:select_dap_config(args)
 
 	local enriched_config = dap:enrich_config(selected_dap_config)
 
-	local class_paths = table.concat(enriched_config.classPaths, ':')
 	local main_class = enriched_config.mainClass
 	local java_exec = enriched_config.javaExec
 
@@ -128,11 +144,12 @@ function Runner:select_dap_config(args)
 		vm_args = active_profile.vm_args or ''
 	end
 
+	local argfile = self:write_classpath_argfile(enriched_config.classPaths)
+
 	local cmd = {
 		java_exec,
 		vm_args,
-		'-cp',
-		class_paths,
+		argfile,
 		main_class,
 		prog_args,
 	}
