@@ -1,4 +1,5 @@
 local system = require('java-core.utils.system')
+local Curl = require('pkgm.downloaders.curl')
 local Wget = require('pkgm.downloaders.wget')
 local PowerShell = require('pkgm.downloaders.powershell')
 local log = require('java-core.utils.log2')
@@ -25,6 +26,12 @@ function M.get_downloader(opts)
 	if vim.fn.executable('wget') == 1 then
 		log.debug('Using wget downloader')
 		return Wget(opts)
+	end
+
+	-- Check for curl on all platforms
+	if vim.fn.executable('curl') == 1 then
+		log.debug('Using curl downloader')
+		return Curl(opts)
 	end
 
 	-- On Windows, fallback to PowerShell if available
