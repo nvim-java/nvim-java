@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.1.0](https://github.com/nvim-java/nvim-java/compare/v4.0.4...v4.1.0) (2026-02-04)
+
+
+### Features
+
+* add curl downloader ([#473](https://github.com/nvim-java/nvim-java/issues/473)) ([d4050eb](https://github.com/nvim-java/nvim-java/commit/d4050ebc7ed909dcf4b536c109e8ce291112efc3))
+* add JavaTestRunAllTests and JavaTestDebugAllTests commands ([#467](https://github.com/nvim-java/nvim-java/issues/467)) ([e4cc304](https://github.com/nvim-java/nvim-java/commit/e4cc304fa7a5daf41c13d6894bc90b4e99e576e6))
+
 ## [4.0.4](https://github.com/nvim-java/nvim-java/compare/v4.0.3...v4.0.4) (2025-12-11)
 
 
