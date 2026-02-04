@@ -35,6 +35,18 @@ local cmd_map = {
 		end,
 	},
 
+	JavaTestRunAllTests = {
+		function()
+			require('java-test').run_all_tests()
+		end,
+	},
+
+	JavaTestDebugAllTests = {
+		function()
+			require('java-test').debug_all_tests()
+		end,
+	},
+
 	JavaTestViewLastReport = {
 		function()
 			require('java-test').view_last_report()
