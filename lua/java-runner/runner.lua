@@ -2,6 +2,7 @@ local ui = require('java.ui.utils')
 local class = require('java-core.utils.class')
 local lsp_utils = require('java-core.utils.lsp')
 local profile_config = require('java.api.profile_config')
+local path = require('java-core.utils.path')
 local Run = require('java-runner.run')
 local RunLogger = require('java-runner.run-logger')
 local DapSetup = require('java-dap.setup')
@@ -96,6 +97,21 @@ function Runner:select_run()
 	return self.runs[selected_main]
 end
 
+---Writes classpath to a temp file and returns the @argfile argument
+---@private
+---@param classpath_str string
+---@return string argfile_arg the @argfile argument to pass to java
+function Runner:write_classpath_argfile(classpath_str)
+	local tmpfile = vim.fn.tempname() .. '.argfile'
+	local file = io.open(tmpfile, 'w')
+	if file then
+		file:write('-cp\n')
+		file:write(classpath_str .. '\n')
+		file:close()
+	end
+	return '@' .. tmpfile
+end
+
 ---Returns the dap config for user selected main
 ---@param args string additional program arguments to pass
 ---@return string[] | nil
@@ -114,7 +130,7 @@ function Runner:select_dap_config(args)
 
 	local enriched_config = dap:enrich_config(selected_dap_config)
 
-	local class_paths = table.concat(enriched_config.classPaths, ':')
+	local classpaths = table.concat(enriched_config.classPaths, path.classpath_seperator)
 	local main_class = enriched_config.mainClass
 	local java_exec = enriched_config.javaExec
 
@@ -128,14 +144,16 @@ function Runner:select_dap_config(args)
 		vm_args = active_profile.vm_args or ''
 	end
 
-	local cmd = {
-		java_exec,
-		vm_args,
-		'-cp',
-		class_paths,
-		main_class,
-		prog_args,
-	}
+	local is_windows = vim.fn.has('win32') == 1 or vim.fn.has('win32unix') == 1
+	local cmd_length = #java_exec + #vm_args + #classpaths + #main_class + #(prog_args or '')
+
+	local cmd
+	if is_windows and cmd_length > 8000 then
+		local argfile = self:write_classpath_argfile(classpaths)
+		cmd = { java_exec, vm_args, argfile, main_class, prog_args }
+	else
+		cmd = { java_exec, vm_args, '-cp', classpaths, main_class, prog_args }
+	end
 
 	return cmd, selected_dap_config
 end
