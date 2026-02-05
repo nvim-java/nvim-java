@@ -119,6 +119,8 @@ Yep! That's all :)
 - `JavaTestDebugCurrentClass` - Debug the test class in the active buffer
 - `JavaTestRunCurrentMethod` - Run the test method on the cursor
 - `JavaTestDebugCurrentMethod` - Debug the test method on the cursor
+- `JavaTestRunAllTests` - Run all tests in the workspace
+- `JavaTestDebugAllTests` - Debug all tests in the workspace
 - `JavaTestViewLastReport` - Open the last test report in a popup window
 
 ### Profiles
@@ -217,6 +219,18 @@ require('java').test.run_current_method()
 
 ```lua
 require('java').test.debug_current_method()
+```
+
+- `run_all_tests` - Run all tests in the workspace
+
+```lua
+require('java').test.run_all_tests()
+```
+
+- `debug_all_tests` - Debug all tests in the workspace
+
+```lua
+require('java').test.debug_all_tests()
 ```
 
 - `view_report` - Open the last test report in a popup window
