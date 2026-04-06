@@ -30,14 +30,15 @@ function M.setup(custom_config)
 	----------------------------------------------------------------------
 	local Manager = require('pkgm.manager')
 	local pkgm = Manager()
+	local to_install = {}
 
-	pkgm:install('jdtls', config.jdtls.version)
+	table.insert(to_install, { name = 'jdtls', version = config.jdtls.version })
 
 	if config.java_test.enable then
 		----------------------------------------------------------------------
 		--                               test                               --
 		----------------------------------------------------------------------
-		pkgm:install('java-test', config.java_test.version)
+		table.insert(to_install, { name = 'java-test', version = config.java_test.version })
 
 		M.test = {
 			run_current_class = test_api.run_current_class,
@@ -54,7 +55,7 @@ function M.setup(custom_config)
 		----------------------------------------------------------------------
 		--                             debugger                             --
 		----------------------------------------------------------------------
-		pkgm:install('java-debug', config.java_debug_adapter.version)
+		table.insert(to_install, { name = 'java-debug', version = config.java_debug_adapter.version })
 		require('java-dap').setup()
 
 		M.dap = {
@@ -65,23 +66,29 @@ function M.setup(custom_config)
 	end
 
 	if config.spring_boot_tools.enable then
-		pkgm:install('spring-boot-tools', config.spring_boot_tools.version)
+		table.insert(to_install, { name = 'spring-boot-tools', version = config.spring_boot_tools.version })
 	end
 
 	if config.lombok.enable then
-		pkgm:install('lombok', config.lombok.version)
+		table.insert(to_install, { name = 'lombok', version = config.lombok.version })
 	end
 
 	if config.jdk.auto_install then
-		pkgm:install('openjdk', config.jdk.version)
+		table.insert(to_install, { name = 'openjdk', version = config.jdk.version })
 	end
 
-	----------------------------------------------------------------------
-	--                               init                               --
-	----------------------------------------------------------------------
-	require('java.startup.lsp_setup').setup(config)
-	require('java.startup.decompile-watcher').setup()
-	require('java-refactor').setup()
+	pkgm:install_all(
+		to_install,
+		vim.schedule_wrap(function()
+			----------------------------------------------------------------------
+			--                               init                               --
+			----------------------------------------------------------------------
+			require('java.startup.lsp_setup').setup(config)
+			require('java.startup.decompile-watcher').setup()
+			require('java-refactor').setup()
+			vim.lsp.enable('jdtls')
+		end)
+	)
 end
 
 ----------------------------------------------------------------------

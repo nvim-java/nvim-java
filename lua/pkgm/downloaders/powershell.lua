@@ -36,8 +36,8 @@ function PowerShell:_init(opts)
 end
 
 ---Download file using PowerShell
----@return string # Path to downloaded file
-function PowerShell:download()
+---@param on_finished fun(file_path: string)
+function PowerShell:download(on_finished)
 	local pwsh = vim.fn.executable('pwsh') == 1 and 'pwsh' or 'powershell'
 	log.debug('PowerShell downloading:', self.url, 'to', self.dest)
 	log.debug('Using PowerShell binary:', pwsh)
@@ -49,24 +49,33 @@ function PowerShell:download()
 		self.dest
 	)
 
-	local cmd = string.format(
+	local inner_cmd = string.format(
 		-- luacheck: ignore
-		"%s -NoProfile -NonInteractive -Command \"$ProgressPreference = 'SilentlyContinue'; $ErrorActionPreference = 'Stop'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; %s\"",
-		pwsh,
+		"$ProgressPreference = 'SilentlyContinue'; $ErrorActionPreference = 'Stop'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; %s",
 		pwsh_cmd
 	)
+
+	local cmd = {
+		pwsh,
+		'-NoProfile',
+		'-NonInteractive',
+		'-Command',
+		inner_cmd,
+	}
 	log.debug('PowerShell command:', cmd)
 
-	local result = vim.fn.system(cmd)
-	local exit_code = vim.v.shell_error
+	vim.system(cmd, { text = true }, function(out)
+		local result = out.stderr
+		local exit_code = out.code
 
-	if exit_code ~= 0 then
-		local err = string.format('PowerShell download failed (exit %d): %s', exit_code, result)
-		err_util.throw(err)
-	end
+		if exit_code ~= 0 then
+			local err = string.format('PowerShell download failed (exit %d): %s', exit_code, result)
+			err_util.throw(err)
+		end
 
-	log.debug('PowerShell download completed:', self.dest)
-	return self.dest
+		log.debug('PowerShell download completed:', self.dest)
+		on_finished(self.dest)
+	end)
 end
 
 return PowerShell

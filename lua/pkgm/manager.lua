@@ -19,33 +19,63 @@ function Manager:_init(specs)
 	log.debug('Manager initialized with ' .. #self.specs .. ' specs')
 end
 
----Download and extract a package
+---@class Package
+---@field name string
+---@field version string
+
+---Download and extract multiples packages asynchronously
+---@param packages Package[]
+---@param callback fun()
+function Manager:install_all(packages, callback)
+	local remaining = #packages
+	if remaining == 0 then
+		callback()
+		return
+	end
+
+	local on_finished = function()
+		remaining = remaining - 1
+		if remaining == 0 then
+			callback()
+		end
+	end
+
+	for _, package in ipairs(packages) do
+		self:install(package.name, package.version, on_finished)
+	end
+end
+
+---Download and extract a package asynchronously
 ---@param name string
 ---@param version string
----@return string # Installation directory path
-function Manager:install(name, version)
+---@param on_finished fun(install_dir: string)
+function Manager:install(name, version, on_finished)
 	log.debug('Installing package:', name, version)
 
 	if self:is_installed(name, version) then
 		local install_dir = self:get_install_dir(name, version)
 		log.debug('Package already installed:', install_dir)
-		return install_dir
+		on_finished(install_dir)
+		return
 	end
 
 	notify.info('Installing package ' .. name .. ' version ' .. version)
 
 	local spec = self:find_spec(name, version)
 	local url = spec:get_url(name, version)
-	local downloaded_file = self:download_package(url)
-	local install_dir = self:get_install_dir(name, version)
 
-	log.debug('Install directory:', install_dir)
+	self:download_package(url, function(downloaded_file)
+		local install_dir = self:get_install_dir(name, version)
 
-	self:extract_package(downloaded_file, install_dir)
+		log.debug('Install directory:', install_dir)
 
-	log.debug('Package installed successfully:', install_dir)
+		self:extract_package(downloaded_file, install_dir)
 
-	return install_dir
+		log.debug('Package installed successfully:', install_dir)
+		notify.info('Package installed successfully ' .. name)
+
+		on_finished(install_dir)
+	end)
 end
 
 ---Check if package is installed
@@ -133,23 +163,23 @@ end
 ---Download package from URL
 ---@private
 ---@param url string
----@return string # Downloaded file path
-function Manager:download_package(url)
+---@param on_finished fun(string)
+function Manager:download_package(url, on_finished)
 	log.debug('Using URL:', url)
 
 	local downloader = downloader_factory.get_downloader({ url = url })
 
 	log.debug('Starting download...')
 
-	local downloaded_file, err = downloader:download()
+	downloader:download(function(downloaded_file, err)
+		if not downloaded_file then
+			err_util.throw(err or 'Download failed')
+		end
 
-	if not downloaded_file then
-		err_util.throw(err or 'Download failed')
-	end
+		log.debug('Downloaded to:', downloaded_file)
 
-	log.debug('Downloaded to:', downloaded_file)
-
-	return downloaded_file
+		on_finished(downloaded_file)
+	end)
 end
 
 ---Extract package to installation directory
@@ -157,27 +187,29 @@ end
 ---@param downloaded_file string
 ---@param install_dir string
 function Manager:extract_package(downloaded_file, install_dir)
-	local extractor = extractor_factory.get_extractor({
-		source = downloaded_file,
-		dest = install_dir,
-	})
+	vim.schedule(function()
+		local extractor = extractor_factory.get_extractor({
+			source = downloaded_file,
+			dest = install_dir,
+		})
 
-	vim.fn.mkdir(install_dir, 'p')
+		vim.fn.mkdir(install_dir, 'p')
 
-	log.debug('Starting extraction...')
+		log.debug('Starting extraction...')
 
-	local success, err = extractor:extract()
+		local success, err = extractor:extract()
 
-	if not success then
-		vim.fn.delete(install_dir, 'rf')
+		if not success then
+			vim.fn.delete(install_dir, 'rf')
+			vim.fn.delete(downloaded_file)
+			err_util.throw(err or 'Extraction failed')
+		end
+
+		log.debug('Extraction completed')
+
 		vim.fn.delete(downloaded_file)
-		err_util.throw(err or 'Extraction failed')
-	end
-
-	log.debug('Extraction completed')
-
-	vim.fn.delete(downloaded_file)
-	log.debug('Cleaned up temporary file')
+		log.debug('Cleaned up temporary file')
+	end)
 end
 
 return Manager

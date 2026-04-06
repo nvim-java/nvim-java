@@ -35,29 +35,34 @@ function Curl:_init(opts)
 end
 
 ---Download file using curl
----@return string|nil # Path to downloaded file, or nil on failure
----@return string|nil # Error message if failed
-function Curl:download()
+---@param on_finished fun(file_path: string|nil, err: string|nil)
+function Curl:download(on_finished)
 	log.debug('curl downloading:', self.url, 'to', self.dest)
-	local cmd = string.format(
-		'curl --retry %d --connect-timeout %d -o %s %s',
+	local cmd = {
+		'curl',
+		'--retry',
 		self.retry_count,
+		'--connect-timeout',
 		self.timeout,
-		vim.fn.shellescape(self.dest),
-		vim.fn.shellescape(self.url)
-	)
+		'-o',
+		self.dest,
+		self.url,
+	}
 	log.debug('curl command:', cmd)
 
-	local result = vim.fn.system(cmd)
-	local exit_code = vim.v.shell_error
+	vim.system(cmd, { text = true }, function(out)
+		local result = out.stderr
+		local exit_code = out.code
 
-	if exit_code ~= 0 then
-		log.error('curl failed:', exit_code, result)
-		return nil, string.format('curl failed (exit %d): %s', exit_code, result)
-	end
+		if exit_code ~= 0 then
+			log.error('curl failed:', exit_code, result)
+			on_finished(nil, string.format('curl failed (exit %d): %s', exit_code, result))
+			return
+		end
 
-	log.debug('curl download completed:', self.dest)
-	return self.dest, nil
+		log.debug('curl download completed:', self.dest)
+		on_finished(self.dest, nil)
+	end)
 end
 
 return Curl
