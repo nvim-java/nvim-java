@@ -45,7 +45,7 @@ end
 function M.get_jvm_args(config)
 	local use_lombok = config.lombok.enable
 	local jdtls_root = resolver.get_jdtls_root(config)
-	local jdtls_config = path.join(jdtls_root, system.get_config_suffix())
+	local jdtls_config = M.get_jdtls_config_path(jdtls_root)
 
 	local java_exe = 'java'
 
@@ -82,6 +82,25 @@ function M.get_jvm_args(config)
 	end
 
 	return jvm_args
+end
+
+---@private
+---@param jdtls_root string
+---@return string
+function M.get_jdtls_config_path(jdtls_root)
+	local config_path = path.join(jdtls_root, system.get_config_suffix())
+
+	if vim.fn.isdirectory(config_path) == 1 then
+		return config_path
+	end
+
+	local os_config_path = path.join(jdtls_root, 'config_' .. system.get_os())
+
+	if vim.fn.isdirectory(os_config_path) == 1 then
+		return os_config_path
+	end
+
+	return config_path
 end
 
 ---@private
