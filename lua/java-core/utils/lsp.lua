@@ -23,12 +23,23 @@ function M.get_jdtls_cache_root_path()
 	return cache_root
 end
 
+local function get_cache_key(value)
+	if value == nil or value == '' then
+		return nil
+	end
+
+	return vim.fn.sha256(value)
+end
+
 --- Returns the path to the jdtls config file
+---@param jdtls_root? string
 ---@return string
-function M.get_jdtls_cache_conf_path()
+function M.get_jdtls_cache_conf_path(jdtls_root)
 	local path = require('java-core.utils.path')
 	local cache_root = M.get_jdtls_cache_root_path()
-	local conf_path = path.join(cache_root, 'config')
+	local cache_key = get_cache_key(jdtls_root)
+	local conf_dir_name = cache_key and ('config_' .. cache_key) or 'config'
+	local conf_path = path.join(cache_root, conf_dir_name)
 	return conf_path
 end
 

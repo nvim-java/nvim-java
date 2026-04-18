@@ -106,7 +106,7 @@ function M.get_jar_args(config, cwd)
 		equinox_launcher,
 
 		'-configuration',
-		lsp_utils.get_jdtls_cache_conf_path(),
+		lsp_utils.get_jdtls_cache_conf_path(jdtls_root),
 
 		'-data',
 		lsp_utils.get_jdtls_cache_data_path(cwd),
