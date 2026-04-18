@@ -1,26 +1,18 @@
 local path = require('java-core.utils.path')
-local Manager = require('pkgm.manager')
 local log = require('java-core.utils.log2')
 local system = require('java-core.utils.system')
+local resolver = require('pkgm.resolve')
 
 local M = {}
 
 --- @param config java.Config
 function M.get_env(config)
-	if not config.jdk.auto_install then
-		log.debug('config.jdk.auto_install disabled, returning empty env')
+	if not config.jdk.auto_install and not config.jdk.path then
+		log.debug('config.jdk.auto_install disabled and config.jdk.path unset, returning empty env')
 		return {}
 	end
 
-	local jdk_root = Manager:get_install_dir('openjdk', config.jdk.version)
-
-	local java_home
-
-	if system.get_os() == 'mac' then
-		java_home = vim.fn.glob(path.join(jdk_root, 'jdk-*', 'Contents', 'Home'))
-	else
-		java_home = vim.fn.glob(path.join(jdk_root, 'jdk-*'))
-	end
+	local java_home = resolver.get_jdk_home(config)
 
 	local java_bin = path.join(java_home, 'bin')
 

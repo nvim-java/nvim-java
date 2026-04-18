@@ -1,12 +1,12 @@
 local List = require('java-core.utils.list')
 local path = require('java-core.utils.path')
-local Manager = require('pkgm.manager')
 local system = require('java-core.utils.system')
 local log = require('java-core.utils.log2')
 local err = require('java-core.utils.errors')
 local java_version_map = require('java-core.constants.java_version')
 local lsp_utils = require('java-core.utils.lsp')
 local str = require('java-core.utils.str')
+local resolver = require('pkgm.resolve')
 
 local M = {}
 
@@ -23,7 +23,7 @@ function M.get_cmd(config)
 		-- system java. So as a workaround, we use the absolute path to java instead
 		-- So following check is not needed when we have auto_install set to true
 		-- @see https://github.com/neovim/neovim/issues/36818
-		if not config.jdk.auto_install then
+		if not config.jdk.auto_install and not config.jdk.path then
 			M.validate_java_version(config, lsp_config.cmd_env)
 		end
 
@@ -44,7 +44,7 @@ end
 ---@return java-core.List
 function M.get_jvm_args(config)
 	local use_lombok = config.lombok.enable
-	local jdtls_root = Manager:get_install_dir('jdtls', config.jdtls.version)
+	local jdtls_root = resolver.get_jdtls_root(config)
 	local jdtls_config = path.join(jdtls_root, system.get_config_suffix())
 
 	local java_exe = 'java'
@@ -52,15 +52,8 @@ function M.get_jvm_args(config)
 	-- NOTE: eventhough we are setting the PATH env var, due to a bug, it's not
 	-- working on Windows. So we are using the absolute path to java instead
 	-- @see https://github.com/neovim/neovim/issues/36818
-	if config.jdk.auto_install then
-		local jdk_root = Manager:get_install_dir('openjdk', config.jdk.version)
-		local java_home
-		if system.get_os() == 'mac' then
-			java_home = vim.fn.glob(path.join(jdk_root, 'jdk-*', 'Contents', 'Home'))
-		else
-			java_home = vim.fn.glob(path.join(jdk_root, 'jdk-*'))
-		end
-
+	if config.jdk.auto_install or config.jdk.path then
+		local java_home = resolver.get_jdk_home(config)
 		java_exe = path.join(java_home, 'bin', 'java')
 	end
 
@@ -85,9 +78,7 @@ function M.get_jvm_args(config)
 
 	-- Adding lombok
 	if use_lombok then
-		local lombok_root = Manager:get_install_dir('lombok', config.lombok.version)
-		local lombok_path = vim.fn.glob(path.join(lombok_root, 'lombok*.jar'))
-		jvm_args:push('-javaagent:' .. lombok_path)
+		jvm_args:push('-javaagent:' .. resolver.get_lombok_path(config))
 	end
 
 	return jvm_args
@@ -98,7 +89,7 @@ end
 ---@param cwd? string
 ---@return java-core.List
 function M.get_jar_args(config, cwd)
-	local jdtls_root = Manager:get_install_dir('jdtls', config.jdtls.version)
+	local jdtls_root = resolver.get_jdtls_root(config)
 	cwd = cwd or vim.fn.getcwd()
 
 	local launcher_reg = path.join(jdtls_root, 'plugins', 'org.eclipse.equinox.launcher_*.jar')

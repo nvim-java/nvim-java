@@ -1,6 +1,6 @@
 local path = require('java-core.utils.path')
 local List = require('java-core.utils.list')
-local Manager = require('pkgm.manager')
+local resolver = require('pkgm.resolve')
 
 local server = require('java-core.ls.servers.jdtls')
 
@@ -22,10 +22,10 @@ function M.setup(config)
 	if config.spring_boot_tools.enable then
 		jdtls_plugins:push('spring-boot-tools')
 
-		local spring_boot_root = Manager:get_install_dir('spring-boot-tools', config.spring_boot_tools.version)
+		local spring_boot_root = resolver.get_extension_root('spring-boot-tools', config.spring_boot_tools)
 
 		require('spring_boot').setup({
-			ls_path = path.join(spring_boot_root, 'extension', 'language-server'),
+			ls_path = path.join(spring_boot_root, 'language-server'),
 		})
 
 		require('spring_boot').init_lsp_commands()
