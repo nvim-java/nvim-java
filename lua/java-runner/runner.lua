@@ -1,10 +1,12 @@
 local ui = require('java.ui.utils')
 local class = require('java-core.utils.class')
 local lsp_utils = require('java-core.utils.lsp')
+local notify = require('java-core.utils.notify')
 local profile_config = require('java.api.profile_config')
 local Run = require('java-runner.run')
 local RunLogger = require('java-runner.run-logger')
 local DapSetup = require('java-dap.setup')
+local env_utils = require('java.utils.env')
 
 ---@class java.Runner
 ---@field runs table<string, java.Run>
@@ -20,7 +22,7 @@ end
 ---Starts a new run
 ---@param args string
 function Runner:start_run(args)
-	local cmd, dap_config = self:select_dap_config(args)
+	local cmd, dap_config, env = self:select_dap_config(args)
 
 	if not cmd or not dap_config then
 		return
@@ -41,7 +43,7 @@ function Runner:start_run(args)
 	self.curr_run = run
 	self.logger:set_buffer(run.buffer)
 
-	run:start(cmd)
+	run:start(cmd, env)
 end
 
 ---Stops the user selected run
@@ -100,6 +102,7 @@ end
 ---@param args string additional program arguments to pass
 ---@return string[] | nil
 ---@return java-dap.DapLauncherConfig | nil
+---@return table<string, string> | nil
 function Runner:select_dap_config(args)
 	local dap = DapSetup(lsp_utils.get_jdtls())
 	local dap_config_list = dap:get_dap_config()
@@ -109,7 +112,7 @@ function Runner:select_dap_config(args)
 	end)
 
 	if not selected_dap_config then
-		return nil, nil
+		return nil, nil, nil
 	end
 
 	local enriched_config = dap:enrich_config(selected_dap_config)
@@ -122,10 +125,21 @@ function Runner:select_dap_config(args)
 
 	local vm_args = ''
 	local prog_args = args
+	local env = nil
 
 	if active_profile then
 		prog_args = (active_profile.prog_args or '') .. ' ' .. (args or '')
 		vm_args = active_profile.vm_args or ''
+
+		local err
+		env, err = env_utils.load_profile_env(
+			active_profile,
+			profile_config.current_project_path
+		)
+		if err then
+			notify.error(err)
+			return nil, nil, nil
+		end
 	end
 
 	local cmd = {
@@ -137,7 +151,7 @@ function Runner:select_dap_config(args)
 		prog_args,
 	}
 
-	return cmd, selected_dap_config
+	return cmd, selected_dap_config, env
 end
 
 return Runner

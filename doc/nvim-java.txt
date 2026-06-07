@@ -138,7 +138,7 @@ TEST ~
 
 PROFILES ~
 
-- `JavaProfile` - Opens the profiles UI
+- `JavaProfile` - Opens the profiles UI for vm args, program args, env, and env file
 
 
 REFACTOR ~
@@ -261,6 +261,9 @@ PROFILES ~
 >lua
     require('java').profile.ui()
 <
+
+Profiles can store vm args, program args, `KEY=VALUE` env entries, and an env file path.
+Inline env overrides env file values. Relative env file paths resolve from the current project cwd.
 
 
 REFACTOR ~
