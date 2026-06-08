@@ -173,7 +173,9 @@ function Manager:download_package(url, on_finished)
 
 	downloader:download(function(downloaded_file, err)
 		if not downloaded_file then
-			err_util.throw(err or 'Download failed')
+			vim.schedule(function()
+				err_util.throw(err or 'Download failed')
+			end)
 		end
 
 		log.debug('Downloaded to:', downloaded_file)
