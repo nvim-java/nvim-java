@@ -45,6 +45,8 @@ Just install and start writing `public static void main(String[] args)`.
 
 **Requirements:** Neovim 0.11.5+
 
+**Do not call `vim.lsp.enable('jdtls')` yourself!**
+
 ### Using `vim.pack`
 
 ```lua
@@ -60,7 +62,6 @@ vim.pack.add({
 })
 
 require('java').setup()
-vim.lsp.enable('jdtls')
 ```
 
 ### Using `lazy.nvim`
@@ -72,7 +73,6 @@ Install using [lazy.nvim](https://github.com/folke/lazy.nvim):
   'nvim-java/nvim-java',
   config = function()
     require('java').setup()
-    vim.lsp.enable('jdtls')
   end,
 }
 ```
@@ -291,7 +291,7 @@ require('java').settings.change_runtime()
 ## :clamp: How to Use JDK X.X Version?
 
 <details>
-  
+
 <summary>:small_orange_diamond:details</summary>
 
 Use `vim.lsp.config()` to override the default JDTLS settings:

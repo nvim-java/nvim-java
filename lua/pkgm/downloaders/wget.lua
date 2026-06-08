@@ -35,29 +35,35 @@ function Wget:_init(opts)
 end
 
 ---Download file using wget
----@return string|nil # Path to downloaded file, or nil on failure
----@return string|nil # Error message if failed
-function Wget:download()
+---@param on_finished fun(file_path: string|nil, err: string|nil)
+function Wget:download(on_finished)
 	log.debug('wget downloading:', self.url, 'to', self.dest)
-	local cmd = string.format(
-		'wget -t %d -T %d -O %s %s',
+	local cmd = {
+		'wget',
+		'-t',
 		self.retry_count,
+		'-T',
 		self.timeout,
-		vim.fn.shellescape(self.dest),
-		vim.fn.shellescape(self.url)
-	)
+		'-O',
+		self.dest,
+		self.url,
+	}
 	log.debug('wget command:', cmd)
 
-	local result = vim.fn.system(cmd)
-	local exit_code = vim.v.shell_error
+	vim.system(cmd, { text = true }, function(out)
+		local result = out.stderr
+		local exit_code = out.code
 
-	if exit_code ~= 0 then
-		log.error('wget failed:', exit_code, result)
-		return nil, string.format('wget failed (exit %d): %s', exit_code, result)
-	end
+		if exit_code ~= 0 then
+			local err = string.format('wget failed (exit %d): %s', exit_code, result)
+			log.error(err)
+			on_finished(nil, err)
+			return
+		end
 
-	log.debug('wget download completed:', self.dest)
-	return self.dest, nil
+		log.debug('wget download completed:', self.dest)
+		on_finished(self.dest, nil)
+	end)
 end
 
 return Wget

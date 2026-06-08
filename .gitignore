@@ -1,3 +1,6 @@
 vendor/plenary.nvim
 .test_plugins
 proj
+.envrc
+.direnv
+flake.*

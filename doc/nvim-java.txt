@@ -1,4 +1,4 @@
-*nvim-java.txt*       For Neovim >= 0.11.5       Last change: 2026 February 05
+*nvim-java.txt*         For Neovim >= 0.11.5         Last change: 2026 June 08
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -56,6 +56,8 @@ HOW TO INSTALL                                      *nvim-java-how-to-install*
 
 **Requirements:** Neovim 0.11.5+
 
+**Do not call vim.lsp.enable('jdtls') yourself!**
+
 
 USING VIM.PACK ~
 
@@ -72,25 +74,23 @@ USING VIM.PACK ~
     })
     
     require('java').setup()
-    vim.lsp.enable('jdtls')
 <
 
 
 USING LAZY.NVIM ~
 
-Install using lazy.nvim <https://github.com/folke/lazy.nvim>:
+Install using lazy.nvim <https://github.com/folke/lazy.nvim>
 
 >lua
     {
       'nvim-java/nvim-java',
       config = function()
         require('java').setup()
-        vim.lsp.enable('jdtls')
       end,
     }
 <
 
-Yep! That’s all :)
+Yep!That’s all :)
 
 
 COMMANDS                                                  *nvim-java-commands*
