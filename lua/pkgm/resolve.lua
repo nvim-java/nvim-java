@@ -5,6 +5,8 @@ local system = require('java-core.utils.system')
 
 local M = {}
 
+local manager = Manager()
+
 local function has_path(config)
 	return config.path ~= nil and config.path ~= ''
 end
@@ -25,7 +27,7 @@ function M.install(name, config)
 		err.throw(('nvim-java: %s auto_install disabled and no path configured'):format(name))
 	end
 
-	return Manager():install(name, config.version)
+	return manager:install(name, config.version)
 end
 
 ---@param name string
@@ -36,7 +38,7 @@ function M.get_install_dir(name, config)
 		return config.path
 	end
 
-	return Manager:get_install_dir(name, config.version)
+	return manager:get_install_dir(name, config.version)
 end
 
 ---@param name string
@@ -64,7 +66,14 @@ function M.get_lombok_path(config)
 	end
 
 	local lombok_root = M.get_install_dir('lombok', config.lombok)
-	return vim.fn.glob(path.join(lombok_root, 'lombok*.jar'))
+	local lombok_jar_pattern = path.join(lombok_root, 'lombok*.jar')
+	local lombok_jar = vim.fn.glob(lombok_jar_pattern)
+
+	if lombok_jar == '' then
+		err.throw('nvim-java: lombok jar not found at ' .. lombok_jar_pattern)
+	end
+
+	return lombok_jar
 end
 
 ---@param config java.Config
@@ -72,6 +81,10 @@ end
 function M.get_jdk_home(config)
 	if has_path(config.jdk) then
 		return config.jdk.path
+	end
+
+	if not can_auto_install(config.jdk) then
+		err.throw('nvim-java: jdk auto_install disabled and no path configured')
 	end
 
 	local jdk_root = M.get_install_dir('openjdk', config.jdk)

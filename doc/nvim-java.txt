@@ -404,7 +404,8 @@ want, following options are available:
 Set `path` when a tool is managed externally. When `path` is set, nvim-java
 uses that path and does not install the tool. Set
 `auto_install = false` on a tool to fail instead of downloading when no path is
-configured.
+configured. Note: `path` has no effect when the tool is disabled
+(`enable = false`) — the tool is simply not loaded.
 
 Path meanings:
 

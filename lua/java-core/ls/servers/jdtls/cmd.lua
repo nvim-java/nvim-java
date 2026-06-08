@@ -100,7 +100,9 @@ function M.get_jdtls_config_path(jdtls_root)
 		return os_config_path
 	end
 
-	return config_path
+	err.throw(
+		('nvim-java: jdtls config directory not found at %s or %s'):format(config_path, os_config_path)
+	)
 end
 
 ---@private
