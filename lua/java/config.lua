@@ -21,22 +21,22 @@ local V = jdtls_version_map[JDTLS_VERSION]
 
 ---@class java.Config
 ---@field checks { nvim_version: boolean, nvim_jdtls_conflict: boolean }
----@field jdtls { version: string }
----@field lombok { enable: boolean, version: string }
----@field java_test { enable: boolean, version: string }
----@field java_debug_adapter { enable: boolean, version: string }
----@field spring_boot_tools { enable: boolean, version: string }
----@field jdk { auto_install: boolean, version: string }
+---@field jdtls { version: string, path: string|nil, auto_install: boolean }
+---@field lombok { enable: boolean, version: string, path: string|nil, auto_install: boolean }
+---@field java_test { enable: boolean, version: string, path: string|nil, auto_install: boolean }
+---@field java_debug_adapter { enable: boolean, version: string, path: string|nil, auto_install: boolean }
+---@field spring_boot_tools { enable: boolean, version: string, path: string|nil, auto_install: boolean }
+---@field jdk { auto_install: boolean, version: string, path: string|nil }
 ---@field log java-core.Log2Config
 
 ---@class java.PartialConfig
 ---@field checks? { nvim_version?: boolean, nvim_jdtls_conflict?: boolean }
----@field jdtls? { version?: string }
----@field lombok? { enable?: boolean, version?: string }
----@field java_test? { enable?: boolean, version?: string }
----@field java_debug_adapter? { enable?: boolean, version?: string }
----@field spring_boot_tools? { enable?: boolean, version?: string }
----@field jdk? { auto_install?: boolean, version?: string }
+---@field jdtls? { version?: string, path?: string, auto_install?: boolean }
+---@field lombok? { enable?: boolean, version?: string, path?: string, auto_install?: boolean }
+---@field java_test? { enable?: boolean, version?: string, path?: string, auto_install?: boolean }
+---@field java_debug_adapter? { enable?: boolean, version?: string, path?: string, auto_install?: boolean }
+---@field spring_boot_tools? { enable?: boolean, version?: string, path?: string, auto_install?: boolean }
+---@field jdk? { auto_install?: boolean, version?: string, path?: string }
 ---@field log? java-core.PartialLog2Config
 
 ---@type java.Config
@@ -48,33 +48,44 @@ local config = {
 
 	jdtls = {
 		version = JDTLS_VERSION,
+		path = nil,
+		auto_install = true,
 	},
 
 	lombok = {
 		enable = true,
 		version = V.lombok,
+		path = nil,
+		auto_install = true,
 	},
 
 	-- load java test plugins
 	java_test = {
 		enable = true,
 		version = V.java_test,
+		path = nil,
+		auto_install = true,
 	},
 
 	-- load java debugger plugins
 	java_debug_adapter = {
 		enable = true,
 		version = V.java_debug_adapter,
+		path = nil,
+		auto_install = true,
 	},
 
 	spring_boot_tools = {
 		enable = true,
 		version = V.spring_boot_tools,
+		path = nil,
+		auto_install = true,
 	},
 
 	jdk = {
 		auto_install = true,
 		version = V.jdk,
+		path = nil,
 	},
 
 	log = {

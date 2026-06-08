@@ -1,10 +1,10 @@
 local M = {}
 
-function M.get_plugin_version_map(config)
+function M.get_plugin_config_map(config)
 	return {
-		['java-test'] = config.java_test.version,
-		['java-debug'] = config.java_debug_adapter.version,
-		['spring-boot-tools'] = config.spring_boot_tools.version,
+		['java-test'] = config.java_test,
+		['java-debug'] = config.java_debug_adapter,
+		['spring-boot-tools'] = config.spring_boot_tools,
 	}
 end
 
@@ -15,19 +15,18 @@ end
 function M.get_plugins(config, plugins)
 	local file = require('java-core.utils.file')
 	local List = require('java-core.utils.list')
-	local Manager = require('pkgm.manager')
 	local path = require('java-core.utils.path')
 	local err = require('java-core.utils.errors')
 	local str = require('java-core.utils.str')
+	local resolver = require('pkgm.resolve')
 
-	local plugin_version_map = M.get_plugin_version_map(config)
+	local plugin_config_map = M.get_plugin_config_map(config)
 
 	return List:new(plugins)
 		:map(function(plugin_name)
-			local version = plugin_version_map[plugin_name]
+			local plugin_config = plugin_config_map[plugin_name]
 
-			local pkg_path = Manager:get_install_dir(plugin_name, version)
-			local plugin_root = path.join(pkg_path, 'extension')
+			local plugin_root = resolver.get_extension_root(plugin_name, plugin_config)
 			local package_json_str = vim.fn.readfile(path.join(plugin_root, 'package.json'))
 			local package_json = vim.json.decode(table.concat(package_json_str, '\n'))
 			local java_extensions = package_json.contributes.javaExtensions

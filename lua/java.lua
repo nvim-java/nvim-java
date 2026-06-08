@@ -28,16 +28,15 @@ function M.setup(custom_config)
 	----------------------------------------------------------------------
 	--                       package installation                       --
 	----------------------------------------------------------------------
-	local Manager = require('pkgm.manager')
-	local pkgm = Manager()
+	local pkgm = require('pkgm.resolve')
 
-	pkgm:install('jdtls', config.jdtls.version)
+	pkgm.install('jdtls', config.jdtls)
 
 	if config.java_test.enable then
 		----------------------------------------------------------------------
 		--                               test                               --
 		----------------------------------------------------------------------
-		pkgm:install('java-test', config.java_test.version)
+		pkgm.install('java-test', config.java_test)
 
 		M.test = {
 			run_current_class = test_api.run_current_class,
@@ -54,7 +53,7 @@ function M.setup(custom_config)
 		----------------------------------------------------------------------
 		--                             debugger                             --
 		----------------------------------------------------------------------
-		pkgm:install('java-debug', config.java_debug_adapter.version)
+		pkgm.install('java-debug', config.java_debug_adapter)
 		require('java-dap').setup()
 
 		M.dap = {
@@ -65,15 +64,15 @@ function M.setup(custom_config)
 	end
 
 	if config.spring_boot_tools.enable then
-		pkgm:install('spring-boot-tools', config.spring_boot_tools.version)
+		pkgm.install('spring-boot-tools', config.spring_boot_tools)
 	end
 
 	if config.lombok.enable then
-		pkgm:install('lombok', config.lombok.version)
+		pkgm.install('lombok', config.lombok)
 	end
 
 	if config.jdk.auto_install then
-		pkgm:install('openjdk', config.jdk.version)
+		pkgm.install('openjdk', config.jdk)
 	end
 
 	----------------------------------------------------------------------
