@@ -33,8 +33,11 @@ function Manager:install_all(packages, callback)
 		return
 	end
 
-	local on_finished = function()
+	local on_finished = function(name, err)
 		remaining = remaining - 1
+		if err then
+			notify.error('Failed to install package: ' .. name)
+		end
 		if remaining == 0 then
 			callback()
 		end
@@ -48,33 +51,45 @@ end
 ---Download and extract a package asynchronously
 ---@param name string
 ---@param version string
----@param on_finished fun(install_dir: string)
+---@param on_finished fun(name: string, err: string|nil)
 function Manager:install(name, version, on_finished)
 	log.debug('Installing package:', name, version)
 
 	if self:is_installed(name, version) then
 		local install_dir = self:get_install_dir(name, version)
 		log.debug('Package already installed:', install_dir)
-		on_finished(install_dir)
+		on_finished(name, nil)
 		return
 	end
 
 	notify.info('Installing package ' .. name .. ' version ' .. version)
 
-	local spec = self:find_spec(name, version)
-	local url = spec:get_url(name, version)
+	local ok, url = pcall(function()
+		local spec = self:find_spec(name, version)
+		return spec:get_url(name, version)
+	end)
+	if not ok then
+		on_finished(name, url)
+		return
+	end
 
-	self:download_package(url, function(downloaded_file)
+	self:download_package(url, function(downloaded_file, download_err)
+		if download_err then
+			on_finished(name, download_err)
+			return
+		end
+
 		local install_dir = self:get_install_dir(name, version)
-
 		log.debug('Install directory:', install_dir)
+		self:extract_package(downloaded_file, install_dir, function(extract_err)
+			if extract_err then
+				on_finished(name, extract_err)
+				return
+			end
 
-		self:extract_package(downloaded_file, install_dir)
-
-		log.debug('Package installed successfully:', install_dir)
-		notify.info('Package installed successfully ' .. name)
-
-		on_finished(install_dir)
+			notify.info('Package installed successfully ' .. name)
+			on_finished(name, nil)
+		end)
 	end)
 end
 
@@ -163,7 +178,7 @@ end
 ---Download package from URL
 ---@private
 ---@param url string
----@param on_finished fun(string)
+---@param on_finished fun(string, string|nil)
 function Manager:download_package(url, on_finished)
 	log.debug('Using URL:', url)
 
@@ -172,15 +187,14 @@ function Manager:download_package(url, on_finished)
 	log.debug('Starting download...')
 
 	downloader:download(function(downloaded_file, err)
-		if not downloaded_file then
-			vim.schedule(function()
-				err_util.throw(err or 'Download failed')
-			end)
+		if err then
+			on_finished(downloaded_file, err)
+			return
 		end
 
 		log.debug('Downloaded to:', downloaded_file)
 
-		on_finished(downloaded_file)
+		on_finished(downloaded_file, nil)
 	end)
 end
 
@@ -188,7 +202,8 @@ end
 ---@private
 ---@param downloaded_file string
 ---@param install_dir string
-function Manager:extract_package(downloaded_file, install_dir)
+---@param on_finished fun(string|nil)
+function Manager:extract_package(downloaded_file, install_dir, on_finished)
 	vim.schedule(function()
 		local extractor = extractor_factory.get_extractor({
 			source = downloaded_file,
@@ -204,13 +219,15 @@ function Manager:extract_package(downloaded_file, install_dir)
 		if not success then
 			vim.fn.delete(install_dir, 'rf')
 			vim.fn.delete(downloaded_file)
-			err_util.throw(err or 'Extraction failed')
+			on_finished(err)
+			return
 		end
 
 		log.debug('Extraction completed')
 
 		vim.fn.delete(downloaded_file)
 		log.debug('Cleaned up temporary file')
+		on_finished(nil)
 	end)
 end
 

@@ -1,6 +1,5 @@
 local class = require('java-core.utils.class')
 local log = require('java-core.utils.log2')
-local err_util = require('java-core.utils.errors')
 local path = require('java-core.utils.path')
 
 ---@class java-core.PowerShell
@@ -36,7 +35,7 @@ function PowerShell:_init(opts)
 end
 
 ---Download file using PowerShell
----@param on_finished fun(file_path: string)
+---@param on_finished fun(file_path: string|nil, err: string|nil)
 function PowerShell:download(on_finished)
 	local pwsh = vim.fn.executable('pwsh') == 1 and 'pwsh' or 'powershell'
 	log.debug('PowerShell downloading:', self.url, 'to', self.dest)
@@ -70,7 +69,9 @@ function PowerShell:download(on_finished)
 
 		if exit_code ~= 0 then
 			local err = string.format('PowerShell download failed (exit %d): %s', exit_code, result)
-			err_util.throw(err)
+			log.error(err)
+			on_finished(nil, err)
+			return
 		end
 
 		log.debug('PowerShell download completed:', self.dest)
