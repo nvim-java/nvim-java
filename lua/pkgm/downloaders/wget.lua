@@ -57,6 +57,7 @@ function Wget:download(on_finished)
 		if exit_code ~= 0 then
 			log.error('wget failed:', exit_code, result)
 			on_finished(nil, string.format('wget failed (exit %d): %s', exit_code, result))
+			return
 		end
 
 		log.debug('wget download completed:', self.dest)
