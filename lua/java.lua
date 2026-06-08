@@ -79,6 +79,10 @@ function M.setup(custom_config)
 	----------------------------------------------------------------------
 	--                               init                               --
 	----------------------------------------------------------------------
+	if config.experimental.fix_generated_sources then
+		require('java.experimental.fix-generated-sources').patch(vim.fn.getcwd())
+	end
+
 	require('java.startup.lsp_setup').setup(config)
 	require('java.startup.decompile-watcher').setup()
 	require('java-refactor').setup()
