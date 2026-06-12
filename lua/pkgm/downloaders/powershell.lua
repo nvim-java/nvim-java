@@ -49,12 +49,19 @@ function PowerShell:download()
 		self.dest
 	)
 
-	local cmd = string.format(
-		-- luacheck: ignore
-		"%s -NoProfile -NonInteractive -Command \"$ProgressPreference = 'SilentlyContinue'; $ErrorActionPreference = 'Stop'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; %s\"",
+	-- pass an argv list so no shell is involved; a single command string
+	-- breaks when &shell is pwsh (nvim nightly default on Windows)
+	local cmd = {
 		pwsh,
-		pwsh_cmd
-	)
+		'-NoProfile',
+		'-NonInteractive',
+		'-Command',
+		string.format(
+			-- luacheck: ignore
+			"$ProgressPreference = 'SilentlyContinue'; $ErrorActionPreference = 'Stop'; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; %s",
+			pwsh_cmd
+		),
+	}
 	log.debug('PowerShell command:', cmd)
 
 	local result = vim.fn.system(cmd)

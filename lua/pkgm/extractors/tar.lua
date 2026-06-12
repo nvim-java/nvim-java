@@ -37,27 +37,24 @@ function Tar:extract()
 	log.debug('tar extracting:', self.source, 'to', self.dest)
 	log.debug('Using tar binary:', tar_cmd)
 
-	local cmd
+	local source = self.source
+	local dest = self.dest
+
+	-- argv list so no shell quoting is involved (&shell may be pwsh on
+	-- Windows nvim nightly)
+	local cmd = { tar_cmd, '--no-same-owner' }
+
 	if system.get_os() == 'win' then
 		-- Windows: convert backslashes to forward slashes (tar accepts them)
-		local source = self.source:gsub('\\', '/')
-		local dest = self.dest:gsub('\\', '/')
-		cmd = string.format(
-			'%s --no-same-owner %s -xf "%s" -C "%s"',
-			tar_cmd,
-			self:tar_supports_force_local(tar_cmd) and '--force-local' or '',
-			source,
-			dest
-		)
-	else
-		-- Unix: use shellescape
-		cmd = string.format(
-			'%s --no-same-owner -xf %s -C %s',
-			tar_cmd,
-			vim.fn.shellescape(self.source),
-			vim.fn.shellescape(self.dest)
-		)
+		source = source:gsub('\\', '/')
+		dest = dest:gsub('\\', '/')
+
+		if self:tar_supports_force_local(tar_cmd) then
+			table.insert(cmd, '--force-local')
+		end
 	end
+
+	vim.list_extend(cmd, { '-xf', source, '-C', dest })
 	log.debug('tar command:', cmd)
 
 	local result = vim.fn.system(cmd)
