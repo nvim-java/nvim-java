@@ -1,5 +1,13 @@
 # Changelog
 
+## [4.1.1](https://github.com/nvim-java/nvim-java/compare/v4.1.0...v4.1.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* **dap:** skip enrich_config for attach mode ([#494](https://github.com/nvim-java/nvim-java/issues/494)) ([ccd76f9](https://github.com/nvim-java/nvim-java/commit/ccd76f9eee604bc88e287d0daee764bf4277cd6b))
+* **refactor:** use method-call syntax for Action:rename ([#493](https://github.com/nvim-java/nvim-java/issues/493)) ([bb12076](https://github.com/nvim-java/nvim-java/commit/bb120763d717eb375db1fe9c5d2034855aa1514c))
+
 ## [4.1.0](https://github.com/nvim-java/nvim-java/compare/v4.0.4...v4.1.0) (2026-02-04)
 
 
