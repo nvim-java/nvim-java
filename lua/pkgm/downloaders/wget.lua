@@ -39,13 +39,17 @@ end
 ---@return string|nil # Error message if failed
 function Wget:download()
 	log.debug('wget downloading:', self.url, 'to', self.dest)
-	local cmd = string.format(
-		'wget -t %d -T %d -O %s %s',
-		self.retry_count,
-		self.timeout,
-		vim.fn.shellescape(self.dest),
-		vim.fn.shellescape(self.url)
-	)
+	-- argv list so no shell quoting is involved
+	local cmd = {
+		'wget',
+		'-t',
+		tostring(self.retry_count),
+		'-T',
+		tostring(self.timeout),
+		'-O',
+		self.dest,
+		self.url,
+	}
 	log.debug('wget command:', cmd)
 
 	local result = vim.fn.system(cmd)

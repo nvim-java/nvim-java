@@ -21,7 +21,8 @@ end
 ---@return string|nil # Error message if failed
 function Unzip:extract()
 	log.debug('unzip extracting:', self.source, 'to', self.dest)
-	local cmd = string.format('unzip -q -o %s -d %s', vim.fn.shellescape(self.source), vim.fn.shellescape(self.dest))
+	-- argv list so no shell quoting is involved
+	local cmd = { 'unzip', '-q', '-o', self.source, '-d', self.dest }
 	log.debug('unzip command:', cmd)
 
 	local result = vim.fn.system(cmd)
