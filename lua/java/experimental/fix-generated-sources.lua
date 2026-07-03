@@ -79,10 +79,7 @@ end
 ---@return integer|nil
 local function find_generated_sources_entry(lines)
 	for index, line in ipairs(lines) do
-		if
-			line:find('path="target/generated%-sources"')
-			or line:find("path='target/generated%-sources'")
-		then
+		if line:find('path="target/generated%-sources"') or line:find("path='target/generated%-sources'") then
 			return index
 		end
 	end
@@ -240,7 +237,9 @@ function M.patch(root)
 	end
 
 	if count >= LIMIT then
-		log.warn('nvim-java: fix_generated_sources hit .classpath find limit (' .. LIMIT .. ') — some files may be missed')
+		log.warn(
+			'nvim-java: fix_generated_sources hit .classpath find limit (' .. LIMIT .. ') — some files may be missed'
+		)
 	end
 
 	local elapsed = (vim.uv.hrtime() - start) / 1e6
