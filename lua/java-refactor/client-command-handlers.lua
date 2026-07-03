@@ -18,7 +18,7 @@ local M = {
 	---@param params java-refactor.RenameAction[]
 	[ClientCommand.RENAME_COMMAND] = function(params)
 		run('Failed to rename the symbol', function(action)
-			action.rename(params)
+			action:rename(params)
 		end)
 	end,
 

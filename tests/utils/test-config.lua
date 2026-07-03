@@ -9,13 +9,16 @@ vim.o.swapfile = false
 vim.o.backup = false
 vim.o.writebackup = false
 
-local temp_path = './.test_plugins'
+-- absolute paths so requires keep working after tests :cd elsewhere
+local root = vim.fn.getcwd()
+local temp_path = root .. '/.test_plugins'
 
 vim.opt.runtimepath:append(temp_path .. '/')
+vim.opt.runtimepath:append(temp_path .. '/plenary.nvim')
 vim.opt.runtimepath:append(temp_path .. '/nui.nvim')
 vim.opt.runtimepath:append(temp_path .. '/spring-boot.nvim')
 vim.opt.runtimepath:append(temp_path .. '/nvim-dap')
-vim.opt.runtimepath:append('.')
+vim.opt.runtimepath:append(root)
 
 local is_nixos = vim.fn.filereadable('/etc/NIXOS') == 1
 local is_ci = vim.env.CI ~= nil
@@ -34,5 +37,8 @@ if is_ci then
 end
 
 require('java').setup(config)
+
+-- plenary child nvim runs with --noplugin so user commands never register
+vim.cmd('runtime! plugin/java.lua')
 
 vim.lsp.enable('jdtls')

@@ -11,8 +11,7 @@ return {
 	JdtlsSpec({
 		name = 'jdtls',
 		version_range = { from = '1.43.0', to = '1.54.0' },
-		url = 'https://download.eclipse.org/{{name}}/milestones/'
-			.. '{{version}}/jdt-language-server-{{version}}-{{timestamp}}.tar.gz',
+		url = 'https://download.eclipse.org/{{name}}/snapshots/jdt-language-server-{{version}}-{{timestamp}}.tar.gz',
 	}),
 	BaseSpec({
 		name = 'java-test',

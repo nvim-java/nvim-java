@@ -97,7 +97,11 @@ describe('Package resolver', function()
 			version = '0.43.2',
 		})
 
-		assert.equals('/downloaded/java-test/0.43.2/extension', extension_root)
+		local path = require('java-core.utils.path')
+		assert.equals(
+			path.join('/downloaded/java-test/0.43.2', 'extension'),
+			extension_root
+		)
 	end)
 
 	it('uses exact lombok jar paths when configured', function()

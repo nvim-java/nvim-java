@@ -41,6 +41,14 @@ end
 function Setup:enrich_config(config)
 	config = vim.deepcopy(config)
 
+	-- Attach configs don't need enriching — the JVM is already running and
+	-- chose its own main class, classpath, and java executable. Without this
+	-- short-circuit, the `assert(main, ...)` below fires because attach
+	-- configs (correctly) have no mainClass.
+	if config.request == 'attach' then
+		return config
+	end
+
 	-- skip enriching if already enriched
 	if config.mainClass and config.projectName and config.modulePaths and config.classPaths and config.javaExec then
 		return config

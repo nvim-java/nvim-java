@@ -39,13 +39,17 @@ end
 ---@return string|nil # Error message if failed
 function Curl:download()
 	log.debug('curl downloading:', self.url, 'to', self.dest)
-	local cmd = string.format(
-		'curl --retry %d --connect-timeout %d -o %s %s',
-		self.retry_count,
-		self.timeout,
-		vim.fn.shellescape(self.dest),
-		vim.fn.shellescape(self.url)
-	)
+	-- argv list so no shell quoting is involved
+	local cmd = {
+		'curl',
+		'--retry',
+		tostring(self.retry_count),
+		'--connect-timeout',
+		tostring(self.timeout),
+		'-o',
+		self.dest,
+		self.url,
+	}
 	log.debug('curl command:', cmd)
 
 	local result = vim.fn.system(cmd)

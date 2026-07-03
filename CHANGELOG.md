@@ -1,5 +1,21 @@
 # Changelog
 
+## [4.1.2](https://github.com/nvim-java/nvim-java/compare/v4.1.1...v4.1.2) (2026-07-03)
+
+
+### Bug Fixes
+
+* change jdtls download url from milestones to snapshots ([#499](https://github.com/nvim-java/nvim-java/issues/499)) ([3f071ca](https://github.com/nvim-java/nvim-java/commit/3f071caa984347880baacf46993728cbdc87c43b))
+* **classpath:** fix bug when generated sources are skipped by jdtls ([#489](https://github.com/nvim-java/nvim-java/issues/489)) ([116339b](https://github.com/nvim-java/nvim-java/commit/116339b9a9b6d9d4563b2afc38fe51ba6e1a1df8))
+
+## [4.1.1](https://github.com/nvim-java/nvim-java/compare/v4.1.0...v4.1.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* **dap:** skip enrich_config for attach mode ([#494](https://github.com/nvim-java/nvim-java/issues/494)) ([ccd76f9](https://github.com/nvim-java/nvim-java/commit/ccd76f9eee604bc88e287d0daee764bf4277cd6b))
+* **refactor:** use method-call syntax for Action:rename ([#493](https://github.com/nvim-java/nvim-java/issues/493)) ([bb12076](https://github.com/nvim-java/nvim-java/commit/bb120763d717eb375db1fe9c5d2034855aa1514c))
+
 ## [4.1.0](https://github.com/nvim-java/nvim-java/compare/v4.0.4...v4.1.0) (2026-02-04)
 
 

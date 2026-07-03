@@ -76,22 +76,22 @@ plugin/java.lua           # User command registration
 
 ```
 tests/
-├── assets/           # Test fixtures and assets (e.g., HelloWorld.java)
-├── constants/        # Test constants (e.g., capabilities.lua)
+├── fixtures/         # Test projects (e.g., demo/ - Maven project with JUnit tests)
 ├── utils/            # Test utilities and config files
 │   ├── lsp-utils.lua      # LSP test helpers
+│   ├── project.lua        # Fixture project + wait/assert helpers
 │   ├── prepare-config.lua # Lazy.nvim test setup
-│   └── test-config.lua    # Manual test setup
+│   └── test-config.lua    # Minimal init for plenary child nvim
 └── specs/            # Test specifications
-    ├── lsp_spec.lua       # All LSP-related tests
-    └── pkgm_spec.lua      # All pkgm-related tests
+    └── integration_spec.lua # End-to-end plugin feature tests
 ```
 
 **Test Guidelines:**
-- Group related tests in single spec file (e.g., all pkgm tests in `pkgm_spec.lua`)
+- Tests are end-to-end: real Neovim + real JDTLS against fixture Maven project
+- Fixture projects are copied to a temp dir at runtime (root markers prefer `.git`, so they must run outside the repo)
+- Spec `it` blocks run sequentially and share JDTLS session state; order matters
 - Extract reusable logic to `utils/` to keep test steps clean
-- Store test data/fixtures in `assets/`
-- Store constants (capabilities, expected values) in `constants/`
+- Store test projects in `fixtures/`
 
 ## Code Patterns
 

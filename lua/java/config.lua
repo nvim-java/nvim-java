@@ -27,6 +27,7 @@ local V = jdtls_version_map[JDTLS_VERSION]
 ---@field java_debug_adapter { enable: boolean, version: string, path: string|nil, auto_install: boolean }
 ---@field spring_boot_tools { enable: boolean, version: string, path: string|nil, auto_install: boolean }
 ---@field jdk { auto_install: boolean, version: string, path: string|nil }
+---@field experimental { fix_generated_sources: boolean }
 ---@field log java-core.Log2Config
 
 ---@class java.PartialConfig
@@ -37,6 +38,7 @@ local V = jdtls_version_map[JDTLS_VERSION]
 ---@field java_debug_adapter? { enable?: boolean, version?: string, path?: string, auto_install?: boolean }
 ---@field spring_boot_tools? { enable?: boolean, version?: string, path?: string, auto_install?: boolean }
 ---@field jdk? { auto_install?: boolean, version?: string, path?: string }
+---@field experimental? { fix_generated_sources?: boolean }
 ---@field log? java-core.PartialLog2Config
 
 ---@type java.Config
@@ -44,6 +46,10 @@ local config = {
 	checks = {
 		nvim_version = true,
 		nvim_jdtls_conflict = true,
+	},
+
+	experimental = {
+		fix_generated_sources = false,
 	},
 
 	jdtls = {

@@ -3,7 +3,7 @@ TESTS_ROOT=tests
 TESTS_DIR?=${TESTS_ROOT}/specs
 PREPARE_CONFIG=${TESTS_ROOT}/utils/prepare-config.lua
 TEST_CONFIG=${TESTS_ROOT}/utils/test-config.lua
-TEST_TIMEOUT?=60000
+TEST_TIMEOUT?=600000
 
 .PHONY: test tests lint format all
 

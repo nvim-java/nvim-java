@@ -3,6 +3,7 @@ local assert = require('luassert')
 describe('JDTLS command', function()
 	local cmd = require('java-core.ls.servers.jdtls.cmd')
 	local path = require('java-core.utils.path')
+	local system = require('java-core.utils.system')
 
 	local temp_dir
 
@@ -16,14 +17,14 @@ describe('JDTLS command', function()
 	end)
 
 	it('uses the platform-specific config directory when it exists', function()
-		local config_dir = path.join(temp_dir, 'config_mac_arm')
+		local config_dir = path.join(temp_dir, system.get_config_suffix())
 		vim.fn.mkdir(config_dir, 'p')
 
 		assert.equals(config_dir, cmd.get_jdtls_config_path(temp_dir))
 	end)
 
 	it('falls back to the os config directory when the platform-specific directory is missing', function()
-		local config_dir = path.join(temp_dir, 'config_mac')
+		local config_dir = path.join(temp_dir, 'config_' .. system.get_os())
 		vim.fn.mkdir(config_dir, 'p')
 
 		assert.equals(config_dir, cmd.get_jdtls_config_path(temp_dir))

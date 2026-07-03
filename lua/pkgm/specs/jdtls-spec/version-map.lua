@@ -1,5 +1,5 @@
 -- To update JDTLS version map:
--- 1. Visit https://download.eclipse.org/jdtls/milestones/
+-- 1. Visit https://download.eclipse.org/jdtls/snapshots/
 -- 2. Click on version link in 'Directory Contents' section
 -- 3. Find file like: jdt-language-server-X.Y.Z-YYYYMMDDHHSS.tar.gz
 -- 4. Extract package version (X.Y.Z) and timestamp (YYYYMMDDHHSS)
