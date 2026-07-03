@@ -15,4 +15,9 @@ read_globals = {
 ignore = {
 	'212/self',
 }
+files['tests/specs/pkgm_resolve_spec.lua'] = {
+	globals = {
+		'vim.notify',
+	},
+}
 max_line_length = false
