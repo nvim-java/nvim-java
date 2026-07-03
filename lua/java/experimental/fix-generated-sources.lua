@@ -122,10 +122,11 @@ local function get_generated_source_roots(module_root)
 		return {}
 	end
 
-	-- Match 'target/generated-sources' substring using OS-native path separators
-	local target_gen_src = path_utils.join('target', 'generated-sources')
+	-- vim.fs.find always yields '/'-separated paths regardless of OS, so
+	-- match against a '/'-normalized substring even on Windows.
+	local target_gen_src = 'target/generated-sources'
 	local java_roots = vim.fs.find(function(name, generated_path)
-		return name == 'java' and generated_path:find(target_gen_src, 1, true) ~= nil
+		return name == 'java' and classpath_normalize(generated_path):find(target_gen_src, 1, true) ~= nil
 	end, {
 		path = generated_root,
 		type = 'directory',
