@@ -50,14 +50,15 @@ end
 ---@param absolute_path string
 ---@return string
 local function get_relative_path(root, absolute_path)
-	local prefix = root .. path_utils.path_separator
-	local relative
-	if absolute_path:sub(1, #prefix) == prefix then
-		relative = absolute_path:sub(#prefix + 1)
-	else
-		relative = absolute_path
+	-- vim.fs.find always joins children with '/' regardless of OS, so
+	-- normalize both sides before stripping the prefix.
+	local normalized_root = classpath_normalize(root)
+	local normalized_path = classpath_normalize(absolute_path)
+	local prefix = normalized_root .. '/'
+	if normalized_path:sub(1, #prefix) == prefix then
+		return normalized_path:sub(#prefix + 1)
 	end
-	return classpath_normalize(relative)
+	return normalized_path
 end
 
 ---@param lines string[]
