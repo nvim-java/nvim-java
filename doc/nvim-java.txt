@@ -1,4 +1,5 @@
-*nvim-java.txt*       For Neovim >= 0.11.5       Last change: 2026 February 05
+*nvim-java.txt*
+                             For Neovim >= 0.11.5    Last change: 2026 July 04
 
 ==============================================================================
 Table of Contents                                *nvim-java-table-of-contents*
@@ -402,18 +403,18 @@ want, following options are available:
 <
 
 Set `path` when a tool is managed externally. When `path` is set, nvim-java
-uses that path and does not install the tool. Set
-`auto_install = false` on a tool to fail instead of downloading when no path is
-configured. Note: `path` has no effect when the tool is disabled
-(`enable = false`) — the tool is simply not loaded.
+uses that path and does not install the tool. Set `auto_install = false` on a
+tool to fail instead of downloading when no path is configured. Note: `path`
+has no effect when the tool is disabled (`enable = false`) — the tool is
+simply not loaded.
 
 Path meanings:
 
 - `jdtls.path`: directory containing `plugins/` and platform `config_*`
-  directories
+    directories
 - `lombok.path`: path to `lombok.jar`
 - `java_test.path`, `java_debug_adapter.path`, `spring_boot_tools.path`: VS Code
-  extension root containing `package.json`
+    extension root containing `package.json`
 - `jdk.path`: JDK home containing `bin/java`
 
 
