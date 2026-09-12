@@ -99,6 +99,8 @@ tests/
 
 **Config merging:** `vim.tbl_deep_extend('force', global_config, user_config or {})`
 
+**Profiles:** `JavaProfile` persists vm args, program args, inline env entries, and an env file; inline env overrides env file values for both DAP and built-in runner
+
 **Config type sync:** When modifying `lua/java/config.lua` (add/update/delete properties), update both `java.Config` type and `java.PartialConfig` in `lua/java.lua` to keep types in sync
 
 **Complex types:** If type contains complex object, create class type instead of inlining type everywhere

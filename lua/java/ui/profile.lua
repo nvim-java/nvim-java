@@ -3,6 +3,7 @@ local notify = require('java-core.utils.notify')
 local profile_config = require('java.api.profile_config')
 local class = require('java-core.utils.class')
 local dap_api = require('java-dap')
+local env_utils = require('java.utils.env')
 local lsp_utils = require('java-core.utils.lsp')
 local ui = require('java.ui.utils')
 
@@ -13,20 +14,22 @@ local DapSetup = require('java-dap.setup')
 
 local new_profile = 'New Profile'
 
---- @param up_win number
---- @param down_win number
-local function map_keys_for_profile_editor(popup, up_win, down_win)
-	local function go_up()
-		vim.api.nvim_set_current_win(up_win)
-	end
+---@param ordered_popups Popup[]
+local function map_keys_for_profile_editor(ordered_popups)
+	for index, popup in ipairs(ordered_popups) do
+		local up_index = index == 1 and #ordered_popups or index - 1
+		local down_index = index == #ordered_popups and 1 or index + 1
 
-	local function go_down()
-		vim.api.nvim_set_current_win(down_win)
+		popup:map('n', '<Tab>', function()
+			vim.api.nvim_set_current_win(ordered_popups[down_index].winid)
+		end)
+		popup:map('n', 'k', function()
+			vim.api.nvim_set_current_win(ordered_popups[up_index].winid)
+		end)
+		popup:map('n', 'j', function()
+			vim.api.nvim_set_current_win(ordered_popups[down_index].winid)
+		end)
 	end
-
-	popup:map('n', '<Tab>', go_down)
-	popup:map('n', 'k', go_up)
-	popup:map('n', 'j', go_down)
 end
 
 --- @param popup Popup
@@ -37,6 +40,17 @@ local function get_popup_value(popup)
 		return value[1]
 	end
 	notify.error('Failed to get popup value for ' .. popup.name)
+end
+
+---@param popup Popup
+---@return string[]
+local function get_popup_lines(popup)
+	local ok, value = pcall(vim.api.nvim_buf_get_lines, popup.bufnr, 0, -1, false)
+	if ok then
+		return value
+	end
+	notify.error('Failed to get popup value for ' .. popup.name)
+	return {}
 end
 
 --- @param name string
@@ -57,8 +71,34 @@ end
 local function save_profile(popups, target_profile, main_class)
 	local vm_args = get_popup_value(popups.vm_args)
 	local prog_args = get_popup_value(popups.prog_args)
+	local env_file = vim.trim(get_popup_value(popups.env_file) or '')
+	local env, err = env_utils.parse_lines(get_popup_lines(popups.env))
 	local name = get_popup_value(popups.name)
-	local profile = profile_config.Profile(vm_args, prog_args, name)
+
+	if err then
+		notify.warn('Invalid environment entries: ' .. err)
+		return false
+	end
+
+	if env_file ~= '' then
+		local _, env_file_err = env_utils.read_file(
+			env_file,
+			profile_config.current_project_path
+		)
+		if env_file_err then
+			notify.warn(env_file_err)
+			return false
+		end
+	end
+
+	local profile = profile_config.Profile(
+		vm_args,
+		prog_args,
+		name,
+		nil,
+		env,
+		env_file ~= '' and env_file or nil
+	)
 
 	if profile.name == nil or profile.name == '' then
 		notify.warn('Profile name is required')
@@ -186,12 +226,20 @@ function ProfileUI:get_and_fill_popup(title, key, target_profile, enter, keymaps
 	-- fill the popup with the config value
 	-- if target_profile is nil, it's a new profile
 	if target_profile then
+		local value = profile_config.get_profile(target_profile, self.main_class)[key]
+		if key == 'env' then
+			value = env_utils.stringify(value)
+		end
+		if value == nil or value == '' then
+			value = ''
+		end
+
 		vim.api.nvim_buf_set_lines(
 			popup.bufnr,
 			0,
 			-1,
 			false,
-			{ profile_config.get_profile(target_profile, self.main_class)[key] }
+			vim.split(value, '\n', { plain = true })
 		)
 	end
 	return popup
@@ -202,20 +250,31 @@ function ProfileUI:open_profile_editor(target_profile)
 	local popups = {
 		name = self:get_and_fill_popup('Name', 'name', target_profile, true, false),
 		vm_args = self:get_and_fill_popup('VM arguments', 'vm_args', target_profile, false, false),
-		prog_args = self:get_and_fill_popup('Program arguments', 'prog_args', target_profile, false, true),
+		prog_args = self:get_and_fill_popup('Program arguments', 'prog_args', target_profile, false, false),
+		env = self:get_and_fill_popup('Environment', 'env', target_profile, false, false),
+		env_file = self:get_and_fill_popup('Environment file', 'env_file', target_profile, false, true),
+	}
+	local ordered_popups = {
+		popups.name,
+		popups.vm_args,
+		popups.prog_args,
+		popups.env,
+		popups.env_file,
 	}
 
 	local layout = Layout(
 		{
 			relative = 'editor',
 			position = '50%',
-			size = { height = 15, width = 60 },
+			size = { height = 22, width = 60 },
 		},
 
 		Layout.Box({
-			Layout.Box(popups.name, { grow = 0.2 }),
-			Layout.Box(popups.vm_args, { grow = 0.4 }),
-			Layout.Box(popups.prog_args, { grow = 0.4 }),
+			Layout.Box(popups.name, { grow = 0.15 }),
+			Layout.Box(popups.vm_args, { grow = 0.2 }),
+			Layout.Box(popups.prog_args, { grow = 0.2 }),
+			Layout.Box(popups.env, { grow = 0.3 }),
+			Layout.Box(popups.env_file, { grow = 0.15 }),
 		}, { dir = 'col' })
 	)
 
@@ -238,22 +297,7 @@ function ProfileUI:open_profile_editor(target_profile)
 		end)
 	end
 
-	map_keys_for_profile_editor(
-		popups.name, -- popup (first)
-		popups.prog_args.winid, -- up_win
-		popups.vm_args.winid -- down_win
-	)
-
-	map_keys_for_profile_editor(
-		popups.vm_args, -- popup (second)
-		popups.name.winid, -- up_win
-		popups.prog_args.winid -- down_win
-	)
-	map_keys_for_profile_editor(
-		popups.prog_args, -- popup (third)
-		popups.vm_args.winid, -- up_win
-		popups.name.winid -- down_win
-	)
+	map_keys_for_profile_editor(ordered_popups)
 end
 
 ---@private

@@ -25,12 +25,14 @@ function Run:_init(dap_config)
 end
 
 ---@param cmd string[]
-function Run:start(cmd)
+---@param env table<string, string>|nil
+function Run:start(cmd, env)
 	local merged_cmd = table.concat(cmd, ' ')
 	self.is_running = true
 	self:send_term(merged_cmd)
 
 	self.job_chan_id = vim.fn.jobstart(merged_cmd, {
+		env = env,
 		pty = true,
 		on_stdout = function(_, data)
 			self:send_term(data)

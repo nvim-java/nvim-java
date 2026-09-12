@@ -9,17 +9,23 @@ local config_path = vim.fn.stdpath('data') .. '/nvim-java-profiles.json'
 --- @field prog_args string
 --- @field name string
 --- @field is_active boolean
+--- @field env table<string, string>
+--- @field env_file string|nil
 local Profile = class()
 
 --- @param vm_args string
 --- @param prog_args string
 --- @param name string
 --- @param is_active boolean
-function Profile:_init(vm_args, prog_args, name, is_active)
+--- @param env table<string, string>|nil
+--- @param env_file string|nil
+function Profile:_init(vm_args, prog_args, name, is_active, env, env_file)
 	self.vm_args = vm_args
 	self.prog_args = prog_args
 	self.name = name
 	self.is_active = is_active or false
+	self.env = env or {}
+	self.env_file = env_file
 end
 
 -- palin config structure
@@ -30,12 +36,18 @@ end
 --  			"vm_args": "-Xmx1024m",
 --  			"prog_args": "arg1 arg2",
 --  			"name": "profile_name1",
+--  			"env": {
+--  				"SPRING_PROFILES_ACTIVE": "dev"
+--  			},
+--  			"env_file": ".env.dev",
 --  			"is_active": true
 --  		},
 --  		{
 --  			"vm_args": "-Xmx1024m",
 --  			"prog_args": "arg1 arg2",
 --  			"name": "profile_name2",
+--  			"env": {},
+--  			"env_file": ".env.local",
 --  			"is_active": false
 --  		}
 --  	],
@@ -90,7 +102,14 @@ function M.load_current_project_profiles()
 		result[dap_config_name] = {}
 		for _, profile in pairs(dap_config_name_val) do
 			result[dap_config_name][profile.name] =
-				Profile(profile.vm_args, profile.prog_args, profile.name, profile.is_active)
+				Profile(
+					profile.vm_args,
+					profile.prog_args,
+					profile.name,
+					profile.is_active,
+					profile.env,
+					profile.env_file
+				)
 		end
 	end
 	return result
