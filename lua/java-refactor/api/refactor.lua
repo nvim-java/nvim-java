@@ -4,7 +4,6 @@ local function run_code_action(action_type, filter)
 	vim.lsp.buf.code_action({
 		apply = true,
 		context = {
-			diagnostics = vim.lsp.diagnostic.get_line_diagnostics(0),
 			only = { action_type },
 		},
 		filter = filter and function(refactor)
