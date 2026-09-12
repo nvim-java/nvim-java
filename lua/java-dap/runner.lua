@@ -41,12 +41,12 @@ end
 function Runner:before(conf, report)
 	log.debug('running "before" callback')
 
-	self.server = assert(vim.loop.new_tcp(), 'uv.new_tcp() must return handle')
+	self.server = assert(vim.uv.new_tcp(), 'uv.new_tcp() must return handle')
 	self.server:bind('127.0.0.1', 0)
 	self.server:listen(128, function(err)
 		assert(not err, err)
 
-		local sock = assert(vim.loop.new_tcp(), 'uv.new_tcp must return handle')
+		local sock = assert(vim.uv.new_tcp(), 'uv.new_tcp must return handle')
 		self.server:accept(sock)
 		local success = sock:read_start(report:get_stream_reader(sock))
 		assert(success == 0, 'failed to listen to reader')
