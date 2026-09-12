@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.2.0](https://github.com/nvim-java/nvim-java/compare/v4.1.2...v4.2.0) (2026-09-12)
+
+
+### Features
+
+* **tools:** allow specifying paths instead of auto installing ([#488](https://github.com/nvim-java/nvim-java/issues/488)) ([9e8b842](https://github.com/nvim-java/nvim-java/commit/9e8b842ea9eff3ebf25fb7360908ed4d4f87c56a))
+
+
+### Bug Fixes
+
+* **dap:** use vim.uv for TCP sockets ([#507](https://github.com/nvim-java/nvim-java/issues/507)) ([dbb0d90](https://github.com/nvim-java/nvim-java/commit/dbb0d904a1051c4ee2bfdf4ab8f1e15b305ad464))
+* **refactor:** remove retired diagnostics API ([#506](https://github.com/nvim-java/nvim-java/issues/506)) ([db5536b](https://github.com/nvim-java/nvim-java/commit/db5536b4cb3da153084e50016596fd0e3a319aae))
+
 ## [4.1.2](https://github.com/nvim-java/nvim-java/compare/v4.1.1...v4.1.2) (2026-07-03)
 
 
