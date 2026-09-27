@@ -16,21 +16,21 @@ return {
 	BaseSpec({
 		name = 'java-test',
 		version = '*',
-		url = 'https://openvsxorg.blob.core.windows.net/resources/vscjava/vscode-java-test'
+		url = 'https://openvsx.eclipsecontent.org/vscjava/vscode-java-test'
 			.. '/{{version}}/vscjava.vscode-java-test-{{version}}.vsix',
 	}),
 
 	BaseSpec({
 		name = 'java-debug',
 		version = '*',
-		url = 'https://openvsxorg.blob.core.windows.net/resources/vscjava/vscode-java-debug/'
-			.. '{{version}}/vscjava.vscode-java-debug-{{version}}.vsix',
+		url = 'https://openvsx.eclipsecontent.org/vscjava/vscode-java-debug'
+			.. '/{{version}}/vscjava.vscode-java-debug-{{version}}.vsix',
 	}),
 
 	BaseSpec({
 		name = 'spring-boot-tools',
 		version = '*',
-		url = 'https://openvsxorg.blob.core.windows.net/resources/VMware/vscode-spring-boot'
+		url = 'https://openvsx.eclipsecontent.org/VMware/vscode-spring-boot'
 			.. '/{{version}}/VMware.vscode-spring-boot-{{version}}.vsix',
 	}),
 
